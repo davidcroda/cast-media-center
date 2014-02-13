@@ -8,7 +8,7 @@ var config = {
     app: {
       name: 'excast'
     },
-    port: 3000,
+    port: process.env.PORT || 3000,
     db: process.env.MONGOHQ_URL,
     indexPath: '/home/dave/ftp/torrents/downloads/',
     thumbnailPath: '/home/dave/ftp/www/thefreeman.montauk.seedboxes.cc/thumbnails/',
@@ -21,7 +21,7 @@ var config = {
     app: {
       name: 'excast'
     },
-    port: 3000,
+    port: process.env.PORT || 3000,
     db: 'mongodb://localhost/excast-test'
   },
 
@@ -30,7 +30,7 @@ var config = {
     app: {
       name: 'excast'
     },
-    port: 3000,
+    port: process.env.PORT || 3000,
     db: 'mongodb://localhost/excast-production'
   }
 };
