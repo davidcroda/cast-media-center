@@ -1,0 +1,9 @@
+extends ../layout
+
+block content
+  .row
+    each video in videos
+      .col-md-3
+          .video(data-url=video.url)
+            img.img-thumbnail(src=video.thumbnail)
+            .video-title= video.name

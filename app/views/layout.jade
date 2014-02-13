@@ -1,0 +1,58 @@
+doctype 5
+html(lang='en')
+  head
+    meta(charset='UTF-8')
+    meta(name='viewport', content='width=device-width')
+    title= title
+    block css
+      link(rel='stylesheet', href='/bootstrap/dist/css/bootstrap.css')
+      link(rel='stylesheet', href='/css/styles.css')
+    block js
+      script(src='//code.jquery.com/jquery-1.10.1.min.js')
+      script(src='/bootstrap/dist/js/bootstrap.js')
+      script(src='https://www.gstatic.com/cv/js/sender/v1/cast_sender.js')
+      script(src='/js/main.js')
+      //script(src='/js/excast.js')
+  body
+    .container-fluid
+
+      nav.navbar.navbar-default(role="navigation")
+        .container-fluid
+          .navbar-header
+            button.navbar-toggle(data-toggle="collapse", data-target="#navbar-collapse", type="button")
+              span.sr-only Toggle navigation
+              span.icon-bar
+              span.icon-bar
+              span.icon-bar
+            a.navbar-brand(href="#") freeCast
+          #navbar-collapse.collapse.navbar-collapse
+            ul.nav.navbar-nav
+              li.active
+                a(href="#") Home
+              li
+                a(href="/refresh") Refresh
+            form.navbar-form.navbar-left(role="search")
+              .form-group
+                input#search.form-control(type="text",placeholder="Search")
+
+
+      block content
+
+      nav#control-nav.navbar.navbar-default.navbar-fixed-bottom(role="navigation",style="display:none;")
+        .container-fluid
+          .row
+            .col-md-1
+              div.controls.padded
+                a(onclick="playMedia()")#playpauseresume.glyphicon.glyphicon-play.disabled
+                a(onclick="stopMedia()")#stop.glyphicon.glyphicon-stop.disabled
+            .col-md-3
+              div.current-media No video loaded
+              img.thumbnail
+              div.currentTime
+            .col-md-8
+              .padded
+                .progress.progress-striped
+                  #progress.progress-bar(role="progressbar", aria-valuenow="60", aria-valuemin="0", aria-valuemax="100")
+
+      .loading
+        img(src="/img/loading.gif")
