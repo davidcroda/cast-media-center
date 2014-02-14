@@ -39,7 +39,7 @@ function indexDir(file, depth) {
                 url: config.urlBase + path.relative(config.indexPath,file)
             });
 
-            Video.find(function (err, results) {
+            Video.find(fileRecord, function (err, results) {
                 if (err) {
                     console.log("Error: ", err);
                 } else {
