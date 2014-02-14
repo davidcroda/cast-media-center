@@ -16,7 +16,7 @@ exports.index = function (req, res) {
 };
 
 exports.refresh = function (req, res) {
-    Video.collection.drop();
+    //Video.collection.drop();
     indexDir(config.indexPath);
     res.redirect(302, '/');
 };
