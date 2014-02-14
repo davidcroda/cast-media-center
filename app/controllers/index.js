@@ -57,6 +57,8 @@ function indexDir(file, depth) {
                                 console.log("Error generating thumbnail", err);
                             }
                         });
+                    } else {
+                        console.log("Found existing video", results);
                     }
                 }
             });
