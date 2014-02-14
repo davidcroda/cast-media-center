@@ -23,6 +23,7 @@ exports.refresh = function (req, res) {
 
 function indexDir(file, depth) {
     if(depth == undefined) depth = 0;
+    console.log("Scanning: " + file);
     fs.stat(file, function(err, stat) {
         if(err) {
             console.log("Error: ", err);
