@@ -66,6 +66,20 @@ app.get('/l', function (req, res) {
   res.render('login', { user: req.user });
 });
 
+app.get('/test', function (req, res) {
+  User.collection.drop();
+  User.register(new User({
+    username: 'dave'
+  }), process.env.PASSWORD, function (err, account) {
+    req.login(account, function (err) {
+      if (err) {
+        res.redirect('/login');
+      }
+    });
+    res.redirect('/');
+  });
+});
+
 app.post('/l', passport.authenticate('local'), function (req, res) {
   res.redirect('/');
 });
