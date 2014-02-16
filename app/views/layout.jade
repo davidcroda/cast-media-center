@@ -12,8 +12,8 @@ html(lang='en')
       script(src='//isotope.metafizzy.co/beta/isotope.pkgd.min.js')
       script(src='/bootstrap/dist/js/bootstrap.js')
       script(src='https://www.gstatic.com/cv/js/sender/v1/cast_sender.js')
-      script(src='/js/main.js')
-      //script(src='/js/excast.js')
+      //script(src='/js/main.js')
+      script(src='/js/excast.js')
   body
     .container-fluid
 
@@ -44,8 +44,8 @@ html(lang='en')
           .row
             .col-md-1
               div.controls.padded
-                a(onclick="playMedia()")#playpauseresume.glyphicon.glyphicon-play.disabled
-                a(onclick="stopMedia()")#stop.glyphicon.glyphicon-stop.disabled
+                a#play.glyphicon.glyphicon-play.disabled
+                a#stop.glyphicon.glyphicon-stop.disabled
             .col-md-3
               div.current-media No video loaded
               img.thumbnail

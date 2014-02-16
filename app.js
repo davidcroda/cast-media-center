@@ -70,5 +70,19 @@ app.post('/login', passport.authenticate('local'), function (req, res) {
   res.redirect('/');
 });
 
+//app.get('/register', function(req, res) {
+//    User.collection.drop();
+//    User.register(new User({
+//        username: 'dave'
+//    }), 'ironfire', function(err, account) {
+//        req.login(account, function(err) {
+//            if(err) {
+//                res.redirect('/login');
+//            }
+//        });
+//        res.redirect('/');
+//    });
+//});
+
 app.listen(config.port);
 console.log('Listening on port: ' + config.port);
