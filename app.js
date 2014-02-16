@@ -57,7 +57,7 @@ app.configure(function () {
 var site = require('./app/controllers/site'),
 //twitch = require('../app/controllers/twitch'),
   refresh = require('./app/controllers/refresh');
-app.get('/login', site.index);
+app.get('/', site.index);
 app.get('/api', site.api);
 app.get('/refresh', refresh.index);
 //app.get('/twitch/:channel', twitch.view);
@@ -66,21 +66,7 @@ app.get('/login', function (req, res) {
   res.render('login', { user: req.user });
 });
 
-app.get('/register', function (req, res) {
-  User.collection.drop();
-  User.register(new User({
-    username: 'dave'
-  }), process.env.PASSWORD, function (err, account) {
-    req.login(account, function (err) {
-      if (err) {
-        res.redirect('/login');
-      }
-    });
-    res.redirect('/');
-  });
-});
-
-app.post('/l', passport.authenticate('local'), function (req, res) {
+app.post('/login', passport.authenticate('local'), function (req, res) {
   res.redirect('/');
 });
 
