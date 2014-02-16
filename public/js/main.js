@@ -40,7 +40,13 @@ $(function() {
             } else {
                 item.parents('.col-md-3').hide();
             }
+            $('#video-container').isotope('layout');
         });
+    });
+
+    $('#video-container').isotope({
+        itemSelector: '.video',
+        layoutMode: 'fitRows'
     });
 });
 

@@ -1,7 +1,11 @@
 var express = require('express'),
   mongoose = require('mongoose'),
   fs = require('fs'),
-  config = require('./config/config');
+  passport = require('passport'),
+  LocalStrategy = require('passport-local').Strategy,
+  User = require('./app/models/user'),
+  config = require('./config/config'),
+  token = require(config.root + '/app/middleware/token');
 
 mongoose.connect(config.db);
 var db = mongoose.connection;
@@ -16,10 +20,55 @@ fs.readdirSync(modelsPath).forEach(function (file) {
   }
 });
 
+// Configure passport
+passport.use(new LocalStrategy(User.authenticate()));
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
+
 var app = express();
 
-require('./config/express')(app, config);
-require('./config/routes')(app);
+app.configure(function () {
+  app.use(express.compress());
+  app.use(express.static(config.root + '/public'));
+  app.set('port', config.port);
+  app.set('views', config.root + '/app/views');
+  app.set('view engine', 'jade');
+  //app.use(express.favicon(config.root + '/public/img/favicon.ico'));
+
+  app.use(express.logger('dev'));
+
+  app.use(express.bodyParser());
+  app.use(express.methodOverride());
+
+  app.use(express.cookieParser('your secret here'));
+  app.use(express.session());
+
+  app.use(passport.initialize());
+  app.use(passport.session());
+
+  app.use(token.authorize);
+
+  app.use(app.router);
+  app.use(function(req, res) {
+    res.status(404).render('404', { title: '404' });
+  });
+});
+
+var site = require('./app/controllers/site'),
+//twitch = require('../app/controllers/twitch'),
+  refresh = require('./app/controllers/refresh');
+app.get('/', site.index);
+app.get('/api', site.api);
+app.get('/refresh', refresh.index);
+//app.get('/twitch/:channel', twitch.view);
+
+app.get('/l', function (req, res) {
+  res.render('login', { user: req.user });
+});
+
+app.post('/l', passport.authenticate('local'), function (req, res) {
+  res.redirect('/');
+});
 
 app.listen(config.port);
 console.log('Listening on port: ' + config.port);

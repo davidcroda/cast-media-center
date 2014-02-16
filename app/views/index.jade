@@ -1,0 +1,8 @@
+extends layout
+
+block content
+  div#video-container
+    each video in videos
+        .video.col-md-3(data-url=video.sources[0], data-img=video.thumbnailLarge)
+          img.img-thumbnail(src=video.thumbnailSmall)
+          .video-title= video.name

@@ -6,8 +6,9 @@ var mongoose = require('mongoose'),
 var VideoSchema = new Schema({
     name: String,
     path: String,
-    url: String,
-    thumbnail: String,
+    sources: [String],
+    thumbnailSmall: String,
+    thumbnailLarge: String,
     watched: Boolean
 });
 

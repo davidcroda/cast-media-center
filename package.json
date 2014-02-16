@@ -10,7 +10,10 @@
     "jade": "~0.34.0",
     "mongoose": "~3.6.14",
     "fluent-ffmpeg": "~1.5.2",
-    "crypto-js": "~3.1.2-2"
+    "crypto-js": "~3.1.2-2",
+    "passport-local-mongoose": "~0.2.5",
+    "passport": "~0.2.0",
+    "passport-local": "~0.1.6"
   },
   "devDependencies": {
     "grunt": "~0.4.1",
