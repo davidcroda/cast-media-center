@@ -10,7 +10,7 @@ var mongoose = require('mongoose'),
     };
 
 exports.index = function (req, res) {
-    //Video.collection.drop();
+    Video.collection.drop();
     indexDir(config.indexPath);
     res.redirect(302, '/');
 };
