@@ -57,16 +57,16 @@ app.configure(function () {
 var site = require('./app/controllers/site'),
 //twitch = require('../app/controllers/twitch'),
   refresh = require('./app/controllers/refresh');
-app.get('/', site.index);
+app.get('/login', site.index);
 app.get('/api', site.api);
 app.get('/refresh', refresh.index);
 //app.get('/twitch/:channel', twitch.view);
 
-app.get('/l', function (req, res) {
+app.get('/login', function (req, res) {
   res.render('login', { user: req.user });
 });
 
-app.get('/test', function (req, res) {
+app.get('/register', function (req, res) {
   User.collection.drop();
   User.register(new User({
     username: 'dave'
