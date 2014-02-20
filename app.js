@@ -5,7 +5,8 @@ var express = require('express'),
   LocalStrategy = require('passport-local').Strategy,
   User = require('./app/models/user'),
   config = require('./config/config'),
-  token = require(config.root + '/app/middleware/token');
+  token = require(config.root + '/app/middleware/token'),
+  Inotify = require('inotify').Inotify;
 
 mongoose.connect(config.db);
 var db = mongoose.connection;
@@ -84,6 +85,16 @@ app.post('/login', passport.authenticate('local'), function (req, res) {
 //        res.redirect('/');
 //    });
 //});
+
+var inotify = new Inotify();
+
+var home_dir = {
+  path: config.indexPath, // <--- change this for a valid directory in your machine.
+  watch_for: Inotify.IN_ALL_EVENTS,
+  callback:  refresh.callback
+};
+
+var home_watch_descriptor = inotify.addWatch(home_dir);
 
 app.listen(config.port);
 console.log('Listening on port: ' + config.port);

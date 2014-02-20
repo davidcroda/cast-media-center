@@ -1,5 +1,6 @@
 var mongoose = require('mongoose'),
-    Video = mongoose.model('Video');
+    Video = mongoose.model('Video'),
+    fs = require('fs');
 
 exports.index = function (req, res) {
     Video.find(function (err, videos) {
@@ -21,15 +22,19 @@ exports.api = function(req, res) {
 };
 
 exports.delete = function(req, res) {
+  console.log(req.params);
   if(req.params.id) {
+    console.log('delete ' + req.params.id);
     Video.find({
-      id: req.params.id
+      _id: req.params.id
     }, function(err, videos) {
+      console.log(videos);
       if(err) throw err;
       for(var i in videos) {
         fs.unlink(videos[i].path, function(err) {
-          if(err) throw err;
-          videos[i].delete();
+          if(err) console.log(err);
+          videos[i].remove();
+          res.send(200);
         });
       }
     });

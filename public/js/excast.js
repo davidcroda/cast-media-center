@@ -86,14 +86,17 @@
         itemSelector: '.video',
         layoutMode: 'fitRows'
       });
-      return $(".delete-link").click(function(ev) {
+      return $(".delete-icon").click(function(ev) {
         var video,
           _this = this;
         if (confirm("Are you sure you want to delete this video?")) {
-          video = $(ev).parent();
-          return $["delete"]('/delete/' + video.attr('data-id'), function() {
-            video.remove();
-            return $('#video-container').isotope('layout');
+          video = $(ev.currentTarget).parent();
+          return $.ajax('/delete/' + video.attr('data-id').replace(/"/g, ''), {
+            type: 'delete',
+            success: function() {
+              video.hide();
+              return $('#video-container').isotope('layout');
+            }
           });
         }
       });
