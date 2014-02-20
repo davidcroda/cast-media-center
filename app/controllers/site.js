@@ -18,4 +18,20 @@ exports.api = function(req, res) {
             videos: videos
         });
     });
-}
+};
+
+exports.delete = function(req, res) {
+  if(req.params.id) {
+    Video.find({
+      id: req.params.id
+    }, function(err, videos) {
+      if(err) throw err;
+      for(var i in videos) {
+        fs.unlink(videos[i].path, function(err) {
+          if(err) throw err;
+          videos[i].delete();
+        });
+      }
+    });
+  }
+};

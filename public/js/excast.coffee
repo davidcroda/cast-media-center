@@ -49,6 +49,14 @@ class Excast
       itemSelector: '.video',
       layoutMode: 'fitRows'
 
+    $(".delete-link").click (ev) ->
+      if confirm "Are you sure you want to delete this video?"
+        video = $(ev).parent()
+        $.delete '/delete/' + video.attr('data-id'), ()=>
+          video.remove()
+          $('#video-container').isotope 'layout'
+
+
   #playback functions
 
   loadMedia: (title, url, thumb) =>

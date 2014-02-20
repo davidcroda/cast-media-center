@@ -82,9 +82,20 @@
         });
         return $('#video-container').isotope('layout');
       });
-      return $('#video-container').isotope({
+      $('#video-container').isotope({
         itemSelector: '.video',
         layoutMode: 'fitRows'
+      });
+      return $(".delete-link").click(function(ev) {
+        var video,
+          _this = this;
+        if (confirm("Are you sure you want to delete this video?")) {
+          video = $(ev).parent();
+          return $["delete"]('/delete/' + video.attr('data-id'), function() {
+            video.remove();
+            return $('#video-container').isotope('layout');
+          });
+        }
       });
     };
 

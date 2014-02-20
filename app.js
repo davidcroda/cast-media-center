@@ -59,6 +59,7 @@ var site = require('./app/controllers/site'),
   refresh = require('./app/controllers/refresh');
 app.get('/', site.index);
 app.get('/api', site.api);
+app.delete('/delete/:id', site.delete);
 app.get('/refresh', refresh.index);
 //app.get('/twitch/:channel', twitch.view);
 

@@ -3,6 +3,8 @@ extends layout
 block content
   div#video-container
     each video in videos
-        .video.col-md-3(data-url=video.sources[0], data-img=video.thumbnailLarge)
+        .video.col-md-3(data-url=video.sources[0], data-img=video.thumbnailLarge, data-id=video._id)
           img.img-thumbnail(src=video.thumbnailSmall)
+          .delete-icon
+            i.glyphicon-trash
           .video-title= video.name
