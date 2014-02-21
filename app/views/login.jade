@@ -8,6 +8,12 @@ block content
         .form-group
           label(for="username") Username
           input#username.form-control(type="text",name="username")
+          br
           label(for="password") Password
           input#password.form-control(type="password",name="password")
+          br
+          label.checkbox(for="remember_me")
+            input#remember-me(type="checkbox",name="remember_me",checked="checked")
+            span Remember Me
+          br
           input.form-control.btn.btn-primary.submit(type="submit")
