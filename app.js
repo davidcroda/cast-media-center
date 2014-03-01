@@ -2,8 +2,7 @@ var express = require('express'),
   mongoose = require('mongoose'),
   fs = require('fs'),
   passport = require('passport'),
-  config = require('./config/config'),
-  watch = require('node-watch');
+  config = require('./config/config');
 
 mongoose.connect(config.db);
 var db = mongoose.connection;
@@ -22,6 +21,10 @@ var app = express();
 
 require('./config/middleware')(app, config);
 require('./config/routes')(app);
+
+var refresh = require('./app/controllers/refresh');
+
+refresh.TIMEOUT = setTimeout(refresh.refresh, refresh.POLL_INTERVAL);
 
 app.listen(config.port);
 console.log('Listening on port: ' + config.port);

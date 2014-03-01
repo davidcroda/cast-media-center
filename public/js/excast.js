@@ -57,7 +57,18 @@
         thumbnail = $(this).find('img.img-thumbnail').attr('src');
         excast.loadMedia(title, url, thumbnail);
         $('.video').each(function() {
-          return $(_this).removeClass('active');
+          return $(_this).removeClass('playing');
+        });
+        return $(this).addClass('playing');
+      });
+      $('.video').bind('click', function() {
+        var thumbnail, title, url;
+        console.log(this);
+        title = $(this).find('.video-title').html();
+        url = $(this).attr('data-url');
+        thumbnail = $(this).find('img.img-thumbnail').attr('src');
+        $('.video').each(function() {
+          return $(this).removeClass('active');
         });
         return $(this).addClass('active');
       });

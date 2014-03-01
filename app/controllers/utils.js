@@ -1,6 +1,6 @@
 var Token = require('../models/token');
 
-exports.generateToken = function(len, userId, next) {
+exports.generateToken = function (len, userId, next) {
   var token = require('crypto').randomBytes(len, function (ex, buff) {
     token = buff.toString('hex');
     console.log("Generated Token: " + token);
@@ -8,7 +8,7 @@ exports.generateToken = function(len, userId, next) {
       userId: userId,
       token: token
     });
-    tokenRecord.save(function(err) {
+    tokenRecord.save(function (err) {
       if (err) return next(err);
       return next(null, token);
     });

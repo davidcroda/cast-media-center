@@ -25,6 +25,15 @@ class Excast
       thumbnail = $(this).find('img.img-thumbnail').attr 'src'
       excast.loadMedia title, url, thumbnail
       $('.video').each =>
+        $(this).removeClass 'playing'
+      $(this).addClass 'playing'
+
+    $('.video').bind 'click', ->
+      console.log(this)
+      title = $(this).find('.video-title').html()
+      url = $(this).attr 'data-url'
+      thumbnail = $(this).find('img.img-thumbnail').attr 'src'
+      $('.video').each ->
         $(this).removeClass 'active'
       $(this).addClass 'active'
 
