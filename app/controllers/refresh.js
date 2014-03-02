@@ -40,13 +40,13 @@ exports.refresh = function () {
     FILES = files;
 
     processFiles(function () {
-      var diff = Date.now() - lastUpdate;
-      exports.TIMEOUT = setTimeout(exports.refresh, calculateTimeout(exports.POLL_INTERVAL, diff));
+      exports.TIMEOUT = setTimeout(exports.refresh, calculateTimeout(exports.POLL_INTERVAL));
     });
   });
 };
 
-function calculateTimeout(interval, diff) {
+function calculateTimeout(interval) {
+  var diff = Date.now() - last_update;
   if(diff > (60 * 30)) {
     return interval * 72; //6 hours
   }
