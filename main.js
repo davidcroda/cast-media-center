@@ -2,6 +2,6 @@
 
 require.config({
   paths: {
-    jquery: ''
+    jquery: 'libs/jquery/'
   }
 })
