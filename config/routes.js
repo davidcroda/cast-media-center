@@ -1,12 +1,15 @@
 var site = require('../app/controllers/site'),
+  api = require('../app/controllers/api'),
 //twitch = require('../app/controllers/twitch'),
   refresh = require('../app/controllers/refresh'),
   passport = require('passport');
 
 module.exports = function(app) {
-  app.get('/', site.index);
-  app.get('/api', site.api);
-  app.delete('/delete/:id', site.delete);
+  app.get('/video', api.index);
+  app.get('/video/:id', api.get);
+  app.delete('/video/:id', api.delete);
+  app.post('/video', api.update);
+
   app.get('/refresh', refresh.index);
 //app.get('/twitch/:channel', twitch.view);
 

@@ -24,7 +24,7 @@ var lastUpdate = 0;
 var FILES = [];
 
 exports.index = function (req, res) {
-  if(req.query.debug) {
+  if(typeof req.query.debug != "undefined") {
     Video.collection.drop();
   }
 
@@ -46,7 +46,7 @@ exports.refresh = function () {
 };
 
 function calculateTimeout(interval) {
-  var diff = Date.now() - last_update;
+  var diff = Date.now() - lastUpdate;
   if(diff > (60 * 30)) {
     return interval * 72; //6 hours
   }
@@ -105,7 +105,7 @@ function extractVideo(archive, index) {
 
 function createVideoRecord(file) {
   var fileRecord = new Video({
-    name: path.basename(file),
+    title: path.basename(file),
     path: file,
     sources: [config.urlBase + path.relative(config.indexPath, file)]
   });
