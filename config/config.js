@@ -10,9 +10,9 @@ var config = {
     },
     port: process.env.PORT || 3000,
     db: process.env.DATABASE_URL || "mongodb://localhost/excast-development",
-    indexPath: process.env.DATABASE_URL || '/home/dave/ftp/torrents/downloads/',
-    thumbnailPath: process.env.THUMBNAIL_PATH || '/home/dave/ftp//www/thefreeman.montauk.seedboxes.cc/thumbnails/',
-    thumbnailUrl: process.env.THUMBNAIL_URL || 'http://thefreeman.montauk.seedboxes.cc/thumbnails/',
+    indexPath: process.env.DATABASE_URL || path.join('D:','tv'),
+    thumbnailPath: process.env.THUMBNAIL_PATH || 'D:/tv/thumbnails',
+    thumbnailUrl: process.env.THUMBNAIL_URL || 'http://localhost/thumbnails/',
     urlBase: process.env.URL_BASE
   },
 

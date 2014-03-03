@@ -9,15 +9,17 @@
 <body>
     <div style="display:none">
         <script type="text/template" id="video_template">
-            <% videos.forEach(function(video) {
-                var videoClass = (video.get('selected'))?"active":"";
-            %>
-                <div class="video col-md-3 <%- videoClass %>" data-id="<%= video.id %>">
-                    <img class="img-thumbnail" src="<%- video.get('thumbnailSmall') %>" />
-                    <div class="delete-icon"><i class="glyphicon glyphicon-trash"></i></div>
-                    <div class="video-title"><%- video.get('title') %></div>
-                </div>
-            <% }); %>
+            <div class="row" id="video-container">
+                <% videos.forEach(function(video) {
+                    var videoClass = (video.get('selected'))?"active":"";
+                %>
+                    <div class="video col-md-3 <%- videoClass %>" data-id="<%= video.id %>">
+                        <img class="img-thumbnail" src="<%- video.get('thumbnailSmall') %>" />
+                        <div class="delete-icon"><i class="glyphicon glyphicon-trash"></i></div>
+                        <div class="video-title"><%- video.get('title') %></div>
+                    </div>
+                <% }); %>
+            </div>
         </script>
     </div>
     <div class="container-fluid">

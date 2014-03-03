@@ -48,30 +48,6 @@
       this.play.bind('click', this.playMedia);
       this.stop = $('#stop');
       this.stop.bind('click', this.stopMedia);
-      $('.video').bind('dblclick', function() {
-        var thumbnail, title, url,
-          _this = this;
-        console.log(this);
-        title = $(this).find('.video-title').html();
-        url = $(this).attr('data-url');
-        thumbnail = $(this).find('img.img-thumbnail').attr('src');
-        excast.loadMedia(title, url, thumbnail);
-        $('.video').each(function() {
-          return $(_this).removeClass('playing');
-        });
-        return $(this).addClass('playing');
-      });
-      $('.video').bind('click', function() {
-        var thumbnail, title, url;
-        console.log(this);
-        title = $(this).find('.video-title').html();
-        url = $(this).attr('data-url');
-        thumbnail = $(this).find('img.img-thumbnail').attr('src');
-        $('.video').each(function() {
-          return $(this).removeClass('active');
-        });
-        return $(this).addClass('active');
-      });
       $('.progress').bind('click', function(ev) {
         var percent, width, x;
         x = ev.offsetX;
@@ -91,25 +67,11 @@
             return item.parents('.col-md-3').hide();
           }
         });
-        return $('#video-container').isotope('layout');
+        return $('#video-container').isotope('reLayout');
       });
-      $('#video-container').isotope({
+      return $('#video-container').isotope({
         itemSelector: '.video',
         layoutMode: 'fitRows'
-      });
-      return $(".delete-icon").click(function(ev) {
-        var video,
-          _this = this;
-        if (confirm("Are you sure you want to delete this video?")) {
-          video = $(ev.currentTarget).parent();
-          return $.ajax('/delete/' + video.attr('data-id').replace(/"/g, ''), {
-            type: 'delete',
-            success: function() {
-              video.hide();
-              return $('#video-container').isotope('layout');
-            }
-          });
-        }
       });
     };
 
@@ -321,10 +283,7 @@
 
   })();
 
-  $(function() {
-    var excast;
-    return excast = new Excast();
-  });
+  define(new Excast());
 
 }).call(this);
 

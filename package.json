@@ -14,7 +14,6 @@
     "passport-local-mongoose": "~0.2.5",
     "passport": "~0.2.0",
     "passport-local": "~0.1.6",
-    "node-watch": "~0.3.4",
     "passport-remember-me": "0.0.1",
     "recursive-readdir": "0.0.2",
     "rarfile": "~0.2.1-3"

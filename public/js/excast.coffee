@@ -18,25 +18,6 @@ class Excast
     @stop = $('#stop')
     @stop.bind 'click', @stopMedia
 
-    $('.video').bind 'dblclick', ->
-      console.log(this)
-      title = $(this).find('.video-title').html()
-      url = $(this).attr 'data-url'
-      thumbnail = $(this).find('img.img-thumbnail').attr 'src'
-      excast.loadMedia title, url, thumbnail
-      $('.video').each =>
-        $(this).removeClass 'playing'
-      $(this).addClass 'playing'
-
-    $('.video').bind 'click', ->
-      console.log(this)
-      title = $(this).find('.video-title').html()
-      url = $(this).attr 'data-url'
-      thumbnail = $(this).find('img.img-thumbnail').attr 'src'
-      $('.video').each ->
-        $(this).removeClass 'active'
-      $(this).addClass 'active'
-
     $('.progress').bind 'click', (ev) ->
       x = ev.offsetX
       width = $(this).width()
@@ -52,20 +33,11 @@ class Excast
           item.parents('.col-md-3').show()
         else
           item.parents('.col-md-3').hide()
-      $('#video-container').isotope 'layout'
+      $('#video-container').isotope 'reLayout'
 
     $('#video-container').isotope
       itemSelector: '.video',
       layoutMode: 'fitRows'
-
-    $(".delete-icon").click (ev) ->
-      if confirm "Are you sure you want to delete this video?"
-        video = $(ev.currentTarget).parent()
-        $.ajax '/delete/' + video.attr('data-id').replace(/"/g,''),
-          type: 'delete',
-          success: () =>
-            video.hide()
-            $('#video-container').isotope 'layout'
 
 
   #playback functions
@@ -243,5 +215,5 @@ class Excast
   onRequestSessionError: (e) ->
     console.log "Launch error: ",e
 
-$ ->
-  excast = new Excast()
+
+define(new Excast())
