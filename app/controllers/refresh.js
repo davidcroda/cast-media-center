@@ -34,6 +34,7 @@ exports.index = function (req, res) {
 
 exports.refresh = function () {
   clearTimeout(exports.TIMEOUT);
+
   readdir(config.indexPath, function (err, files) {
     if (err) console.log("Error: ", err);
 
@@ -112,10 +113,12 @@ function createVideoRecord(file) {
   console.log("Creating Video record for ", file);
   for (var size in sizes) {
     console.log("Creating Thumbnail size: " + sizes[size]);
-    generateThumbnail(fileRecord, size, sizes[size], function (err, sizeName, url) {
+    generateThumbnail(fileRecord, size, sizes[size], function (err, sizeName, url, audio, video) {
       if (!err) {
         console.log('Thumbnail created ' + sizeName + ' thumbnail at ' + url);
         fileRecord['thumbnail' + sizeName] = url;
+        fileRecord['audio'] = audio;
+        fileRecord['video'] = video;
         fileRecord.save(function (err) {
           if (err)
             console.log("Error: " + err);
@@ -128,10 +131,18 @@ function createVideoRecord(file) {
 }
 
 function generateThumbnail(file, sizeName, size, cb) {
-  var proc = new ffmpeg({
-    source: file.path
-  })
+  var audio = "",
+      video = "";
+    new ffmpeg({
+      source: file.path
+    })
     .withSize(size)
+    .onCodecData(function(data) {
+      console.log(data);
+      sys.exit(0);
+      audio = data.audio;
+      video = data.video;
+    })
     .takeScreenshots({
       count: 1,
       filename: "%b-%w-%h"
@@ -141,7 +152,7 @@ function generateThumbnail(file, sizeName, size, cb) {
         console.log(err);
         cb(err, null);
       } else {
-        cb(null, sizeName, config.thumbnailUrl + filenames[0]);
+        cb(null, sizeName, config.thumbnailUrl + filenames[0], audio, video);
       }
     });
 }
