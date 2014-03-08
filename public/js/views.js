@@ -1,6 +1,11 @@
 var views = {
   VideoView: Backbone.View.extend({
-    initialize: function() {
+    initialize: function(options) {
+      this.excast = options.excast;
+      this.sort = "-date";
+      this.listenTo(this.collection, 'sync', function() {
+        this.render();
+      });
       this.render();
       $('#video-container').isotope({
         filter: '.video',
@@ -8,12 +13,32 @@ var views = {
       });
     },
     render: function() {
-      var template = _.template($("#video_template").html(), {videos: this.collection});
-      this.$el.html(template);
+      var navTemplate = _.template($("#video_nav").html(), {
+        current: this.sort,
+        sorts: [
+          {
+            title: "Date",
+            value: "-date"
+          },
+          {
+            title: "Title",
+            value: "+title"
+          }
+        ]
+      });
+      var videoTemplate = _.template($("#video_template").html(), {videos: this.collection});
+      this.$el.html(navTemplate + videoTemplate);
     },
     events: {
-      'dblclick .video': 'selectVideo',
+      'change .video-nav select':'sortVideo',
+      'click .video': 'selectVideo',
+      'dblclick .video': 'playVideo',
       'click .delete-icon': 'deleteVideo'
+    },
+    sortVideo: function(ev) {
+      var $el = $(ev.currentTarget);
+      this.sort = $el.val();
+      this.trigger('sort',this.sort);
     },
     deleteVideo: function(ev) {
       var video = $(ev.currentTarget).parent('.video'),
@@ -28,18 +53,19 @@ var views = {
       }
     },
     selectVideo: function(ev) {
+      $('.video').removeClass('highlight').removeClass('active');
+      $(ev.currentTarget).addClass('highlight');
+    },
+    playVideo: function(ev) {
+      $('.video').removeClass('highlight').removeClass('active');
       var id = $(ev.currentTarget).attr('data-id');
-      $('.video').removeClass('active');
       this.collection.forEach(function(video, i) {
         if(video.id != id)
           video.set('selected', false);
       });
       var video = this.collection.get(id);
-      video.set('selected',!video.get('selected'));
-      if(video.get('selected')) {
-        $(ev.currentTarget).addClass('active');
-        excast.loadMedia(video.get('title'),video.get('sources')[0],video.get('thumbnailLarge'));
-      }
+      $(ev.currentTarget).addClass('active');
+      this.excast.loadMedia(video.get('title'),video.get('sources')[0],video.get('thumbnailLarge'));
     }
   }),
   SourceView: Backbone.View.extend({
@@ -66,4 +92,5 @@ var views = {
     }
   })
 };
+
 define(views);

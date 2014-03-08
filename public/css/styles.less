@@ -1,19 +1,26 @@
+@import "../components/bootstrap/less/variables";
+
 .padded {
   padding: 10px;
 }
+
 .controls {
   font-size: 2em;
 }
+
 .disabled {
   color: grey;
 }
+
 .disabled a {
   color: grey;
 }
+
 .progress {
   margin-top: 20px;
   border: solid 1px black;
 }
+
 .loading {
   display: none;
   position: absolute;
@@ -26,14 +33,17 @@
   background-color: white;
   box-shadow: 3px 3px 2px black;
 }
+
 .thumbnail {
   width: 100px;
 }
+
 .video {
   text-align: center;
   height: 300px;
   padding: 10px;
 }
+
 .video .delete-icon {
   display: none;
   position: absolute;
@@ -44,29 +54,36 @@
   font-size: 20px;
   color: indianred;
 }
+
 .video:hover .delete-icon {
   display: block;
 }
-.video.active {
-  background-color: #428bca;
+
+.video {
+  &.active {
+    background-color: @brand-primary;
+  }
+
+  &.highlight {
+    background-color: lighten(@brand-primary, 20%);
+  }
 }
-.video.highlight {
-  background-color: #92bce0;
-}
+
 .video-nav {
   margin: 10px 0px;
-}
-.video-nav ul {
-  margin: 0;
-  padding: 0;
-}
-.video-nav ul li {
-  display: inline;
-  list-style: none;
-}
-.video-nav ul li .asc:before {
-  content: "<";
-}
-.video-nav ul li .desc:before {
-  content: ">";
+
+  ul {
+    margin: 0;
+    padding: 0;
+    li {
+      display: inline;
+      list-style: none;
+      .asc:before {
+        content: "<";
+      }
+      .desc:before {
+        content: ">";
+      }
+    }
+  }
 }

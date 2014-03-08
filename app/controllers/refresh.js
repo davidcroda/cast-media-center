@@ -105,9 +105,11 @@ function extractVideo(archive, index) {
 }
 
 function createVideoRecord(file) {
+  var stat = fs.statSync(file);
   var fileRecord = new Video({
     title: path.basename(file),
     path: file,
+    date: stat.mtime,
     sources: [config.urlBase + path.relative(config.indexPath, file)]
   });
   console.log("Creating Video record for ", file);

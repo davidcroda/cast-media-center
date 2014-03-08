@@ -3,13 +3,21 @@ var models = {
     urlRoot: '/api/video',
     defaults: {
       title: '',
+      path: '',
       subtitle: '',
       duration: 0,
-      url: '',
+      sources: [],
       thumbnailSmall: '',
       thumbnailLarge: '',
+      date: '',
       selected: false
     },
+    title: String,
+    path: String,
+    duration: 0,
+    sources: [String],
+    thumbnailSmall: String,
+    thumbnailLarge: String,
     initialize: function(options) {
       this.id = options._id;
 //        this.on('change:selected',function(model, value, options) {

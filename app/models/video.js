@@ -12,13 +12,13 @@ var VideoSchema = new Schema({
   thumbnailLarge: String,
   videoCodec: String,
   audioCode: String,
+  date: Date,
   selected: Boolean,
   watched: Boolean
+}, {
+  toJSON: {
+    virtuals: true
+  }
 });
-
-VideoSchema.virtual('date')
-  .get(function () {
-    return this._id.getTimestamp();
-  });
 
 mongoose.model('Video', VideoSchema);

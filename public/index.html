@@ -41,11 +41,23 @@
                         <div class="delete-icon"><i class="glyphicon glyphicon-trash"></i></div>
                         <div class="video-title">
                             <%- video.get('title') %><br />
-                            <span class='audio-encoding'>Audio: <%= video.get('audio') %></span><br />
-                            <span class='video-encoding'>Video: <%= video.get('video') %></span>
+                            <div class='created'><%= video.get('date') %></div>
                         </div>
                     </div>
                 <% }); %>
+            </div>
+        </script>
+        <script type="text/template" id="video_nav">
+            <div class="video-nav">
+                <select>
+                    <option value="">Sort</option>
+                    <% sorts.forEach(function(sort) {
+                    console.log(current, sort);
+                        sort.selected = (current == sort.value)?"selected=selected":"";
+                    %>
+                    <option value="<%- sort.value %>" <%- sort.selected %>><%- sort.title %></option>
+                    <% }); %>
+                </select>
             </div>
         </script>
     </div>

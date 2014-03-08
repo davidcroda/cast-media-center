@@ -48,14 +48,18 @@ require([
   });
 
   var VideoList = Backbone.Collection.extend({
-    model: models.Video,
-    url: '/api/video'
+    initialize: function() {
+      this.sort = "-date";
+      this.urlBase = "/api/video?sort=";
+      this.url = this.urlBase + this.sort;
+    },
+    model: models.Video
   });
   var videos = new VideoList(),
       video_view = null;
 
   var appRouter = new Router();
-  console.log(appRouter);
+
   appRouter.on('route:index', function() {
     videos.fetch({
       success: function(collection, response, options) {
@@ -63,8 +67,13 @@ require([
           model.set('id',model.get('_id'));
         });
         video_view = new views.VideoView({
+          excast: excast,
           el: $("#content"),
           collection: collection
+        }).on('sort', function(sort) {
+            this.collection.sort = sort;
+            this.collection.url = videos.urlBase + videos.sort;
+            this.collection.fetch();
         });
       }
     });

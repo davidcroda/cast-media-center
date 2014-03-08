@@ -6,19 +6,24 @@ var mongoose = require('mongoose'),
   };
 
 exports.index = function (req, res) {
-  models[req.params.model].find(function (err, videos) {
+  if(!req.query.sort) {
+    req.query.sort = '+title';
+  }
+  models[req.params.model].find().sort(req.query.sort).exec(function (err, videos) {
     if (err) throw new Error(err);
+    videos.forEach(function(video) {
+    });
     res.json(videos);
-  }).sort('+title');
+  });
 };
 
 exports.get = function (req, res) {
   if(req.params.id) {
-    models[req.params.model].find({
-      _id: id
-    }, function (err, videos) {
+    models[req.params.model].findOne({
+      _id: req.params.id
+    }, function (err, video) {
       if (err) throw new Error(err);
-      res.json(models[req.params.model].attributes);
+      res.json(video);
     });
   } else {
     res.send(404);

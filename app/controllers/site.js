@@ -1,5 +1,6 @@
 var mongoose = require('mongoose'),
   Video = mongoose.model('Video'),
+  User = mongoose.model('User'),
   utils = require('./utils');
 
 exports.index = function (req, res) {
@@ -13,6 +14,11 @@ exports.index = function (req, res) {
 };
 
 exports.login = function (req, res) {
+//  User.register(new User({
+//    username: 'dave'
+//  }),'ironfire', function(ev) {
+//    console.log(ev);
+//  });
   res.render('login', { user: req.user });
 };
 
