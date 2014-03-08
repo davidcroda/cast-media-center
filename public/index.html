@@ -42,6 +42,8 @@
                         <div class="video-title">
                             <%- video.get('title') %><br />
                             <div class='created'><%= video.get('date') %></div>
+                            <div class='vcodec'>Video: <b><%= video.get('vcodec') %></b></div>
+                            <div class='acodec'>Audio: <b><%= video.get('acodec') %></b></div>
                         </div>
                     </div>
                 <% }); %>

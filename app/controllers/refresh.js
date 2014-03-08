@@ -5,6 +5,7 @@ var mongoose = require('mongoose'),
   readdir = require('recursive-readdir'),
   config = require('../../config/config'),
   ffmpeg = require('fluent-ffmpeg'),
+  metadata = require('fluent-ffmpeg').Metadata
   rarfile = require('rarfile').RarFile,
   sizes = {
     Small: '480x270',
@@ -106,45 +107,45 @@ function extractVideo(archive, index) {
 
 function createVideoRecord(file) {
   var stat = fs.statSync(file);
-  var fileRecord = new Video({
-    title: path.basename(file),
-    path: file,
-    date: stat.mtime,
-    sources: [config.urlBase + path.relative(config.indexPath, file)]
-  });
-  console.log("Creating Video record for ", file);
-  for (var size in sizes) {
-    console.log("Creating Thumbnail size: " + sizes[size]);
-    generateThumbnail(fileRecord, size, sizes[size], function (err, sizeName, url, audio, video) {
-      if (!err) {
-        console.log('Thumbnail created ' + sizeName + ' thumbnail at ' + url);
-        fileRecord['thumbnail' + sizeName] = url;
-        fileRecord['audio'] = audio;
-        fileRecord['video'] = video;
-        fileRecord.save(function (err) {
-          if (err)
-            console.log("Error: " + err);
-        });
-      } else {
-        console.log("Error generating thumbnail", err);
-      }
+  var metaObject = new metadata(file, function(metadata, err) {
+    if(err) throw err;
+    if(typeof metadata.audio == "undefined") {
+      console.log(metadata);
+      console.log("MISSING AUDIO FIELD");
+      sys.exit(0);
+    }
+    var fileRecord = new Video({
+      title: path.basename(file),
+      path: file,
+      date: stat.mtime,
+      sources: [config.urlBase + path.relative(config.indexPath, file)],
+      vcodec: metadata.video.codec,
+      acodec: metadata.audio.codec
     });
-  }
+    console.log("Creating Video record for ", file);
+    for (var size in sizes) {
+      console.log("Creating Thumbnail size: " + sizes[size]);
+      generateThumbnail(fileRecord, size, sizes[size], function (err, sizeName, url) {
+        if (!err) {
+          console.log('Thumbnail created ' + sizeName + ' thumbnail at ' + url);
+          fileRecord['thumbnail' + sizeName] = url;
+          fileRecord.save(function (err) {
+            if (err)
+              console.log("Error: " + err);
+          });
+        } else {
+          console.log("Error generating thumbnail", err);
+        }
+      });
+    }
+  });
 }
 
 function generateThumbnail(file, sizeName, size, cb) {
-  var audio = "",
-      video = "";
     new ffmpeg({
       source: file.path
     })
     .withSize(size)
-    .onCodecData(function(data) {
-      console.log(data);
-      sys.exit(0);
-      audio = data.audio;
-      video = data.video;
-    })
     .takeScreenshots({
       count: 1,
       filename: "%b-%w-%h"
@@ -154,7 +155,7 @@ function generateThumbnail(file, sizeName, size, cb) {
         console.log(err);
         cb(err, null);
       } else {
-        cb(null, sizeName, config.thumbnailUrl + filenames[0], audio, video);
+        cb(null, sizeName, config.thumbnailUrl + filenames[0]);
       }
     });
 }

@@ -10,8 +10,8 @@ var VideoSchema = new Schema({
   sources: [String],
   thumbnailSmall: String,
   thumbnailLarge: String,
-  videoCodec: String,
-  audioCode: String,
+  vcodec: String,
+  acodec: String,
   date: Date,
   selected: Boolean,
   watched: Boolean
