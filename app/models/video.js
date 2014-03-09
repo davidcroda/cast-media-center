@@ -13,7 +13,10 @@ var VideoSchema = new Schema({
   vcodec: String,
   acodec: String,
   date: Date,
-  selected: Boolean,
+  transcoding: {
+    type: Boolean,
+    default: false
+  },
   watched: Boolean
 }, {
   toJSON: {

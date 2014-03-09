@@ -5,8 +5,9 @@ var mongoose = require('mongoose'),
   readdir = require('recursive-readdir'),
   config = require('../../config/config'),
   ffmpeg = require('fluent-ffmpeg'),
-  metadata = require('fluent-ffmpeg').Metadata
+  metadata = require('fluent-ffmpeg').Metadata,
   rarfile = require('rarfile').RarFile,
+  transcoder = require('./transcoder'),
   sizes = {
     Small: '480x270',
     Large: '1280x720'
@@ -15,7 +16,7 @@ var mongoose = require('mongoose'),
     //"rar|001|zip": extractVideo,
     "mp4|mkv": processVideo
   },
-  videoRegex = /(mp4|mkv|x264|xvid|divx|mpeg|mpg|avi)/i;
+  videoRegex = /(mp4|mkv|xvid|divx|mpeg|mpg|avi)/i;
 
 exports.POLL_INTERVAL = 1000 * 60 * 5;
 exports.TIMEOUT = null;
@@ -58,7 +59,8 @@ function calculateTimeout(interval) {
 function processFiles(cb) {
   for(var ext in handlers) {
     FILES.forEach(function(file, index) {
-      if(file.match(videoRegex)) {
+      console.log("Processing File: ", file);
+      if(file.match(videoRegex) && !transcoder.isTranscoding(file)) {
         var re = new RegExp("\." + ext);
         if(path.extname(file).match(re)) {
           handlers[ext](file, index);

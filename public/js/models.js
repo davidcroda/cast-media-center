@@ -12,14 +12,19 @@ var models = {
       vcodec: '',
       acodec: '',
       date: '',
-      selected: false
+      transcoding: false
     },
     title: String,
     path: String,
-    duration: 0,
+    subtitle: String,
+    duration: Number,
     sources: [String],
     thumbnailSmall: String,
     thumbnailLarge: String,
+    vcodec: String,
+    acodec: String,
+    date: Date,
+    transcoding: Boolean,
     initialize: function(options) {
       this.id = options._id;
 //        this.on('change:selected',function(model, value, options) {

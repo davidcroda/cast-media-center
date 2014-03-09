@@ -6,11 +6,6 @@ var views = {
       this.listenTo(this.collection, 'sync', function() {
         this.render();
       });
-      this.render();
-      $('#video-container').isotope({
-        filter: '.video',
-        layout: 'fitRows'
-      });
     },
     render: function() {
       var navTemplate = _.template($("#video_nav").html(), {
@@ -27,7 +22,20 @@ var views = {
         ]
       });
       var videoTemplate = _.template($("#video_template").html(), {videos: this.collection});
+      var _this = this;
       this.$el.html(navTemplate + videoTemplate);
+      $('.transcoding').each(function(index, el) {
+        console.log('checking transcode progress');
+        var id = $(el).data('id');
+        var video = _this.collection.get(id);
+        _this.excast.transcodeVideo(video, el);
+      });
+      this.$el.ready(function() {
+        $('#video-container').isotope({
+          filter: '.video',
+          layout: 'fitRows'
+        });
+      });
     },
     events: {
       'change .video-nav select':'sortVideo',
@@ -59,10 +67,6 @@ var views = {
     playVideo: function(ev) {
       $('.video').removeClass('highlight').removeClass('active');
       var id = $(ev.currentTarget).attr('data-id');
-      this.collection.forEach(function(video, i) {
-        if(video.id != id)
-          video.set('selected', false);
-      });
       var video = this.collection.get(id);
       this.excast.loadMedia(video, ev.currentTarget);
     }

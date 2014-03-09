@@ -4,18 +4,6 @@
     __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
 
   Excast = (function() {
-    Excast.init = false;
-
-    Excast.appSession = null;
-
-    Excast.mediaSession = null;
-
-    Excast.queue = null;
-
-    Excast.timer = null;
-
-    Excast.currentTime = 0;
-
     function Excast() {
       this.onRequestSessionSuccess = __bind(this.onRequestSessionSuccess, this);
       this.loadApp = __bind(this.loadApp, this);
@@ -37,6 +25,13 @@
       this.checkMedia = __bind(this.checkMedia, this);
       this.transcodeVideo = __bind(this.transcodeVideo, this);
       this.bindControls = __bind(this.bindControls, this);
+      this.init = false;
+      this.appSession = null;
+      this.mediaSession = null;
+      this.queue = null;
+      this.timer = null;
+      this.currentTime = 0;
+      this.timeouts = {};
       if (!chrome.cast || !chrome.cast.isAvailable) {
         setTimeout(this.initializeCastApi, 1000);
       }
@@ -79,14 +74,15 @@
 
     Excast.prototype.transcodeVideo = function(video, el) {
       var _this = this;
-      _this = this;
+      $(el).addClass('transcoding');
       return $.post('/api/video/' + video.get('id'), function(data) {
         var percent;
         percent = data.progress * 100;
         $(el).find('.overlay').css({
           width: percent + "%"
         });
-        return setTimeout(function() {
+        clearTimeout(_this.timeouts[video.get('path')]);
+        return _this.timeouts[video.get('path')] = setTimeout(function() {
           return _this.transcodeVideo(video, el);
         }, 15000);
       });
@@ -94,7 +90,6 @@
 
     Excast.prototype.checkMedia = function(video, el) {
       if (video.get('vcodec') !== 'h264' || video.get('acodec') !== 'aac') {
-        $(el).addClass('transcoding');
         this.transcodeVideo(video, el);
         return false;
       } else {

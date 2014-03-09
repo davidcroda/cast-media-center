@@ -1,13 +1,13 @@
 class Excast
 
-  @init = false
-  @appSession = null
-  @mediaSession = null
-  @queue = null
-  @timer = null
-  @currentTime = 0
-
   constructor: ()->
+    @init = false
+    @appSession = null
+    @mediaSession = null
+    @queue = null
+    @timer = null
+    @currentTime = 0
+    @timeouts = {}
     if !chrome.cast || !chrome.cast.isAvailable
       setTimeout @initializeCastApi, 1000
 
@@ -43,20 +43,20 @@ class Excast
   #playback functions
 
   transcodeVideo: (video, el) =>
-    _this = this
+    $(el).addClass('transcoding');
     $.post '/api/video/' + video.get('id'), (data)=>
       percent = data.progress * 100;
       $(el).find('.overlay').css({
         width: percent + "%"
       });
-      setTimeout(()=>
-        _this.transcodeVideo(video, el);
+      clearTimeout(@timeouts[video.get('path')]);
+      @timeouts[video.get('path')] = setTimeout(()=>
+        @transcodeVideo(video, el);
       , 15000)
 
   checkMedia: (video, el) =>
     if video.get('vcodec') != 'h264' || video.get('acodec') != 'aac'
-      $(el).addClass('transcoding');
-      this.transcodeVideo(video, el);
+      @transcodeVideo(video, el);
       return false;
     else
       $(el).addClass('active');
@@ -64,7 +64,7 @@ class Excast
     return video
 
   loadMedia: (video, el) =>
-    video = this.checkMedia(video, el)
+    video = @checkMedia(video, el)
 
     if video
       title = video.get('title')
