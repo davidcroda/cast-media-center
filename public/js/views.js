@@ -30,7 +30,7 @@ var views = {
         var video = _this.collection.get(id);
         _this.excast.transcodeVideo(video, el);
       });
-      this.$el.ready(function() {
+      $(document).ready(function() {
         $('#video-container').isotope({
           filter: '.video',
           layout: 'fitRows'
