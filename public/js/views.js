@@ -65,7 +65,8 @@ var views = {
       });
       var video = this.collection.get(id);
       $(ev.currentTarget).addClass('active');
-      this.excast.loadMedia(video.get('title'),video.get('sources')[0],video.get('thumbnailLarge'));
+
+      this.excast.loadMedia(video);
     }
   }),
   SourceView: Backbone.View.extend({

@@ -34,6 +34,8 @@
       this.seekMedia = __bind(this.seekMedia, this);
       this.playMedia = __bind(this.playMedia, this);
       this.loadMedia = __bind(this.loadMedia, this);
+      this.checkMedia = __bind(this.checkMedia, this);
+      this.transcodeVideo = __bind(this.transcodeVideo, this);
       this.bindControls = __bind(this.bindControls, this);
       if (!chrome.cast || !chrome.cast.isAvailable) {
         setTimeout(this.initializeCastApi, 1000);
@@ -75,9 +77,26 @@
       });
     };
 
-    Excast.prototype.loadMedia = function(title, url, thumb) {
-      var mediaInfo, request,
+    Excast.prototype.transcodeVideo = function(video) {
+      return '/api/video/' + video.get('id');
+    };
+
+    Excast.prototype.checkMedia = function(video) {
+      if (video.get('vcodec') !== 'h264' || video.get('acodec') !== 'aac') {
+        video.set('url', this.transcodeVideo(video));
+      } else {
+        video.set('url', video.get('sources')[0]);
+      }
+      return video;
+    };
+
+    Excast.prototype.loadMedia = function(video) {
+      var mediaInfo, request, thumb, title, url,
         _this = this;
+      video = this.checkMedia(video);
+      title = video.get('title');
+      url = video.get('url');
+      thumb = video.get('thumb');
       console.log("loadMedia: ", title, url, thumb);
       if (!this.appSession) {
         this.loadApp(function() {

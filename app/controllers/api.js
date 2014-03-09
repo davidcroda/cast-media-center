@@ -1,5 +1,6 @@
 var mongoose = require('mongoose'),
   fs = require('fs'),
+  Transcoder = require('../../lib/transcoder'),
   models = {
     video: mongoose.model('Video'),
     source: mongoose.model('Source')
@@ -22,13 +23,64 @@ exports.get = function (req, res) {
     models[req.params.model].findOne({
       _id: req.params.id
     }, function (err, video) {
-      if (err) throw new Error(err);
-      res.json(video);
+      if (err) throw err;
+      if(req.params.model == 'video') {
+        streamVideo(res, video);
+      } else {
+        res.json(video);
+      }
     });
   } else {
     res.send(404);
   }
 };
+
+function streamVideo(res, video) {
+  res.writeHead(200, {
+    'Content-Type': 'video/mp4'
+  });
+
+  var buffer = new require('stream').Duplex();
+  buffer.data = "";
+  buffer.size = 0;
+  buffer.minSize = 100000;
+  buffer._write = function(chunk, enc, next) {
+    console.log("Received Chunk: Enc: " + enc + ", Length: " + chunk.length);
+    buffer.data +=chunk;
+    buffer.size += chunk.length;
+    if(buffer.size > buffer.minSize) {
+      console.log("Buffer reached minSize. Sending...");
+      buffer.pipe(res);
+      buffer.data = "";
+      buffer.size = 0;
+      //res.end();
+    }
+    next();
+  };
+  buffer._read = function(len) {
+    return buffer.data;
+  };
+  var stream = fs.createReadStream(video.get('path'));
+  var transcoder = new Transcoder(stream);
+  transcoder
+    .videoCodec('libx264')
+    .audioCodec('libfdk_aac')
+    .channels(2)
+    .format('mp4')
+    .on('finish', function() {
+      console.log("ffmpeg process finished");
+    })
+    .stream()
+    .pipe(res).on('close',function() {
+      transcoder.kill("SIGKILL");
+    });
+
+  buffer.on('data', function(chunk) {
+    console.log("onData: Received Chunk Length: " + chunk.length);
+  }).on('error', function(err) {
+    console.log(err);
+  });
+}
 
 exports.delete = function (req, res) {
   if (req.params.id) {

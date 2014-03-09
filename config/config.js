@@ -16,7 +16,7 @@ var config = {
     urlBase: process.env.URL_BASE
   },
 
-  staging: {
+  VM: {
     root: rootPath,
     app: {
       name: 'excast'
@@ -26,7 +26,7 @@ var config = {
     indexPath: process.env.INDEX_PATH || '/home/dave/mount/torrents/downloads/',
     thumbnailPath: process.env.THUMBNAIL_PATH || '/home/dave/mount/www/thefreeman.montauk.seedboxes.cc/thumbnails/',
     thumbnailUrl: process.env.THUMBNAIL_URL || 'http://thefreeman.montauk.seedboxes.cc/thumbnails/',
-    urlBase: process.env.URL_BASE
+    urlBase: process.env.URL_BASE || "http://thefreeman:ironfire@montauk.seedboxes.cc/thefreeman/downloads/"
   },
 
   test: {

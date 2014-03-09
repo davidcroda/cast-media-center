@@ -42,7 +42,23 @@ class Excast
 
   #playback functions
 
-  loadMedia: (title, url, thumb) =>
+  transcodeVideo: (video) =>
+    return '/api/video/' + video.get('id');
+
+  checkMedia: (video) =>
+    if video.get('vcodec') != 'h264' || video.get('acodec') != 'aac'
+      video.set('url',this.transcodeVideo(video))
+    else
+      video.set('url', video.get('sources')[0])
+    return video
+
+  loadMedia: (video) =>
+    video = this.checkMedia(video)
+
+    title = video.get('title')
+    url = video.get('url')
+    thumb = video.get('thumb')
+
     console.log "loadMedia: ", title, url, thumb
     if !@appSession
       @loadApp =>

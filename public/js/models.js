@@ -9,6 +9,8 @@ var models = {
       sources: [],
       thumbnailSmall: '',
       thumbnailLarge: '',
+      vcodec: '',
+      acodec: '',
       date: '',
       selected: false
     },

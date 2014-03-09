@@ -118,7 +118,7 @@ function createVideoRecord(file) {
       title: path.basename(file),
       path: file,
       date: stat.mtime,
-      sources: [config.urlBase + path.relative(config.indexPath, file)],
+      sources: [path.join(config.urlBase, path.relative(config.indexPath, file))],
       vcodec: metadata.video.codec,
       acodec: metadata.audio.codec
     });
