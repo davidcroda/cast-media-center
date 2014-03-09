@@ -2,6 +2,7 @@ var views = {
   VideoView: Backbone.View.extend({
     initialize: function(options) {
       this.excast = options.excast;
+      this.isotope = false;
       this.sort = "-date";
       this.listenTo(this.collection, 'sync', function() {
         this.render();
@@ -31,10 +32,11 @@ var views = {
         _this.excast.transcodeVideo(video, el);
       });
       $(document).ready(function() {
-        $('#video-container').isotope({
-          filter: '.video',
-          layout: 'fitRows'
-        });
+          _this.isotope = $('#video-container');
+          _this.isotope.isotope({
+            filter: '.video',
+            layout: 'fitRows'
+          });
       });
     },
     events: {

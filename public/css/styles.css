@@ -42,6 +42,9 @@
   -o-user-select: none;
   user-select: none;
 }
+.video .img-thumbnail {
+  min-height: 220px;
+}
 .video .delete-icon {
   display: none;
   position: absolute;
