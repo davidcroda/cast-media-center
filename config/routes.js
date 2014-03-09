@@ -2,6 +2,7 @@ var site = require('../app/controllers/site'),
   api = require('../app/controllers/api'),
 //twitch = require('../app/controllers/twitch'),
   refresh = require('../app/controllers/refresh'),
+  User = mongoose.model('User'),
   passport = require('passport');
 
 module.exports = function(app) {
