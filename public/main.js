@@ -53,7 +53,10 @@ require([
       this.urlBase = "/api/video?sort=";
       this.url = this.urlBase + this.sort;
     },
-    model: models.Video
+    model: models.Video,
+    parse: function(res) {
+      return res.videos;
+    }
   });
   var videos = new VideoList(),
       video_view = null;

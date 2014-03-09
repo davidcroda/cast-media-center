@@ -16,7 +16,9 @@ exports.index = function (req, res) {
     if (err) throw new Error(err);
     videos.forEach(function(video) {
     });
-    res.json(videos);
+    res.json({
+      videos: videos
+    });
   });
 };
 
