@@ -6,7 +6,7 @@ var site = require('../app/controllers/site'),
 
 module.exports = function(app) {
   app.get('/api/:model', api.index);
-  app.get('/api/:model/:id', api.get);
+  app.post('/api/:model/:id', api.get);
   app.delete('/api/:model/:id', api.delete);
   app.post('/api/:model', api.update);
   app.put('/api/:model', api.create);

@@ -32,6 +32,15 @@
 .video {
   text-align: center;
   padding: 10px;
+  -webkit-user-select: none;
+  /* Chrome/Safari */
+  -moz-user-select: none;
+  /* Firefox */
+  -ms-user-select: none;
+  /* IE10+ */
+  /* Rules below not implemented in browsers yet */
+  -o-user-select: none;
+  user-select: none;
 }
 .video .delete-icon {
   display: none;
@@ -43,14 +52,49 @@
   font-size: 20px;
   color: indianred;
 }
-.video:hover .delete-icon {
-  display: block;
+.video .play-icon,
+.video .transcode-icon {
+  display: none;
+  position: absolute;
+  margin: auto;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  font-size: 72px;
+  height: 150px;
+  color: #5cb85c;
+}
+.video .overlay {
+  display: none;
+  width: 0%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  position: absolute;
+  opacity: 0.5;
+  background-image: -webkit-linear-gradient(left, color-stop(#5cb85c 0%), color-stop(#428bca 100%));
+  background-image: linear-gradient(to right, #5cb85c 0%, #428bca 100%);
+  background-repeat: repeat-x;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff5cb85c', endColorstr='#ff428bca', GradientType=1);
 }
 .video.active {
   background-color: #428bca;
 }
 .video.highlight {
   background-color: #92bce0;
+}
+.video.highlight.transcoding {
+  background: none !important;
+}
+.transcoding .img-thumbnail {
+  opacity: 0.5;
+}
+.transcoding .overlay {
+  display: block;
+}
+.video:hover .icon {
+  display: block;
 }
 .video-nav {
   margin: 10px 0px;

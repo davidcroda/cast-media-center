@@ -34,11 +34,18 @@
         <script type="text/template" id="video_template">
             <div class="row" id="video-container">
                 <% videos.forEach(function(video) {
+                    var canPlay = (video.get('vcodec') == 'h264' && video.get('acodec') == 'aac');
                     var videoClass = (video.get('selected'))?"active":"";
                 %>
                     <div class="video col-md-3 <%- videoClass %>" data-id="<%= video.id %>">
                         <img class="img-thumbnail" src="<%- video.get('thumbnailSmall') %>" />
-                        <div class="delete-icon"><i class="glyphicon glyphicon-trash"></i></div>
+                        <div class="overlay"></div>
+                        <% if(canPlay) { %>
+                            <div class="icon play-icon"><i class="glyphicon glyphicon-play-circle"></i></div>
+                        <% } else { %>
+                            <div class="icon transcode-icon"><i class="glyphicon glyphicon-wrench"></i></div>
+                        <% } %>
+                        <div class="icon delete-icon"><i class="glyphicon glyphicon-trash"></i></div>
                         <div class="video-title">
                             <%- video.get('title') %><br />
                             <div class='created'><%= video.get('date') %></div>

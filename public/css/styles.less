@@ -1,4 +1,5 @@
 @import "../components/bootstrap/less/variables";
+@import "../components/bootstrap/less/mixins";
 
 .padded {
   padding: 10px;
@@ -41,24 +42,45 @@
 .video {
   text-align: center;
   padding: 10px;
-}
 
-.video .delete-icon {
-  display: none;
-  position: absolute;
-  top: 0;
-  margin-top: 20px;
-  right: 0;
-  margin-right: 20px;
-  font-size: 20px;
-  color: indianred;
-}
+  -webkit-user-select: none; /* Chrome/Safari */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* IE10+ */
 
-.video:hover .delete-icon {
-  display: block;
-}
+  /* Rules below not implemented in browsers yet */
+  -o-user-select: none;
+  user-select: none;
 
-.video {
+  .delete-icon {
+    display: none;
+    position: absolute;
+    top: 0;
+    margin-top: 20px;
+    right: 0;
+    margin-right: 20px;
+    font-size: 20px;
+    color: indianred;
+  }
+  .play-icon, .transcode-icon {
+    display: none;
+    position: absolute;
+    margin: auto;
+    top: 0; left: 0; bottom: 0; right: 0;
+    font-size: 72px;
+    height: 150px;
+    color: @brand-success;
+  }
+
+  .overlay {
+    display: none;
+    width: 0%;
+    height: 100%;
+    top: 0; left: 0;
+    position: absolute;
+    opacity: 0.5;
+    #gradient .horizontal(@brand-success, @brand-primary, 0%, 100%);
+  }
+
   &.active {
     background-color: @brand-primary;
   }
@@ -66,6 +88,21 @@
   &.highlight {
     background-color: lighten(@brand-primary, 20%);
   }
+
+  &.highlight.transcoding {
+    background: none !important;
+  }
+}
+.transcoding {
+  .img-thumbnail {
+    opacity: 0.5
+  }
+  .overlay {
+    display: block;
+  }
+}
+.video:hover .icon {
+  display: block;
 }
 
 .video-nav {

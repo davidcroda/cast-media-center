@@ -77,48 +77,64 @@
       });
     };
 
-    Excast.prototype.transcodeVideo = function(video) {
-      return '/api/video/' + video.get('id');
+    Excast.prototype.transcodeVideo = function(video, el) {
+      var _this = this;
+      _this = this;
+      return $.post('/api/video/' + video.get('id'), function(data) {
+        var percent;
+        percent = data.progress * 100;
+        $(el).find('.overlay').css({
+          width: percent + "%"
+        });
+        return setTimeout(function() {
+          return _this.transcodeVideo(video, el);
+        }, 15000);
+      });
     };
 
-    Excast.prototype.checkMedia = function(video) {
+    Excast.prototype.checkMedia = function(video, el) {
       if (video.get('vcodec') !== 'h264' || video.get('acodec') !== 'aac') {
-        video.set('url', this.transcodeVideo(video));
+        $(el).addClass('transcoding');
+        this.transcodeVideo(video, el);
+        return false;
       } else {
+        $(el).addClass('active');
         video.set('url', video.get('sources')[0]);
       }
       return video;
     };
 
-    Excast.prototype.loadMedia = function(video) {
+    Excast.prototype.loadMedia = function(video, el) {
       var mediaInfo, request, thumb, title, url,
         _this = this;
-      video = this.checkMedia(video);
-      title = video.get('title');
-      url = video.get('url');
-      thumb = video.get('thumb');
-      console.log("loadMedia: ", title, url, thumb);
-      if (!this.appSession) {
-        this.loadApp(function() {
-          return _this.loadMedia(title, url, thumb);
-        });
-        return false;
+      video = this.checkMedia(video, el);
+      if (video) {
+        title = video.get('title');
+        url = video.get('url');
+        thumb = video.get('thumb');
+        console.log("loadMedia: ", title, url, thumb);
+        if (!this.appSession) {
+          this.loadApp(function() {
+            return _this.loadMedia(title, url, thumb);
+          });
+          return false;
+        }
+        $('.current-media').html(title);
+        $('.thumbnail').attr('src', thumb);
+        $('#control-nav').show();
+        $('.progress-striped').addClass('active').children('#progress').width('100%');
+        console.log("loading... " + url);
+        mediaInfo = new chrome.cast.media.MediaInfo(url);
+        mediaInfo.contentType = 'video/mp4';
+        mediaInfo.customData = {
+          title: title,
+          thumbnail: thumb
+        };
+        request = new chrome.cast.media.LoadRequest(mediaInfo);
+        request.autoplay = true;
+        request.currentTime = 0;
+        return this.appSession.loadMedia(request, this.onMediaDiscovered, this.onMediaError);
       }
-      $('.current-media').html(title);
-      $('.thumbnail').attr('src', thumb);
-      $('#control-nav').show();
-      $('.progress-striped').addClass('active').children('#progress').width('100%');
-      console.log("loading... " + url);
-      mediaInfo = new chrome.cast.media.MediaInfo(url);
-      mediaInfo.contentType = 'video/mp4';
-      mediaInfo.customData = {
-        title: title,
-        thumbnail: thumb
-      };
-      request = new chrome.cast.media.LoadRequest(mediaInfo);
-      request.autoplay = true;
-      request.currentTime = 0;
-      return this.appSession.loadMedia(request, this.onMediaDiscovered, this.onMediaError);
     };
 
     Excast.prototype.playMedia = function() {

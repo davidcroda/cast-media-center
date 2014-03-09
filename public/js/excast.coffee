@@ -42,47 +42,59 @@ class Excast
 
   #playback functions
 
-  transcodeVideo: (video) =>
-    return '/api/video/' + video.get('id');
+  transcodeVideo: (video, el) =>
+    _this = this
+    $.post '/api/video/' + video.get('id'), (data)=>
+      percent = data.progress * 100;
+      $(el).find('.overlay').css({
+        width: percent + "%"
+      });
+      setTimeout(()=>
+        _this.transcodeVideo(video, el);
+      , 15000)
 
-  checkMedia: (video) =>
+  checkMedia: (video, el) =>
     if video.get('vcodec') != 'h264' || video.get('acodec') != 'aac'
-      video.set('url',this.transcodeVideo(video))
+      $(el).addClass('transcoding');
+      this.transcodeVideo(video, el);
+      return false;
     else
+      $(el).addClass('active');
       video.set('url', video.get('sources')[0])
     return video
 
-  loadMedia: (video) =>
-    video = this.checkMedia(video)
+  loadMedia: (video, el) =>
+    video = this.checkMedia(video, el)
 
-    title = video.get('title')
-    url = video.get('url')
-    thumb = video.get('thumb')
+    if video
+      title = video.get('title')
+      url = video.get('url')
+      thumb = video.get('thumb')
 
-    console.log "loadMedia: ", title, url, thumb
-    if !@appSession
-      @loadApp =>
-        @loadMedia title, url, thumb
-      return false
+      console.log "loadMedia: ", title, url, thumb
+      if !@appSession
+        @loadApp =>
+          @loadMedia title, url, thumb
+        return false
 
-    $('.current-media').html title
-    $('.thumbnail').attr 'src', thumb
-    $('#control-nav').show()
-    $('.progress-striped').addClass('active').children('#progress').width('100%')
-    console.log("loading... " + url);
+      $('.current-media').html title
+      $('.thumbnail').attr 'src', thumb
+      $('#control-nav').show()
+      $('.progress-striped').addClass('active').children('#progress').width('100%')
+      console.log("loading... " + url);
 
-    mediaInfo = new chrome.cast.media.MediaInfo(url);
-    mediaInfo.contentType = 'video/mp4'
-    mediaInfo.customData =
-      title : title,
-      thumbnail : thumb
-    request = new chrome.cast.media.LoadRequest mediaInfo
-    request.autoplay = true;
-    request.currentTime = 0;
+      mediaInfo = new chrome.cast.media.MediaInfo(url);
+      mediaInfo.contentType = 'video/mp4'
+      mediaInfo.customData =
+        title : title,
+        thumbnail : thumb
+      request = new chrome.cast.media.LoadRequest mediaInfo
+      request.autoplay = true;
+      request.currentTime = 0;
 
-    @appSession.loadMedia request,
-      @onMediaDiscovered,
-      @onMediaError
+      @appSession.loadMedia request,
+        @onMediaDiscovered,
+        @onMediaError
 
   playMedia: =>
     if !@mediaSession
