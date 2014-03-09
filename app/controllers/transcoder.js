@@ -8,14 +8,11 @@ var fs = require('fs'),
 exports.transcoding = {};
 exports.isTranscoding = function(file) {
   if(file.match(/\.CONV.mp4$/)) {
-    console.log("File matched CONV.mp4", file);
     for (var t in exports.transcoding) {
       console.log("Testing ", file);
       if(file == transformPath(t)) {
         console.log("isTranscoding: true", file);
         return true;
-      } else {
-
       }
     }
     console.log("isTranscoding: false", file);
@@ -44,8 +41,11 @@ exports.transcode = function (res, video) {
     if(video.vcodec == "h264") vcodec = "copy";
     if(video.acodec == "aac") acodec = "copy";
 
-    if(acodec == "copy" && vcodec == "copy")
+    if(acodec == "copy" && vcodec == "copy") {
+      video.transcoding = false;
+      video.save();
       return;
+    }
 
     var newPath = transformPath(video.path);
 
