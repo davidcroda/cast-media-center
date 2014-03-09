@@ -69,7 +69,7 @@ class Excast
     if video
       title = video.get('title')
       url = video.get('url')
-      thumb = video.get('thumb')
+      thumb = video.get('thumbnailLarge')
 
       console.log "loadMedia: ", title, url, thumb
       if !@appSession
@@ -130,10 +130,10 @@ class Excast
     clearTimeout(@timer)
     @mediaSession.stop null, @updateMediaDisplay, @onError
 
-  #Initial Setup
+  #Ttial Setup
 
   initializeCastApi: =>
-    sessionRequest = new chrome.cast.SessionRequest chrome.cast.media.DEFAULT_MEDIA_RECEIVER_APP_ID
+    sessionRequest = new chrome.cast.SessionRequest "E4815CDE"
     apiConfig = new chrome.cast.ApiConfig sessionRequest, @sessionListener, @receiverListener
     chrome.cast.initialize(apiConfig, @onInitSuccess, @onError)
 
