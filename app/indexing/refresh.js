@@ -33,7 +33,7 @@ var FILES = [];
 
 exports.index = function (req, res) {
 
-  registerFilter(require('filters/exclude_samples.js').index);
+  registerFilter(require('./filters/exclude_samples.js').index);
 
   if(typeof req.query.debug != "undefined") {
     Video.collection.drop();
