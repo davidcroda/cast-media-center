@@ -21,11 +21,20 @@ var mongoose = require('mongoose'),
 exports.POLL_INTERVAL = 1000 * 60 * 5;
 exports.TIMEOUT = null;
 
+var filters = [];
+
+var registerFilter = function(cb) {
+  filters.push(cb);
+};
+
 var lastUpdate = 0;
 
 var FILES = [];
 
 exports.index = function (req, res) {
+
+  registerFilter(require('filters/exclude_samples.js').index);
+
   if(typeof req.query.debug != "undefined") {
     Video.collection.drop();
   }
@@ -39,6 +48,10 @@ exports.refresh = function () {
 
   readdir(config.indexPath, function (err, files) {
     if (err) console.log("Error: ", err);
+
+    for(var filter in filters) {
+      files = filter(files);
+    }
 
     FILES = files;
 
