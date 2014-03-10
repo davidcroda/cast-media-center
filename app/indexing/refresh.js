@@ -7,7 +7,7 @@ var mongoose = require('mongoose'),
   ffmpeg = require('fluent-ffmpeg'),
   metadata = require('fluent-ffmpeg').Metadata,
   rarfile = require('rarfile').RarFile,
-  transcoder = require('./transcoder'),
+  transcoder = require('../utils/transcoder'),
   sizes = {
     Small: '480x270',
     Large: '1280x720'
