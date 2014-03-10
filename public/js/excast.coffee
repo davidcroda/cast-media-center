@@ -45,6 +45,10 @@ class Excast
   transcodeVideo: (video, el) =>
     $(el).addClass('transcoding');
     $.post '/api/video/' + video.get('id'), (data)=>
+      if data.video
+        clearTimeout(@timeouts[video.get('path')]);
+        return data.video
+
       percent = data.progress * 100;
       $(el).find('.overlay').css({
         width: percent + "%"
@@ -53,11 +57,11 @@ class Excast
       @timeouts[video.get('path')] = setTimeout(()=>
         @transcodeVideo(video, el);
       , 15000)
+      return false
 
   checkMedia: (video, el) =>
     if video.get('vcodec') != 'h264' || video.get('acodec') != 'aac'
-      @transcodeVideo(video, el);
-      return false;
+      return @transcodeVideo(video, el);
     else
       $(el).addClass('active');
       video.set('url', video.get('sources')[0])
