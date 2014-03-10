@@ -1,7 +1,7 @@
 var mongoose = require('mongoose'),
   fs = require('fs'),
   config = require('../../config/config'),
-  transcoder = require('./transcoder'),
+  transcoder = require('../utils/transcoder'),
   path = require('path'),
   models = {
     video: mongoose.model('Video'),
