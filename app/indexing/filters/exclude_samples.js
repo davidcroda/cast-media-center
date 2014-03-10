@@ -1,5 +1,5 @@
 exports.index = function(files) {
-  files.forEach(function(i, file) {
+  files.forEach(function(file, i) {
     if(file.match(/sample/)) {
       delete files[i]
     }

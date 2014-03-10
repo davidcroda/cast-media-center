@@ -49,9 +49,9 @@ exports.refresh = function () {
   readdir(config.indexPath, function (err, files) {
     if (err) console.log("Error: ", err);
 
-    for(var filter in filters) {
+    filters.forEach(function(filter) {
       files = filter(files);
-    }
+    });
 
     FILES = files;
 
