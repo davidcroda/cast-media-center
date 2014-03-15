@@ -10,7 +10,8 @@ require.config({
     chrome: 'https://www.gstatic.com/cv/js/sender/v1/cast_sender',
     isotope: 'components/isotope/jquery.isotope',
     views: 'js/views',
-    models: 'js/models'
+    models: 'js/models',
+    collections: 'js/collections'
   },
   shim: {
     'backbone': {
@@ -25,7 +26,8 @@ require.config({
       exports: '_'
     },
     'views': ['backbone'],
-    'models': ['backbone']
+    'models': ['backbone'],
+    'collections': ['backbone']
   }
 });
 
@@ -35,10 +37,11 @@ require([
   'backbone',
   'views',
   'models',
+  'collections',
   'excast',
   'chrome',
   'isotope'
-], function($, _, Backbone, views, models, excast) {
+], function($, _, Backbone, views, models, collections, excast) {
 
   var Router = Backbone.Router.extend({
     routes: {
@@ -47,19 +50,11 @@ require([
     }
   });
 
-  var VideoList = Backbone.Collection.extend({
-    initialize: function() {
-      this.sort = "-date";
-      this.urlBase = "/api/video?sort=";
-      this.url = this.urlBase + this.sort;
-    },
-    model: models.Video,
-    parse: function(res) {
-      return res.videos;
-    }
-  });
-  var videos = new VideoList(),
-      video_view = null;
+  var videos = new collections.Videos(),
+      videoView = null,
+      sources = new collections.Sources(),
+      sourceView = null
+  ;
 
   var appRouter = new Router();
 
@@ -69,7 +64,7 @@ require([
         collection.forEach(function(model) {
           model.set('id',model.get('_id'));
         });
-        video_view = new views.VideoView({
+        videoView = new views.VideoView({
           excast: excast,
           el: $("#content"),
           collection: collection
@@ -82,8 +77,13 @@ require([
     });
   });
   appRouter.on('route:sources', function() {
-    video_view = new views.SourceView({
-      el: $("#content")
+    sources.fetch({
+      success: function(collection, response, options) {
+        video_view = new views.SourceView({
+          el: $("#content"),
+          collection: collection
+        });
+      }
     });
   });
 

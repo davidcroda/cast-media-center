@@ -110,7 +110,7 @@
       if (video) {
         title = video.get('title');
         url = video.get('url');
-        thumb = video.get('thumb');
+        thumb = video.get('thumbnailLarge');
         console.log("loadMedia: ", title, url, thumb);
         if (!this.appSession) {
           this.loadApp(function() {
@@ -175,7 +175,7 @@
 
     Excast.prototype.initializeCastApi = function() {
       var apiConfig, sessionRequest;
-      sessionRequest = new chrome.cast.SessionRequest(chrome.cast.media.DEFAULT_MEDIA_RECEIVER_APP_ID);
+      sessionRequest = new chrome.cast.SessionRequest("E4815CDE");
       apiConfig = new chrome.cast.ApiConfig(sessionRequest, this.sessionListener, this.receiverListener);
       return chrome.cast.initialize(apiConfig, this.onInitSuccess, this.onError);
     };

@@ -13,23 +13,30 @@
                 <fieldset>
                     <label for="path">
                         <span>Path</span>
-                        <input type="text" class="form-control" name="path" id="path" />
+                        <input type="text" placeholder="/home/media/" class="form-control" name="path" id="path" />
                     </label>
-                    <label for="url">
-                        <span>Url</span>
-                        <input type="text" class="form-control" name="url" id="url" />
+                    <label for="baseUrl">
+                        <span>Base URL</span>
+                        <input type="text" placeholder="http://localhost/media" class="form-control" name="baseUrl" id="baseUrl" />
                     </label>
-                    <label for="thumbnailPath">
-                        <span>Thumbnail Path</span>
-                        <input type="text" class="form-control" name="thumbnailPath" id="thumbnailPath" />
-                    </label>
-                    <label for="thumbnailUrl">
-                        <span>Thumbnail URL</span>
-                        <input type="text" class="form-control" name="thumbnailUrl" id="thumbnailUrl" />
+                    <label for="type">
+                        <span>Type</span>
+                        <select id="type" name="type" class="form-control">
+                            <option value="local">Local</option>
+                        </select>
                     </label>
                     <input type="submit">
                 </fieldset>
             </form>
+            <table class="table">
+                <% sources.forEach(function(source) { %>
+                <tr>
+                    <td><%- source.get('path') %></td>
+                    <td><%- source.get('urlBase') %></td>
+                    <td><%- source.get('type') %></td>
+                </tr>
+                <% }); %>
+            </table>
         </script>
         <script type="text/template" id="video_template">
             <div class="row" id="video-container">

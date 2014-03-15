@@ -12,7 +12,8 @@ var models = {
       vcodec: '',
       acodec: '',
       date: '',
-      transcoding: false
+      transcoding: false,
+      watched: false
     },
     title: String,
     path: String,
@@ -25,14 +26,29 @@ var models = {
     acodec: String,
     date: Date,
     transcoding: Boolean,
+    watched: Boolean,
     initialize: function(options) {
       this.id = options._id;
-//        this.on('change:selected',function(model, value, options) {
-//          console.log(model);
-//          console.log(value);
-//          console.log(options);
-//          model.save();
-//        });
+        this.on('change:watched',function(model, value, options) {
+          console.log(model);
+          console.log(value);
+          console.log(options);
+          model.save();
+        });
+    }
+  }),
+  Source: Backbone.Model.extend({
+    urlRoot: '/api/source',
+    defaults: {
+      path: '',
+      baseUrl: '',
+      type: 'local'
+    },
+    path: String,
+    baseUrl: String,
+    type: String,
+    initialize: function(options) {
+      this.id = options._id;
     }
   })
 };

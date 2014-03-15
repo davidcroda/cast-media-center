@@ -3,9 +3,7 @@ var mongoose = require('mongoose'),
 
 var SourceSchema = new Schema({
   path: String,
-  url: String,
-  thumbnailPath: String,
-  thumbnailUrl: String,
+  baseUrl: String,
   type: String
 });
 

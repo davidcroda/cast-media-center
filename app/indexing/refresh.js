@@ -1,17 +1,18 @@
 var mongoose = require('mongoose'),
   Video = mongoose.model('Video'),
+  Source = mongoose.model('Source'),
   path = require('path'),
   fs = require('fs'),
-  readdir = require('recursive-readdir'),
   config = require('../../config/config'),
   ffmpeg = require('fluent-ffmpeg'),
   metadata = require('fluent-ffmpeg').Metadata,
   rarfile = require('rarfile').RarFile,
   transcoder = require('../utils/transcoder'),
-  sizes = {
-    Small: '480x270',
-    Large: '1280x720'
-  },
+  types = require('./types');
+sizes = {
+  Small: '480x270',
+  Large: '1280x720'
+},
   handlers = {
     //"rar|001|zip": extractVideo,
     "mp4|mkv": processVideo
@@ -23,7 +24,7 @@ exports.TIMEOUT = null;
 
 var filters = [];
 
-var registerFilter = function(cb) {
+var registerFilter = function (cb) {
   filters.push(cb);
 };
 
@@ -35,7 +36,7 @@ exports.index = function (req, res) {
 
   registerFilter(require('./filters/exclude_samples.js').index);
 
-  if(typeof req.query.debug != "undefined") {
+  if (typeof req.query.debug != "undefined") {
     Video.collection.drop();
   }
 
@@ -46,37 +47,43 @@ exports.index = function (req, res) {
 exports.refresh = function () {
   clearTimeout(exports.TIMEOUT);
 
-  readdir(config.indexPath, function (err, files) {
-    if (err) console.log("Error: ", err);
+  Source.find().exec(function (err, results) {
+    if (err) throw err;
 
-    filters.forEach(function(filter) {
-      files = filter(files);
+    results.forEach(function (source) {
+      types[source.type](source.path, function (err, files) {
+        if (err) console.log("Error: ", err);
+
+        filters.forEach(function (filter) {
+          files = filter(files);
+        });
+
+        FILES = files;
+
+        processFiles(source, function () {
+          exports.TIMEOUT = setTimeout(exports.refresh, calculateTimeout(exports.POLL_INTERVAL));
+        });
+      });
     });
-
-    FILES = files;
-
-    processFiles(function () {
-      exports.TIMEOUT = setTimeout(exports.refresh, calculateTimeout(exports.POLL_INTERVAL));
-    });
-  });
+  })
 };
 
 function calculateTimeout(interval) {
   var diff = Date.now() - lastUpdate;
-  if(diff > (60 * 30)) {
+  if (diff > (60 * 30)) {
     return interval * 72; //6 hours
   }
   return interval;
 }
 
-function processFiles(cb) {
-  for(var ext in handlers) {
-    FILES.forEach(function(file, index) {
+function processFiles(source, cb) {
+  for (var ext in handlers) {
+    FILES.forEach(function (file, index) {
       console.log("Processing File: ", file);
-      if(file.match(videoRegex) && !transcoder.isTranscoding(file)) {
+      if (file.match(videoRegex) && !transcoder.isTranscoding(file)) {
         var re = new RegExp("\." + ext);
-        if(path.extname(file).match(re)) {
-          handlers[ext](file, index);
+        if (path.extname(file).match(re)) {
+          handlers[ext](source, file, index);
         }
       }
     });
@@ -86,7 +93,7 @@ function processFiles(cb) {
   }
 }
 
-function processVideo(video) {
+function processVideo(source, video) {
   Video.find({
     path: video
   }, function (err, results) {
@@ -95,7 +102,7 @@ function processVideo(video) {
     } else {
       if (results.length == 0) {
         lastUpdate = Date.now();
-        createVideoRecord(video);
+        createVideoRecord(source, video);
       } else {
         console.log("Found existing video for path: ", video);
       }
@@ -103,7 +110,7 @@ function processVideo(video) {
   });
 }
 
-function extractVideo(archive, index) {
+function extractVideo(source, archive, index) {
   console.log("Extract ", archive);
 
   var rf = new rarfile(archive, {
@@ -120,20 +127,15 @@ function extractVideo(archive, index) {
   return archive + ".test.mp4";
 }
 
-function createVideoRecord(file) {
+function createVideoRecord(source, file) {
   var stat = fs.statSync(file);
-  var metaObject = new metadata(file, function(metadata, err) {
-    if(err) throw err;
-    if(typeof metadata.audio == "undefined") {
-      console.log(metadata);
-      console.log("MISSING AUDIO FIELD");
-      sys.exit(0);
-    }
+  var metaObject = new metadata(file, function (metadata, err) {
+    if (err) throw err;
     var fileRecord = new Video({
       title: path.basename(file),
       path: file,
       date: stat.mtime,
-      sources: [path.join(config.urlBase, path.relative(config.indexPath, file))],
+      sources: [path.join(source.baseUrl, path.relative(source.path, file))],
       vcodec: metadata.video.codec,
       acodec: metadata.audio.codec
     });
@@ -157,9 +159,9 @@ function createVideoRecord(file) {
 }
 
 function generateThumbnail(file, sizeName, size, cb) {
-    new ffmpeg({
-      source: file.path
-    })
+  new ffmpeg({
+    source: file.path
+  })
     .withSize(size)
     .takeScreenshots({
       count: 1,

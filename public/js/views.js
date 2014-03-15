@@ -75,7 +75,9 @@ var views = {
   }),
   SourceView: Backbone.View.extend({
     initialize: function() {
-      this.render();
+      this.listenTo(this.collection, 'sync', function() {
+        this.render();
+      });
     },
     events: {
       'submit form': 'addSource'
@@ -83,7 +85,7 @@ var views = {
     addSource: function(ev) {
       var form = $(ev.currentTarget),
           data = form.serialize(),
-          url = '/api/video';
+          url = '/api/source';
       console.log(url);
       $.ajax(url, {
         method: 'PUT',
@@ -92,7 +94,7 @@ var views = {
       return false;
     },
     render: function() {
-      var template = _.template($("#source_template").html());
+      var template = _.template($("#source_template").html(), {sources: this.collection});
       this.$el.html(template);
     }
   })

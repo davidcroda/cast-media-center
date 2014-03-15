@@ -1,6 +1,8 @@
 var path = require('path'),
   rootPath = path.normalize(__dirname + '/..'),
-  env = process.env.NODE_ENV || 'development';
+  env = process.env.NODE_ENV || 'development',
+  port = process.env.PORT || 3000
+;
 
 var config = {
   development: {
@@ -8,12 +10,10 @@ var config = {
     app: {
       name: 'excast'
     },
-    port: process.env.PORT || 3000,
+    port: port,
     db: process.env.DATABASE_URL || "mongodb://localhost/excast-development",
-    indexPath: process.env.INDEX_PATH || '/home/dave/ftp/torrents/downloads',
-    thumbnailPath: process.env.THUMBNAIL_PATH || '/home/dave/ftp/www/thefreeman.montauk.seedboxes.cc/thumbnails/',
-    thumbnailUrl: process.env.THUMBNAIL_URL || 'http://thefreeman.montauk.seedboxes.cc/thumbnails/',
-    urlBase: process.env.URL_BASE
+    thumbnailPath: process.env.THUMBNAIL_PATH || './public/thumbnails/',
+    thumbnailUrl: process.env.THUMBNAIL_URL || 'http://localhost:' + port + '/thumbnails/'
   },
 
   VM: {
@@ -21,12 +21,10 @@ var config = {
     app: {
       name: 'excast'
     },
-    port: process.env.PORT || 3000,
+    port: port,
     db: process.env.DATABASE_URL || "mongodb://192.168.1.7/excast-development",
-    indexPath: process.env.INDEX_PATH || '/home/dave/mount/torrents/downloads/',
-    thumbnailPath: process.env.THUMBNAIL_PATH || '/home/dave/mount/www/thefreeman.montauk.seedboxes.cc/thumbnails/',
-    thumbnailUrl: process.env.THUMBNAIL_URL || 'http://thefreeman.montauk.seedboxes.cc/thumbnails/',
-    urlBase: process.env.URL_BASE || "http://thefreeman:ironfire@montauk.seedboxes.cc/thefreeman/downloads/"
+    thumbnailPath: process.env.THUMBNAIL_PATH || './public/thumbnails/',
+    thumbnailUrl: process.env.THUMBNAIL_URL || 'http://localhost:' + port + '/thumbnails/'
   },
 
   test: {
