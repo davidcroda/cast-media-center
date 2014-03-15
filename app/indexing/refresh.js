@@ -2,22 +2,24 @@ var mongoose = require('mongoose'),
   Video = mongoose.model('Video'),
   Source = mongoose.model('Source'),
   path = require('path'),
+  url = require('url'),
   fs = require('fs'),
   config = require('../../config/config'),
   ffmpeg = require('fluent-ffmpeg'),
   metadata = require('fluent-ffmpeg').Metadata,
   rarfile = require('rarfile').RarFile,
   transcoder = require('../utils/transcoder'),
-  types = require('./types');
-sizes = {
-  Small: '480x270',
-  Large: '1280x720'
-},
+  types = require('./types'),
+  sizes = {
+    Small: '480x270',
+    Large: '1280x720'
+  },
   handlers = {
     //"rar|001|zip": extractVideo,
     "mp4|mkv": processVideo
   },
-  videoRegex = /(mp4|mkv|xvid|divx|mpeg|mpg|avi)/i;
+  videoRegex = /(mp4|mkv|xvid|divx|mpeg|mpg|avi)/i
+;
 
 exports.POLL_INTERVAL = 1000 * 60 * 5;
 exports.TIMEOUT = null;
@@ -34,7 +36,7 @@ var FILES = [];
 
 exports.index = function (req, res) {
 
-  registerFilter(require('./filters/exclude_samples.js').index);
+  registerFilter(require('./filters.js').samples);
 
   if (typeof req.query.debug != "undefined") {
     Video.collection.drop();
@@ -135,7 +137,7 @@ function createVideoRecord(source, file) {
       title: path.basename(file),
       path: file,
       date: stat.mtime,
-      sources: [path.join(source.baseUrl, path.relative(source.path, file))],
+      sources: [url.resolve(source.baseUrl, path.relative(source.path, file))],
       vcodec: metadata.video.codec,
       acodec: metadata.audio.codec
     });
