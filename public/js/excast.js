@@ -53,7 +53,7 @@
         percent = x / width;
         return excast.seekMedia(percent);
       });
-      $('#search').bind('keyup', function() {
+      return $('#search').bind('keyup', function() {
         var query;
         query = ".*" + $("#search").val().toLowerCase() + ".*";
         $('.video-title').each(function(index, item) {
@@ -65,10 +65,6 @@
           }
         });
         return $('#video-container').isotope('reLayout');
-      });
-      return $('#video-container').isotope({
-        itemSelector: '.video',
-        layoutMode: 'fitRows'
       });
     };
 

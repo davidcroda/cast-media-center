@@ -35,10 +35,6 @@ class Excast
           item.parents('.col-md-3').hide()
       $('#video-container').isotope 'reLayout'
 
-    $('#video-container').isotope
-      itemSelector: '.video',
-      layoutMode: 'fitRows'
-
 
   #playback functions
 
