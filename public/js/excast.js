@@ -29,6 +29,7 @@
       this.appSession = null;
       this.mediaSession = null;
       this.queue = null;
+      this.video = null;
       this.timer = null;
       this.currentTime = 0;
       this.timeouts = {};
@@ -103,6 +104,7 @@
       var mediaInfo, request, thumb, title, url,
         _this = this;
       video = this.checkMedia(video, el);
+      video.watched = true;
       if (video) {
         title = video.get('title');
         url = video.get('url');
@@ -114,6 +116,8 @@
           });
           return false;
         }
+        this.video = video;
+        video.watched = true;
         $('.current-media').html(title);
         $('.thumbnail').attr('src', thumb);
         $('#control-nav').show();

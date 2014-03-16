@@ -5,6 +5,7 @@ class Excast
     @appSession = null
     @mediaSession = null
     @queue = null
+    @video = null
     @timer = null
     @currentTime = 0
     @timeouts = {}
@@ -65,6 +66,7 @@ class Excast
 
   loadMedia: (video, el) =>
     video = @checkMedia(video, el)
+    video.watched = true;
 
     if video
       title = video.get('title')
@@ -76,6 +78,9 @@ class Excast
         @loadApp =>
           @loadMedia title, url, thumb
         return false
+
+      @video = video;
+      video.watched = true;
 
       $('.current-media').html title
       $('.thumbnail').attr 'src', thumb

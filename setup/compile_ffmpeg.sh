@@ -1,4 +1,4 @@
-
+#!/bin/sh
 
 sudo apt-get update
 sudo apt-get -y install autoconf automake build-essential libass-dev libgpac-dev \
