@@ -27,14 +27,14 @@ var models = {
     date: Date,
     transcoding: Boolean,
     watched: Boolean,
-    initialize: function(options) {
+    initialize: function (options) {
       this.id = options._id;
-        this.on('change:watched',function(model, value, options) {
-          console.log(model);
-          console.log(value);
-          console.log(options);
-          model.save();
-        });
+      this.on('change:watched', function (model, value, options) {
+        console.log(model);
+        console.log(value);
+        console.log(options);
+        model.save();
+      });
     }
   }),
   Source: Backbone.Model.extend({
@@ -47,7 +47,7 @@ var models = {
     path: String,
     baseUrl: String,
     type: String,
-    initialize: function(options) {
+    initialize: function (options) {
       this.id = options._id;
     }
   })

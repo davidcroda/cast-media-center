@@ -41,7 +41,7 @@ require([
   'excast',
   'chrome',
   'isotope'
-], function($, _, Backbone, views, models, collections, excast) {
+], function ($, _, Backbone, views, models, collections, excast) {
 
   var Router = Backbone.Router.extend({
     routes: {
@@ -51,34 +51,35 @@ require([
   });
 
   var videos = new collections.Videos(),
-      videoView = null,
-      sources = new collections.Sources(),
-      sourceView = null
-  ;
+    videoView = null,
+    sources = new collections.Sources(),
+    sourceView = null
+    ;
 
   var appRouter = new Router();
 
-  appRouter.on('route:index', function() {
+  appRouter.on('route:index', function () {
     videos.fetch({
-      success: function(collection, response, options) {
-        collection.forEach(function(model) {
-          model.set('id',model.get('_id'));
+      success: function (collection, response, options) {
+        collection.forEach(function (model) {
+          model.set('id', model.get('_id'));
+          model.set('show', true);
         });
         videoView = new views.VideoView({
           excast: excast,
           el: $("#content"),
           collection: collection
-        }).on('sort', function(sort) {
+        }).on('sort', function (sort) {
             this.collection.sort = sort;
             this.collection.url = videos.urlBase + videos.sort;
             this.collection.fetch();
-        });
+          });
       }
     });
   });
-  appRouter.on('route:sources', function() {
+  appRouter.on('route:sources', function () {
     sources.fetch({
-      success: function(collection, response, options) {
+      success: function (collection, response, options) {
         video_view = new views.SourceView({
           el: $("#content"),
           collection: collection

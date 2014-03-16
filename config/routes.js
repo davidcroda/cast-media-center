@@ -6,11 +6,11 @@ var site = require('../app/controllers/site'),
   User = mongoose.model('User'),
   passport = require('passport');
 
-module.exports = function(app) {
+module.exports = function (app) {
   app.get('/api/:model', api.index);
   app.post('/api/:model/:id', api.get);
   app.delete('/api/:model/:id', api.delete);
-  app.post('/api/:model', api.update);
+  app.put('/api/:model/:id', api.update);
   app.put('/api/:model', api.create);
 
   app.get('/refresh', refresh.index);

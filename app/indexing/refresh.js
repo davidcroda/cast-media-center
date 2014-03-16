@@ -19,7 +19,7 @@ var mongoose = require('mongoose'),
     "mp4|mkv": processVideo
   },
   videoRegex = /(mp4|mkv|xvid|divx|mpeg|mpg|avi)/i
-;
+  ;
 
 exports.POLL_INTERVAL = 1000 * 60 * 5;
 exports.TIMEOUT = null;

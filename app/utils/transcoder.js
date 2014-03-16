@@ -3,14 +3,14 @@ var fs = require('fs'),
   path = require('path'),
   config = require('../../config/config')
 
-;
+  ;
 
 exports.transcoding = {};
-exports.isTranscoding = function(file) {
-  if(file.match(/\.CONV.mp4$/)) {
+exports.isTranscoding = function (file) {
+  if (file.match(/\.CONV.mp4$/)) {
     for (var t in exports.transcoding) {
       console.log("Testing ", file);
-      if(file == transformPath(t)) {
+      if (file == transformPath(t)) {
         console.log("isTranscoding: true", file);
         return true;
       }
@@ -29,7 +29,7 @@ function transformPath(file) {
 
 exports.transcode = function (res, video) {
 
-  if(!exports.isTranscoding(video.path)) {
+  if (!exports.isTranscoding(video.path)) {
     exports.transcoding[video.path] = true;
 
     video.transcoding = true;
@@ -38,10 +38,10 @@ exports.transcode = function (res, video) {
     var vcodec = "libx264",
       acodec = "libfdk_aac";
 
-    if(video.vcodec == "h264") vcodec = "copy";
-    if(video.acodec == "aac") acodec = "copy";
+    if (video.vcodec == "h264") vcodec = "copy";
+    if (video.acodec == "aac") acodec = "copy";
 
-    if(acodec == "copy" && vcodec == "copy") {
+    if (acodec == "copy" && vcodec == "copy") {
       video.transcoding = false;
       video.save();
       return;
@@ -56,7 +56,7 @@ exports.transcode = function (res, video) {
       .audioCodec(acodec)
       .channels(2)
       .format('mp4')
-      .on('progress', function(progress) {
+      .on('progress', function (progress) {
         // The 'progress' event is emitted every time FFmpeg
         // reports progress information. 'progress' contains
         // the following information:
@@ -74,7 +74,7 @@ exports.transcode = function (res, video) {
         exports.transcoding[video.path] = progress;
         res.json(progress);
       })
-      .on('finish', function() {
+      .on('finish', function () {
         console.log("transcode finished");
         delete exports.transcoding[video.path];
         video.path = newPath;
@@ -83,8 +83,8 @@ exports.transcode = function (res, video) {
         video.transcoding = false;
         video.title = path.basename(video.path);
         video.sources = [path.join(config.urlBase) + path.relative(config.indexPath, video.path)];
-        video.save(function(err) {
-          if(err) throw err;
+        video.save(function (err) {
+          if (err) throw err;
           fs.unlink(video.path);
         });
         res.end();

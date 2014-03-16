@@ -1,13 +1,13 @@
 var express = require('express'),
-    passport = require('passport'),
-    utils = require('../app/controllers/utils'),
-    LocalStrategy = require('passport-local').Strategy,
-    RememberMeStrategy = require('passport-remember-me').Strategy,
-    User = require('../app/models/user'),
-    Token = require('../app/models/token')
-;
+  passport = require('passport'),
+  utils = require('../app/controllers/utils'),
+  LocalStrategy = require('passport-local').Strategy,
+  RememberMeStrategy = require('passport-remember-me').Strategy,
+  User = require('../app/models/user'),
+  Token = require('../app/models/token')
+  ;
 
-module.exports = function(app, config) {
+module.exports = function (app, config) {
 
 // Configure passport
   passport.use(new LocalStrategy(User.authenticate()));
@@ -15,16 +15,16 @@ module.exports = function(app, config) {
     function (token, done) {
       Token.findOne({
         token: token
-      }, function(err, res) {
-        if(err) return done(err);
+      }, function (err, res) {
+        if (err) return done(err);
         console.log(res);
-        if(!res) {
+        if (!res) {
           return done(null, false);
         }
         user = User.findOne({
           _id: res.userId
-        }, function(err, res) {
-          if(err) return done(err);
+        }, function (err, res) {
+          if (err) return done(err);
           Token.remove();
           return done(null, res);
         });

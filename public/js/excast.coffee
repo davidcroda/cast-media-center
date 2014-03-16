@@ -66,7 +66,10 @@ class Excast
 
   loadMedia: (video, el) =>
     video = @checkMedia(video, el)
-    video.watched = true;
+
+    @video = video;
+
+    video.set('watched', true);
 
     if video
       title = video.get('title')
@@ -79,9 +82,6 @@ class Excast
           @loadMedia title, url, thumb
         return false
 
-      @video = video;
-      video.watched = true;
-
       $('.current-media').html title
       $('.thumbnail').attr 'src', thumb
       $('#control-nav').show()
@@ -91,8 +91,8 @@ class Excast
       mediaInfo = new chrome.cast.media.MediaInfo(url);
       mediaInfo.contentType = 'video/mp4'
       mediaInfo.customData =
-        title : title,
-        thumbnail : thumb
+        title: title,
+        thumbnail: thumb
       request = new chrome.cast.media.LoadRequest mediaInfo
       request.autoplay = true;
       request.currentTime = 0;
@@ -169,7 +169,7 @@ class Excast
   formatTime: (duration)->
     duration = Math.floor duration
     hours = Math.floor duration / 3600
-    minutes = Math.floor (duration - (hours*3600)) / 60
+    minutes = Math.floor (duration - (hours * 3600)) / 60
     seconds = duration % 60
 
     if hours < 1
@@ -223,7 +223,7 @@ class Excast
     @appSession.addUpdateListener @sessionUpdateListener
 
   sessionUpdateListener: (alive)=>
-    console.log (alive ? 'Session Updated: ' : 'Session Removed: ') + @appSession.sessionId;
+    console.log (alive ? 'Session Updated: ': 'Session Removed: ') + @appSession.sessionId;
     if !isAlive
       @appSession = null
       @mediaSession = null
@@ -246,7 +246,7 @@ class Excast
     cb()
 
   onRequestSessionError: (e) ->
-    console.log "Launch error: ",e
+    console.log "Launch error: ", e
 
 
 define(new Excast())

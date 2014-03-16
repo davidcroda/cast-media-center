@@ -1,6 +1,6 @@
-exports.samples = function(files) {
-  files.forEach(function(file, i) {
-    if(file.match(/sample/)) {
+exports.samples = function (files) {
+  files.forEach(function (file, i) {
+    if (file.match(/sample/)) {
       delete files[i]
     }
   });
