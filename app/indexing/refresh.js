@@ -138,6 +138,7 @@ function createVideoRecord(source, file) {
       path: file,
       date: stat.mtime,
       sources: [url.resolve(source.baseUrl, path.relative(source.path, file))],
+      watched: false,
       vcodec: metadata.video.codec,
       acodec: metadata.audio.codec
     });

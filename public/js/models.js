@@ -30,9 +30,6 @@ var models = {
     initialize: function (options) {
       this.id = options._id;
       this.on('change:watched', function (model, value, options) {
-        console.log(model);
-        console.log(value);
-        console.log(options);
         model.save();
       });
     }
