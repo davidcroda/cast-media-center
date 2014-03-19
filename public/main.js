@@ -83,7 +83,7 @@ require([
         sourceView = new views.SourceView({
           el: $("#content"),
           collection: collection,
-          model: Source
+          model: models.Source
         });
       }
     });
