@@ -4,7 +4,6 @@ var mongoose = require('mongoose'),
   metadata = require('fluent-ffmpeg').Metadata,
   rarfile = require('rarfile').RarFile,
   config = require('../../config/config'),
-  types = require('./types'),
   sizes = {
     Small: '480x270',
     Large: '1280x720'

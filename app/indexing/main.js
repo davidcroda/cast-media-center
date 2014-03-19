@@ -4,7 +4,8 @@ var mongoose = require('mongoose'),
   path = require('path'),
   config = require('../../config/config'),
   transcoder = require('../utils/transcoder'),
-  videoRegex = /(mp4|mkv|xvid|divx|mpeg|mpg|avi)/i
+  videoRegex = /(mp4|mkv|xvid|divx|mpeg|mpg|avi)/i,
+  types = require('./types')
 
 exports.POLL_INTERVAL = 1000 * 60 * 5;
 exports.TIMEOUT = null;
@@ -16,11 +17,11 @@ var filters = [],
 //"mp4|mkv": processVideo
 
 
-var registerFilter = function (cb) {
-  filters.push(cb);
+var registerFilter = function (filter) {
+  filters.push(filter);
 };
-var registerHandler = function(pattern, cb) {
-  handlers[pattern] = cb;
+var registerHandler = function(handler) {
+  handlers.push(handler);
 };
 
 var lastUpdate = 0;
@@ -29,8 +30,8 @@ var FILES = [];
 
 exports.index = function (req, res) {
 
-  registerFilter(require('./filters.js').samples);
-  registerHandler()
+  registerFilter(require('./filters').samples);
+  registerHandler(require('./handlers').video);
 
   if (typeof req.query.debug != "undefined") {
     Video.collection.drop();
