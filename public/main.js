@@ -80,9 +80,10 @@ require([
   appRouter.on('route:sources', function () {
     sources.fetch({
       success: function (collection, response, options) {
-        video_view = new views.SourceView({
+        sourceView = new views.SourceView({
           el: $("#content"),
-          collection: collection
+          collection: collection,
+          model: Source
         });
       }
     });

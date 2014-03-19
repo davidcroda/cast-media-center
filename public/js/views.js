@@ -95,13 +95,24 @@ var views = {
     }
   }),
   SourceView: Backbone.View.extend({
-    initialize: function () {
+    initialize: function (options) {
+      this.model = options.model;
       this.listenTo(this.collection, 'sync', function () {
         this.render();
       });
     },
     events: {
+      'click .delete-link': 'deleteSource',
       'submit form': 'addSource'
+    },
+    deleteSource: function(ev) {
+      var id = $(ev.currentTarget).attr('rel');
+      var source = this.collection.get(id);
+      console.log(source);
+      if(confirm("Are you sure you want to delete this source?")) {
+        var model = new this.model(source).destroy();
+        this.collection.sync();
+      }
     },
     addSource: function (ev) {
       var form = $(ev.currentTarget),

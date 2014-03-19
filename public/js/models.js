@@ -45,7 +45,9 @@ var models = {
     baseUrl: String,
     type: String,
     initialize: function (options) {
-      this.id = options._id;
+      if(options._id) {
+        this.id = options._id;
+      }
     }
   })
 };
