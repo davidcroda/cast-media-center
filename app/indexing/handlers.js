@@ -4,20 +4,13 @@ var mongoose = require('mongoose'),
   metadata = require('fluent-ffmpeg').Metadata,
   rarfile = require('rarfile').RarFile,
   config = require('../../config/config'),
+  path = require('path'),
   sizes = {
     Small: '480x270',
     Large: '1280x720'
   },
   url = require('url'),
   fs = require('fs')
-
-//"rar|001|zip": extractVideo,
-//"mp4|mkv": processVideo
-exports.video = {
-  pattern: /\.(mp4|mkv)/,
-  callback: processVideo
-};
-
 
 var processVideo = function(source, video) {
   Video.find({
@@ -108,3 +101,11 @@ function extractVideo(source, archive, index) {
 
   return archive + ".test.mp4";
 }
+
+
+//"rar|001|zip": extractVideo,
+//"mp4|mkv": processVideo
+exports.video = {
+  pattern: /\.(mp4|mkv)/,
+  callback: processVideo
+};

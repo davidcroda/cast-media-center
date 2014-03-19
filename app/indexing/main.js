@@ -74,7 +74,7 @@ function calculateTimeout(interval) {
 }
 
 function processFiles(source, cb) {
-  for (var handler in handlers) {
+  handlers.forEach(function(handler) {
     FILES.forEach(function (file, index) {
       console.log("Processing File: ", file);
       if (file.match(videoRegex) && !transcoder.isTranscoding(file)) {
@@ -83,7 +83,7 @@ function processFiles(source, cb) {
         }
       }
     });
-  }
+  });
   if (typeof cb == "function") {
     cb()
   }
