@@ -22,7 +22,7 @@ var app = express();
 require('./config/middleware')(app, config);
 require('./config/routes')(app);
 
-var refresh = require('./app/indexing/refresh');
+var refresh = require('./app/indexing/main');
 
 refresh.TIMEOUT = setTimeout(refresh.refresh, refresh.POLL_INTERVAL);
 
