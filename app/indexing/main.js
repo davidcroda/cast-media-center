@@ -11,7 +11,7 @@ exports.POLL_INTERVAL = 1000 * 60 * 5;
 exports.TIMEOUT = null;
 
 var filters = [],
-    handlers = {};
+    handlers = [];
 
 //"rar|001|zip": extractVideo,
 //"mp4|mkv": processVideo
