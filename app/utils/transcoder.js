@@ -24,7 +24,8 @@ exports.isTranscoding = function (file) {
 };
 
 function transformPath(file) {
-  return file + '.CONV.mp4';
+  file = file.replace('/\.[^.]+?$','.mp4');
+  return file;
 }
 
 exports.transcode = function (res, video) {
@@ -82,7 +83,9 @@ exports.transcode = function (res, video) {
         video.vcodec = "h264";
         video.transcoding = false;
         video.title = path.basename(video.path);
-        video.sources = [path.join(config.urlBase) + path.relative(config.indexPath, video.path)];
+        video.sources = video.sources.map(function(source) {
+          return transformPath(source);
+        });
         video.save(function (err) {
           if (err) throw err;
           fs.unlink(video.path);
