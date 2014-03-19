@@ -79,7 +79,7 @@ function processFiles(source, cb) {
       console.log("Processing File: ", file);
       if (file.match(videoRegex) && !transcoder.isTranscoding(file)) {
         if (path.extname(file).match(handler.pattern)) {
-          handler.matched(source, file, index);
+          handler.callback(source, file, index);
         }
       }
     });
