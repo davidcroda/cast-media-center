@@ -22,7 +22,7 @@ var config = {
       name: 'excast'
     },
     port: port,
-    db: process.env.DATABASE_URL || "mongodb://192.168.1.7/excast-development",
+    db: process.env.DATABASE_URL || "mongodb://localhost/excast-development",
     thumbnailPath: process.env.THUMBNAIL_PATH || './public/thumbnails/',
     thumbnailUrl: process.env.THUMBNAIL_URL || 'http://' + host + ':' + port + '/thumbnails/'
   },

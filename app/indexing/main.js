@@ -17,10 +17,10 @@ var filters = [],
 //"mp4|mkv": processVideo
 
 
-var registerFilter = function (filter) {
+exports.registerFilter = function (filter) {
   filters.push(filter);
 };
-var registerHandler = function(handler) {
+exports.registerHandler = function(handler) {
   handlers.push(handler);
 };
 
@@ -29,9 +29,6 @@ var lastUpdate = 0;
 var FILES = [];
 
 exports.index = function (req, res) {
-
-  registerFilter(require('./filters').samples);
-  registerHandler(require('./handlers').video);
 
   if (typeof req.query.debug != "undefined") {
     Video.collection.drop();

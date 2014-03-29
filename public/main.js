@@ -43,6 +43,8 @@ require([
   'isotope'
 ], function ($, _, Backbone, views, models, collections, excast) {
 
+  $("#wrapper").html(_.template($("#layout").html()));
+
   var Router = Backbone.Router.extend({
     routes: {
       "": "index",
