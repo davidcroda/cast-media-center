@@ -4,7 +4,9 @@ var collections = {
       this.model = model;
       this.sort = "-date";
       this.urlBase = "/api/video?sort=";
-      this.url = this.urlBase + this.sort;
+    },
+    url: function() {
+      return this.urlBase + this.sort;
     },
     error: onError,
     parse: function (res) {

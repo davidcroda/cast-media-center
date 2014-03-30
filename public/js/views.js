@@ -8,7 +8,7 @@ var views = {
       this.excast = options.excast;
       this.sort = "-date";
       this.filter = {};
-      this.listenTo(this.collection, 'sync', function () {
+      this.listenTo(this.collection, 'sync reset', function () {
         this.render();
       });
     },
@@ -27,7 +27,7 @@ var views = {
           }
         ]
       });
-      var videoTemplate = _.template($("#video_template").html(), {videos: this.collection});
+      var videoTemplate = _.template($("#video_template").html(), {videos: this.collection.models});
       var _this = this;
       this.$el.html(navTemplate + videoTemplate);
       $('.transcoding').each(function (index, el) {
@@ -57,9 +57,9 @@ var views = {
       console.log(this.filter);
       this.collection.forEach(function (video) {
         if (checked && video.attributes.hasOwnProperty(field) && video.get(field) != value) {
-          video.set('show', false);
+          video.set('hide', true);
         } else {
-          video.set('show', true);
+          video.set('hide', false);
         }
       });
       this.render();

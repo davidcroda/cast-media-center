@@ -61,7 +61,7 @@
       <% videos.forEach(function(video) {
       var canPlay = (video.get('vcodec') == 'h264' && video.get('acodec') == 'aac');
       var videoClass = (video.get('transcoding'))?"transcoding":"";
-      if(video.get('show')) {
+      if(!video.get('hide')) {
       %>
       <div class="video col-md-3 <%- videoClass %>" data-id="<%= video.id %>">
         <img class="img-thumbnail" src="<%- video.get('thumbnailSmall') %>"/>

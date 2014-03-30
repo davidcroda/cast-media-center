@@ -42,6 +42,8 @@ require([
   'chrome'
 ], function ($, _, Backbone, views, models, collections, excast) {
 
+  var App = {};
+
   $("#wrapper").html(_.template($("#layout").html()));
 
   var Router = Backbone.Router.extend({
@@ -52,47 +54,38 @@ require([
     }
   });
 
-  var videos = new collections.Videos(models.Video),
-    sources = new collections.Sources(models.Source),
-    videoView = null,
-    sourceView = null,
-    loginView = null
-    ;
+  App.videos = new collections.Videos(models.Video);
+  App.sources = new collections.Sources(models.Source);
+  App.videoView = null;
+  App.sourceView = null;
+  App.loginView = null;
 
-  var appRouter = new Router();
+  App.router = new Router();
 
-  appRouter.on('route:index', function () {
-    videos.fetch({
-      success: function (collection, response, options) {
-        collection.forEach(function (model) {
-          model.set('id', model.get('_id'));
-          model.set('show', true);
-        });
-        videoView = new views.VideoView({
-          excast: excast,
-          el: $("#content"),
-          collection: collection
-        }).on('sort', function (sort) {
-            this.collection.sort = sort;
-            this.collection.url = videos.urlBase + videos.sort;
-            this.collection.fetch();
-          });
-      },
+  App.router.on('route:index', function () {
+    App.videoView = new views.VideoView({
+      excast: excast,
+      el: $("#content"),
+      collection: App.videos
+    }).on('sort', function (sort) {
+        this.collection.sort = sort;
+        this.collection.url = App.videos.urlBase + App.videos.sort;
+        this.collection.fetch();
+      });
+    var fetchOptions = {
       error: function(collection, response, options) {
-//        console.log("Collection:", collection);
-//        console.log("Response:", response);
-//        console.log("Options:", options);
         if(response.status == 401) {
-          appRouter.navigate('login', {trigger: true, replace: true});
+          App.router.navigate('login', {trigger: true, replace: true});
         }
       }
-    });
+    };
+    App.videos.fetch(fetchOptions);
   });
 
-  appRouter.on('route:sources', function () {
-    sources.fetch({
+  App.router.on('route:sources', function () {
+    App.sources.fetch({
       success: function (collection, response, options) {
-        sourceView = new views.SourceView({
+        App.sourceView = new views.SourceView({
           el: $("#content"),
           collection: collection,
           model: models.Source
@@ -101,9 +94,9 @@ require([
     });
   });
 
-  appRouter.on('route:login', function() {
+  App.router.on('route:login', function() {
     console.log('hello');
-    loginView = new views.LoginView({
+    App.loginView = new views.LoginView({
       el: $("#content")
     });
   });
