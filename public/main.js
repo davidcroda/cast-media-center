@@ -22,6 +22,12 @@ require.config({
       //module value.
       exports: 'Backbone'
     },
+    'bootstrap': {
+      deps: ['jquery']
+    },
+    'jquery': {
+      exports: '$'
+    },
     'underscore': {
       exports: '_'
     },
@@ -39,7 +45,8 @@ require([
   'models',
   'collections',
   'excast',
-  'chrome'
+  'chrome',
+  'bootstrap'
 ], function ($, _, Backbone, views, models, collections, excast) {
 
   var App = {};

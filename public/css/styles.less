@@ -43,6 +43,8 @@
   text-align: center;
   padding: 10px;
 
+  height: 390px;
+
   -webkit-user-select: none; /* Chrome/Safari */
   -moz-user-select: none; /* Firefox */
   -ms-user-select: none; /* IE10+ */
@@ -55,16 +57,25 @@
     min-height: 220px;
   }
 
-  .delete-icon {
+  .video-dropdown {
     display: none;
     position: absolute;
-    top: 0;
-    margin-top: 20px;
     right: 0;
+    top: 0;
     margin-right: 20px;
+    margin-top: 20px;
     font-size: 20px;
+  }
+
+  &:hover .video-dropdown {
+    display: block;
+  }
+
+  .delete-icon {
+    font-size: 14px;
     color: indianred;
   }
+
   .play-icon, .transcode-icon {
     display: none;
     position: absolute;
@@ -107,13 +118,6 @@
     opacity: 0.5
   }
   .overlay {
-    display: block;
-  }
-}
-
-.video {
-  height: 390px;
-  &:hover .icon {
     display: block;
   }
 }

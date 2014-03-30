@@ -32,6 +32,7 @@
 .video {
   text-align: center;
   padding: 10px;
+  height: 390px;
   -webkit-user-select: none;
   /* Chrome/Safari */
   -moz-user-select: none;
@@ -45,14 +46,20 @@
 .video .img-thumbnail {
   min-height: 220px;
 }
-.video .delete-icon {
+.video .video-dropdown {
   display: none;
   position: absolute;
-  top: 0;
-  margin-top: 20px;
   right: 0;
+  top: 0;
   margin-right: 20px;
+  margin-top: 20px;
   font-size: 20px;
+}
+.video:hover .video-dropdown {
+  display: block;
+}
+.video .delete-icon {
+  font-size: 14px;
   color: indianred;
 }
 .video .play-icon,
@@ -94,12 +101,6 @@
   opacity: 0.5;
 }
 .transcoding .overlay {
-  display: block;
-}
-.video {
-  height: 390px;
-}
-.video:hover .icon {
   display: block;
 }
 .video-nav {
