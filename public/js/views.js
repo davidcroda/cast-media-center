@@ -1,5 +1,9 @@
+var AppView = Backbone.View.extend({
+
+});
+
 var views = {
-  VideoView: Backbone.View.extend({
+  VideoView: AppView.extend({
     initialize: function (options) {
       this.excast = options.excast;
       this.sort = "-date";
@@ -31,12 +35,6 @@ var views = {
         var id = $(el).data('id');
         var video = _this.collection.get(id);
         _this.excast.transcodeVideo(video, el);
-      });
-      $(window).load(function () {
-        _this.isotope.isotope({
-          filter: '.video',
-          layout: 'fitRows'
-        });
       });
     },
     events: {
@@ -94,7 +92,9 @@ var views = {
       this.excast.loadMedia(video, ev.currentTarget);
     }
   }),
-  SourceView: Backbone.View.extend({
+
+
+  SourceView: AppView.extend({
     initialize: function (options) {
       this.model = options.model;
       this.listenTo(this.collection, 'sync', function () {
@@ -127,6 +127,28 @@ var views = {
     },
     render: function () {
       var template = _.template($("#source_template").html(), {sources: this.collection});
+      this.$el.html(template);
+    }
+  }),
+
+  LoginView: AppView.extend({
+    initialize: function() {
+      console.log(this.user);
+      $("#main_nav").hide();
+      this.render();
+    },
+    events: {
+      'submit form': 'submitForm'
+    },
+    submitForm: function(ev) {
+      $.post('/login', $(ev.currentTarget).serialize(), function(data) {
+        AppView.prototype.user = data;
+        $("#main_nav").show();
+      });
+      return ev.preventDefault();
+    },
+    render: function() {
+      var template = _.template($("#login_template").html(),{});
       this.$el.html(template);
     }
   })

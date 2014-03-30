@@ -47,16 +47,14 @@ exports.refresh = function () {
     results.forEach(function (source) {
       types[source.type](source.path, function (err, files) {
         if (err) console.log("Error: ", err);
+        if (files.length > 0) {
+          filters.forEach(function (filter) {
+            files = filter(files);
+          });
 
-        filters.forEach(function (filter) {
-          files = filter(files);
-        });
-
-        FILES = files;
-
-        processFiles(source, function () {
-          exports.TIMEOUT = setTimeout(exports.refresh, calculateTimeout(exports.POLL_INTERVAL));
-        });
+          FILES = files;
+          processFiles(source);
+        }
       });
     });
   })
@@ -83,5 +81,7 @@ function processFiles(source, cb) {
   });
   if (typeof cb == "function") {
     cb()
+  } else {
+    exports.TIMEOUT = setTimeout(exports.refresh, calculateTimeout(exports.POLL_INTERVAL));
   }
 }

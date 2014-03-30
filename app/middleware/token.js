@@ -4,9 +4,9 @@ exports.authorize = function (req, res, next) {
   if (req.path == '/login' ||
     req.path == '/register' ||
     req.isAuthenticated() ||
-    req.headers['x-token'] == process.env.TOKEN) {
+    (process.env.TOKEN && req.headers['x-token'] == process.env.TOKEN)) {
     return next();
   } else {
-    return res.send(404);
+    return res.send(401);
   }
 };

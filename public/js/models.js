@@ -32,8 +32,10 @@ var models = {
       this.on('change:watched', function (model, value, options) {
         model.save();
       });
-    }
+    },
+    error: onModelError
   }),
+
   Source: Backbone.Model.extend({
     urlRoot: '/api/source',
     defaults: {
@@ -48,8 +50,15 @@ var models = {
       if(options._id) {
         this.id = options._id;
       }
-    }
+    },
+    error: onModelError
   })
 };
+
+function onModelError(model, resp, options) {
+  console.log("#### MODEL ERROR ####");
+  console.log(model, resp, options);
+  console.log("#### MODEL ERROR ####");
+}
 
 define(models);

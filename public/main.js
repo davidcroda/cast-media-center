@@ -39,8 +39,7 @@ require([
   'models',
   'collections',
   'excast',
-  'chrome',
-  'isotope'
+  'chrome'
 ], function ($, _, Backbone, views, models, collections, excast) {
 
   $("#wrapper").html(_.template($("#layout").html()));
@@ -48,14 +47,16 @@ require([
   var Router = Backbone.Router.extend({
     routes: {
       "": "index",
-      "sources": 'sources'
+      "sources": 'sources',
+      'login': 'login'
     }
   });
 
-  var videos = new collections.Videos(),
+  var videos = new collections.Videos(models.Video),
+    sources = new collections.Sources(models.Source),
     videoView = null,
-    sources = new collections.Sources(),
-    sourceView = null
+    sourceView = null,
+    loginView = null
     ;
 
   var appRouter = new Router();
@@ -76,9 +77,18 @@ require([
             this.collection.url = videos.urlBase + videos.sort;
             this.collection.fetch();
           });
+      },
+      error: function(collection, response, options) {
+//        console.log("Collection:", collection);
+//        console.log("Response:", response);
+//        console.log("Options:", options);
+        if(response.status == 401) {
+          appRouter.navigate('login', {trigger: true, replace: true});
+        }
       }
     });
   });
+
   appRouter.on('route:sources', function () {
     sources.fetch({
       success: function (collection, response, options) {
@@ -88,6 +98,13 @@ require([
           model: models.Source
         });
       }
+    });
+  });
+
+  appRouter.on('route:login', function() {
+    console.log('hello');
+    loginView = new views.LoginView({
+      el: $("#content")
     });
   });
 
