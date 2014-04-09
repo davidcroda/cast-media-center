@@ -78,6 +78,7 @@ exports.transcode = function (res, video) {
       .on('finish', function () {
         console.log("transcode finished");
         delete exports.transcoding[video.path];
+        var oldPath = video.path;
         video.path = newPath;
         video.acodec = "aac";
         video.vcodec = "h264";
@@ -88,7 +89,9 @@ exports.transcode = function (res, video) {
         });
         video.save(function (err) {
           if (err) throw err;
-          fs.unlink(video.path);
+          if(oldPath != newPath) {
+            fs.unlink(oldPath);
+          }
         });
         res.end();
       })
