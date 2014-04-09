@@ -75,7 +75,12 @@ exports.transcode = function (res, video) {
         exports.transcoding[video.path] = progress;
         res.json(progress);
       })
-      .on('finish', function () {
+      .on('error', function(ev, ev1, ev2) {
+        console.log("ERROR");
+        console.log(ev, ev1, ev2);
+      })
+      .on('finish', function (ev) {
+        console.log(ev);
         console.log("transcode finished");
         delete exports.transcoding[video.path];
         var oldPath = video.path;

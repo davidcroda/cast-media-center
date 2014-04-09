@@ -6,6 +6,8 @@ exports.postLogin = function (req, res, next) {
     return next();
   }
 
+  console.log(req.user);
+
   utils.generateToken(64, req.user.id, function (err, token) {
     if (err) return next(err);
     res.cookie('remember_me', token, { path: '/', httpOnly: true, maxAge: 604800000 }); // 7 days

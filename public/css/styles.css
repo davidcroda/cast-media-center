@@ -75,6 +75,10 @@
   height: 150px;
   color: #5cb85c;
 }
+.video:hover .play-icon,
+.video:hover .transcode-icon {
+  display: block;
+}
 .video .overlay {
   display: none;
   width: 0%;
