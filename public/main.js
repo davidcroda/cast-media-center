@@ -102,7 +102,6 @@ require([
   });
 
   App.router.on('route:login', function() {
-    console.log('hello');
     App.loginView = new views.LoginView({
       el: $("#content")
     });

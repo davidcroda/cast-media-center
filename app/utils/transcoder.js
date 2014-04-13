@@ -24,8 +24,7 @@ exports.isTranscoding = function (file) {
 };
 
 function transformPath(file) {
-  file = file.replace('/\.[^.]+?$','.mp4');
-  return file;
+  return file + '.CONV.mp4';
 }
 
 exports.transcode = function (res, video) {

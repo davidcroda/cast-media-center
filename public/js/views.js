@@ -1,5 +1,7 @@
 var AppView = Backbone.View.extend({
-
+  initialize: function(App) {
+    this.App = App;
+  }
 });
 
 var views = {
@@ -134,6 +136,7 @@ var views = {
   LoginView: AppView.extend({
     initialize: function() {
       console.log(this.user);
+      console.log(this.App);
       $("#main_nav").hide();
       this.render();
     },
@@ -144,6 +147,7 @@ var views = {
       $.post('/login', $(ev.currentTarget).serialize(), function(data) {
         AppView.prototype.user = data;
         $("#main_nav").show();
+
       });
       return ev.preventDefault();
     },

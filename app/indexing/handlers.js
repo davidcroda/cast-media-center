@@ -74,8 +74,6 @@ var generateThumbnail = function (file, sizeName, size, cb) {
       filename: "%b-%w-%h"
     }, config.thumbnailPath, function (err, filenames) {
       if (err) {
-        console.log("Error processing: " + file.path);
-        console.log(err);
         cb(err, null);
       } else {
         cb(null, sizeName, config.thumbnailUrl + filenames[0]);
