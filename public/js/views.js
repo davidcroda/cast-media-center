@@ -72,18 +72,15 @@ var views = {
       this.trigger('sort', this.sort);
     },
     deleteVideo: function (ev) {
-      var video = $(ev.currentTarget).parents('.video'),
-        id = video.data('id');
-      console.log($(ev.currentTarget));
-      if (confirm("Are you sure you want to delete this video?")) {
+      var videoEl = $(ev.currentTarget).parents('.video'),
+        id = videoEl.data('id'),
         video = this.collection.get(id);
-        console.log(id);
-        console.log(this.collection);
-        console.log(video);
+      if (typeof video != "undefined" && confirm("Are you sure you want to delete " + video.get('title') + "?")) {
         video.destroy({
           success: function (model, response) {
             console.log(model, response);
-            $('#video-container').destroy();
+            videoEl.remove();
+            return ev.preventDefault();
           }
         });
       }

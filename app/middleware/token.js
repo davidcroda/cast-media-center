@@ -1,6 +1,8 @@
 exports.authorize = function (req, res, next) {
   console.log("Auth: " + req.isAuthenticated());
   console.log("Path: " + req.path);
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
   if (req.path == '/login' ||
     req.path == '/register' ||
     req.isAuthenticated() ||
