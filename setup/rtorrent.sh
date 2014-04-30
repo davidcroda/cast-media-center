@@ -10,7 +10,7 @@ svn co http://svn.code.sf.net/p/xmlrpc-c/code/advanced xmlrpc-c
 cd xmlrpc-c
 ./configure
 make
-make install
+sudo make install
 
 #libtorrent and rtorrent
 cd ${BASE}
