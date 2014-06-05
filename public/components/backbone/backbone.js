@@ -1138,8 +1138,6 @@
       emulateJSON: Backbone.emulateJSON
     });
 
-    console.log(method, model, options);
-
     // Default JSON-request options.
     var params = {type: type, dataType: 'json'};
 

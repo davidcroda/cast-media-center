@@ -11,6 +11,12 @@
   <script type="text/template" id="source_template">
     <form>
       <fieldset>
+        <legend>Add Torrents</legend>
+        <input type="file" id="torrents" name="torrents[]" multiple />
+        <div id="upload-status"></div>
+      </fieldset>
+      <br />
+      <fieldset>
         <label for="path">
           <span>Path</span>
           <input type="text" placeholder="/home/media/" class="form-control" name="path" id="path"/>
@@ -135,9 +141,9 @@
               <li><a href="#sources">Sources</a></li>
               <li><a href="/refresh">Refresh</a></li>
             </ul>
-            <form role="search" class="navbar-form navbar-left">
+            <form method="post" class="navbar-form navbar-left">
               <div class="form-group">
-                <input id="search" type="text" placeholder="Search" class="form-control">
+                <input id="torrent" type="file" class="form-control">
               </div>
             </form>
             <ul class="nav navbar-nav pull-right">

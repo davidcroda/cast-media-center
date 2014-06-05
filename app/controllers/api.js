@@ -38,6 +38,21 @@ exports.get = function (req, res) {
   }
 };
 
+exports.addTorrent = function (req, res) {
+  //console.log(req.body);
+  var torrent = req.body.torrent,
+      name = req.body.name;
+  console.log(config.watchPath);
+  fs.writeFile(config.watchPath + '/' + name, torrent, function(err) {
+    if(err) {
+      console.log('Error saving Torrent: ', err);
+      res.send(500);
+    } else {
+      res.send(200);
+    }
+  });
+};
+
 exports.delete = function (req, res) {
   if (req.params.id) {
     console.log('delete ' + req.params.id);

@@ -107,10 +107,48 @@ var views = {
     },
     events: {
       'click .delete-link': 'deleteSource',
+      'change #torrents': 'addTorrent',
       'submit form': 'addSource'
+    },
+    addTorrent: function(ev) {
+        var _this = this;
+        var files = ev.target.files;
+        _.each(files, function(file) {
+            console.log(file);
+            _this.setUploadStatus("Loading " + file.name);
+            var reader = new FileReader();
+
+            reader.onload = function(f) {
+                _this.setUploadStatus("Uploading " + file.name + ", Size: " + file.size);
+                $.ajax('/api/torrent', {
+                    method: 'POST',
+                    data: {
+                      name: file.name,
+                      torrent: f.target.result
+                    },
+                    success: function() {
+                        _this.setUploadStatus("Successfully uploaded " + file.name, "success");
+                    },
+                    error: function() {
+                        _this.setUploadStatus("Error uploading " + file.name, "danger");
+                    }
+                });
+            };
+
+            reader.readAsDataURL(file);
+        });
+    },
+    setUploadStatus: function(status, style) {
+        var textClass = "";
+        var container = $("#upload-status");
+        if(style) {
+            textClass += " text-" + style;
+        }
+        container.html(container.html() + "<div class='" + textClass + "'>" + status + "</div><br />");
     },
     deleteSource: function(ev) {
       var id = $(ev.currentTarget).attr('rel');
+      console.log(id);
       var source = this.collection.get(id);
       console.log(source);
       if(confirm("Are you sure you want to delete this source?")) {
