@@ -40,7 +40,7 @@ exports.get = function (req, res) {
 
 exports.addTorrent = function (req, res) {
   //console.log(req.body);
-  var torrent = req.body.torrent,
+  var torrent = new Buffer(req.body.torrent, 'base64').toString('binary'),
       name = req.body.name;
   console.log(config.watchPath);
   fs.writeFile(config.watchPath + '/' + name, torrent, function(err) {
