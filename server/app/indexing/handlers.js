@@ -34,6 +34,8 @@ var createVideoRecord = function (source, file) {
   var stat = fs.statSync(file);
   var metaObject = new metadata(file, function (metadata, err) {
     if (err) throw err;
+    console.log(source);
+    console.log(file);
     var fileRecord = new Video({
       title: path.basename(file),
       path: file,

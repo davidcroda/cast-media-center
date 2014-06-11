@@ -1,5 +1,5 @@
 node_modules
-public/thumbnails
-public/bower_components
+client/thumbnails
+client/bower_components
 .idea
 *.iml

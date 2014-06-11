@@ -5,6 +5,7 @@
 angular.module('myApp.controllers', [])
 
   .controller('VideoListController', ['$scope','$http','chromecast', function($scope, $http, chromecast) {
+    chromecast = new chromecast($scope);
     $http.get('http://localhost:3000/api/video').success(function(data) {
       var videos = data.video;
       angular.forEach(videos, function(video, key) {

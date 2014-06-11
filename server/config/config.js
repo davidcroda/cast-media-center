@@ -12,7 +12,7 @@ var config = {
     },
     port: port,
     db: process.env.DATABASE_URL || "mongodb://localhost/excast-development",
-    thumbnailPath: process.env.THUMBNAIL_PATH || './public/thumbnails/',
+    thumbnailPath: process.env.THUMBNAIL_PATH || './client/thumbnails/',
     thumbnailUrl: process.env.THUMBNAIL_URL || 'http://daveroda.com/thumbnails/',
     watchPath: path.normalize(path.join(rootPath,'..','watch'))
   },
@@ -24,7 +24,7 @@ var config = {
     },
     port: port,
     db: process.env.DATABASE_URL || "mongodb://localhost/excast-development",
-    thumbnailPath: process.env.THUMBNAIL_PATH || './public/thumbnails/',
+    thumbnailPath: process.env.THUMBNAIL_PATH || './client/thumbnails/',
     thumbnailUrl: process.env.THUMBNAIL_URL || 'http://' + host + ':' + port + '/thumbnails/',
     watchPath: path.normalize(path.join(rootPath,'..','watch'))
   },

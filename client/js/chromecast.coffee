@@ -1,6 +1,6 @@
 class Excast
 
-  constructor: ()->
+  constructor: ($scope)->
     @init = false
     @appSession = null
     @mediaSession = null
@@ -66,9 +66,7 @@ class Excast
       video.url = video.sources[0]
     return video
 
-  loadMedia: (video, $scope) =>
-    @$scope = $scope
-
+  loadMedia: (video) =>
     video = @checkMedia(video)
 
     @video = video;
@@ -76,15 +74,14 @@ class Excast
     video.watched = true;
 
     if video
-
       console.log "loadMedia: ", video
       if !@appSession
         @loadApp =>
           @loadMedia video
         return false
 
-      $scope.currentMedia = video
-      $scope.state = "playing"
+      @$scope.currentMedia = video
+      @$scope.state = "playing"
 
       console.log("loading... " + video.url);
       mediaInfo = new chrome.cast.media.MediaInfo(video.url);
@@ -148,13 +145,23 @@ class Excast
       session.addUpdateListener(@updateMediaDisplay)
       @updateMediaDisplay()
 
+  onStopSuccess: (data) =>
+    console.log("Session stopped")
+    @appSession = @mediaSession = null
+    console.log(data)
+
+  onStopError: (error) =>
+    console.log(error)
+
+  onMediaError: (error) =>
+    console.log(error)
+
   updateMediaDisplay: =>
     if @mediaSession
       @currentTime = @mediaSession.currentTime
       console.log 'Overrode @currentTime with @mediaSession.currentTime of ', @mediaSession.currentTime
-      $('#control-nav').show()
-      $('.current-media').html @mediaSession.media.customData.title
-      $('.thumbnail').attr 'src', @mediaSession.media.customData.thumbnail
+      #$('.current-media').html @mediaSession.media.customData.title
+      #$('.thumbnail').attr 'src', @mediaSession.media.customData.thumbnail
       @updateProgressBar()
       @updateControls()
 
@@ -206,7 +213,6 @@ class Excast
         @stop.addClass('disabled')
 
   onInitSuccess: =>
-    console.log 'init success'
     @init = true
     @bindControls()
 
@@ -216,10 +222,14 @@ class Excast
   sessionListener: (e)=>
     console.log "Received Session: ", e
     @appSession = e;
-    if e.media.length > 0
-      @onMediaDiscovered e.media[0]
-    @appSession.addMediaListener @onMediaDiscovered
-    @appSession.addUpdateListener @sessionUpdateListener
+    if !@$scope.currentMedia
+      console.log("Stopping existing session");
+      @appSession.stop(@onStopSuccess, @onStopError)
+    else
+      if e.media.length > 0
+        @onMediaDiscovered e.media[0]
+      @appSession.addMediaListener @onMediaDiscovered
+      @appSession.addUpdateListener @sessionUpdateListener
 
   sessionUpdateListener: (alive)=>
     console.log (alive ? 'Session Updated: ': 'Session Removed: ') + @appSession.sessionId;
@@ -250,4 +260,4 @@ class Excast
 
 angular.module 'excast', []
   .factory 'chromecast', ()->
-    return new Excast()
+    return Excast
