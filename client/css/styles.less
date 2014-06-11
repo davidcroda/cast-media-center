@@ -1,0 +1,136 @@
+@import "../bower_components/bootstrap/less/variables";
+@import "../bower_components/bootstrap/less/mixins";
+
+.padded {
+  padding: 10px;
+}
+
+.controls {
+  font-size: 2em;
+}
+
+.disabled {
+  color: grey;
+}
+
+.disabled a {
+  color: grey;
+}
+
+.progress {
+  margin-top: 20px;
+  border: solid 1px black;
+}
+
+.loading {
+  display: none;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 128px;
+  height: 128px;
+  margin-left: -64px;
+  margin-top: -64px;
+  background-color: white;
+  box-shadow: 3px 3px 2px black;
+}
+
+.thumbnail {
+  width: 100px;
+}
+
+.video {
+  text-align: center;
+  padding: 10px;
+
+  height: 390px;
+
+  -webkit-user-select: none; /* Chrome/Safari */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* IE10+ */
+
+  /* Rules below not implemented in browsers yet */
+  -o-user-select: none;
+  user-select: none;
+
+  .img-thumbnail {
+    min-height: 220px;
+  }
+
+  .video-dropdown {
+    position: absolute;
+    right: 0;
+    top: 0;
+    margin-right: 20px;
+    margin-top: 20px;
+    font-size: 20px;
+  }
+
+  .delete-icon {
+    font-size: 14px;
+    color: indianred;
+  }
+
+  .play-icon, .transcode-icon {
+    position: absolute;
+    margin: auto;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    font-size: 72px;
+    height: 150px;
+    color: @brand-success;
+  }
+
+  .overlay {
+    display: none;
+    width: 0%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    position: absolute;
+    opacity: 0.5;
+    #gradient .horizontal(@brand-success, @brand-primary, 0%, 100%);
+  }
+
+  &.active {
+    background-color: @brand-primary;
+  }
+
+  &.highlight {
+    background-color: lighten(@brand-primary, 20%);
+  }
+
+  &.highlight.transcoding {
+    background: none !important;
+  }
+}
+
+.transcoding {
+  .img-thumbnail {
+    opacity: 0.5
+  }
+  .overlay {
+    display: block;
+  }
+}
+
+.video-nav {
+  margin: 10px 0px;
+
+  ul {
+    margin: 0;
+    padding: 0;
+    li {
+      display: inline;
+      list-style: none;
+      .asc:before {
+        content: "<";
+      }
+      .desc:before {
+        content: ">";
+      }
+    }
+  }
+}

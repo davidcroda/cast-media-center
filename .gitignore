@@ -1,4 +1,5 @@
 node_modules
 public/thumbnails
+public/bower_components
 .idea
 *.iml
