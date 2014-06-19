@@ -104,6 +104,6 @@ function extractVideo(source, archive, index) {
 //"rar|001|zip": extractVideo,
 //"mp4|mkv": processVideo
 exports.video = {
-  pattern: /\.(mp4|mkv)/,
+  pattern: /\.(mp4|mkv|avi)/,
   callback: processVideo
 };

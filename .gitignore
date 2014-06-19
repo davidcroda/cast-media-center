@@ -1,4 +1,5 @@
 node_modules
 public/thumbnails
+public/components
 .idea
 *.iml
