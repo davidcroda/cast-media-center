@@ -14,25 +14,23 @@ module.exports = function (grunt) {
     pkg: grunt.file.readJSON('package.json'),
     develop: {
       server: {
-        file: 'app.js'
+        file: '/server/app.js'
       }
     },
     watch: {
       options: {
-        nospawn: true,
-        livereload: reloadPort
+        nospawn: true
+        //livereload: reloadPort
       },
       js: {
         files: [
-          'app.js',
-          'app/**/*.js',
-          'config/*.js'
+          '/server/**/*.js'
         ],
         tasks: ['develop', 'delayed-livereload']
       },
       jade: {
-        files: ['app/views/**/*.jade'],
-        options: { livereload: reloadPort }
+        files: ['app/views/**/*.jade']
+        //options: { livereload: reloadPort }
       }
     }
   });
