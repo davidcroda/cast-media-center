@@ -1,0 +1,268 @@
+{
+  "video": [
+    {
+      "__v": 0,
+      "_id": "537e346a955300b70300001a",
+      "acodec": "aac",
+      "date": "2014-01-02T05:00:00.000Z",
+      "duration": 0,
+      "path": "/home/dave/mount/Broad.City.S01E10.The.Last.Supper.HDTV.x264-BWB/Broad.City.S01E10.The.Last.Supper.HDTV.x264-BWB.mp4",
+      "thumbnailLarge": "",
+      "thumbnailSmall": "http://daveroda.com/thumbnails/Broad.City.S01E10.The.Last.Supper.HDTV.x264-BWB-480-270.jpg",
+      "title": "Broad.City.S01E10.The.Last.Supper.HDTV.x264-BWB.mp4",
+      "vcodec": "h264",
+      "watched": true,
+      "transcoding": false,
+      "sources": [
+        "http://daveroda.com:81/Broad.City.S01E10.The.Last.Supper.HDTV.x264-BWB/Broad.City.S01E10.The.Last.Supper.HDTV.x264-BWB.mp4"
+      ],
+      "id": "537e346a955300b70300001a"
+    },
+    {
+      "__v": 0,
+      "_id": "538e96443861225c2b00000a",
+      "acodec": "aac",
+      "date": "2014-06-04T03:45:08.000Z",
+      "duration": 0,
+      "path": "/home/dave/mount/Californication.S07E01.480p.HDTV.x264-mSD/Californication.S07E01.480p.HDTV.x264-mSD.mkv",
+      "thumbnailLarge": "http://daveroda.com/thumbnails/Californication.S07E01.480p.HDTV.x264-mSD-1280-720.jpg",
+      "thumbnailSmall": "http://daveroda.com/thumbnails/Californication.S07E01.480p.HDTV.x264-mSD-480-270.jpg",
+      "title": "Californication.S07E01.480p.HDTV.x264-mSD.mkv",
+      "vcodec": "h264",
+      "watched": true,
+      "transcoding": false,
+      "sources": [
+        "http://daveroda.com:81/Californication.S07E01.480p.HDTV.x264-mSD/Californication.S07E01.480p.HDTV.x264-mSD.mkv"
+      ],
+      "id": "538e96443861225c2b00000a"
+    },
+    {
+      "__v": 0,
+      "_id": "538e9d0a3861225c2b00000b",
+      "acodec": "aac",
+      "date": "2014-06-04T04:10:12.000Z",
+      "duration": 0,
+      "path": "/home/dave/mount/Californication.S07E02.480p.HDTV.x264-mSD/Californication.S07E02.480p.HDTV.x264-mSD.mkv",
+      "thumbnailLarge": "http://daveroda.com/thumbnails/Californication.S07E02.480p.HDTV.x264-mSD-1280-720.jpg",
+      "thumbnailSmall": "http://daveroda.com/thumbnails/Californication.S07E02.480p.HDTV.x264-mSD-480-270.jpg",
+      "title": "Californication.S07E02.480p.HDTV.x264-mSD.mkv",
+      "vcodec": "h264",
+      "watched": true,
+      "transcoding": false,
+      "sources": [
+        "http://daveroda.com:81/Californication.S07E02.480p.HDTV.x264-mSD/Californication.S07E02.480p.HDTV.x264-mSD.mkv"
+      ],
+      "id": "538e9d0a3861225c2b00000b"
+    },
+    {
+      "__v": 0,
+      "_id": "538fb35d3861225c2b00000c",
+      "acodec": "aac",
+      "date": "2014-06-05T00:01:32.000Z",
+      "duration": 0,
+      "path": "/home/dave/mount/Californication.S07E03.480p.HDTV.x264-mSD/Californication.S07E03.480p.HDTV.x264-mSD.mkv",
+      "thumbnailLarge": "http://daveroda.com/thumbnails/Californication.S07E03.480p.HDTV.x264-mSD-1280-720.jpg",
+      "thumbnailSmall": "http://daveroda.com/thumbnails/Californication.S07E03.480p.HDTV.x264-mSD-480-270.jpg",
+      "title": "Californication.S07E03.480p.HDTV.x264-mSD.mkv",
+      "vcodec": "h264",
+      "watched": true,
+      "transcoding": false,
+      "sources": [
+        "http://daveroda.com:81/Californication.S07E03.480p.HDTV.x264-mSD/Californication.S07E03.480p.HDTV.x264-mSD.mkv"
+      ],
+      "id": "538fb35d3861225c2b00000c"
+    },
+    {
+      "__v": 0,
+      "_id": "538ff3d1aba4cc3945000004",
+      "acodec": "aac",
+      "date": "2014-06-05T04:36:28.000Z",
+      "duration": 0,
+      "path": "/home/dave/mount/Californication.S07E04.480p.HDTV.x264-mSD/Californication.S07E04.480p.HDTV.x264-mSD.mkv",
+      "thumbnailLarge": "http://daveroda.com/thumbnails/Californication.S07E04.480p.HDTV.x264-mSD-1280-720.jpg",
+      "thumbnailSmall": "http://daveroda.com/thumbnails/Californication.S07E04.480p.HDTV.x264-mSD-480-270.jpg",
+      "title": "Californication.S07E04.480p.HDTV.x264-mSD.mkv",
+      "vcodec": "h264",
+      "watched": true,
+      "transcoding": false,
+      "sources": [
+        "http://daveroda.com:81/Californication.S07E04.480p.HDTV.x264-mSD/Californication.S07E04.480p.HDTV.x264-mSD.mkv"
+      ],
+      "id": "538ff3d1aba4cc3945000004"
+    },
+    {
+      "__v": 0,
+      "_id": "53913c29aba4cc3945000009",
+      "acodec": "aac",
+      "date": "2014-06-06T03:57:04.000Z",
+      "duration": 0,
+      "path": "/home/dave/mount/Californication.S07E06.480p.HDTV.x264-mSD/Californication.S07E06.480p.HDTV.x264-mSD.mkv",
+      "thumbnailLarge": "http://daveroda.com/thumbnails/Californication.S07E06.480p.HDTV.x264-mSD-1280-720.jpg",
+      "thumbnailSmall": "http://daveroda.com/thumbnails/Californication.S07E06.480p.HDTV.x264-mSD-480-270.jpg",
+      "title": "Californication.S07E06.480p.HDTV.x264-mSD.mkv",
+      "vcodec": "h264",
+      "watched": true,
+      "transcoding": false,
+      "sources": [
+        "http://daveroda.com:81/Californication.S07E06.480p.HDTV.x264-mSD/Californication.S07E06.480p.HDTV.x264-mSD.mkv"
+      ],
+      "id": "53913c29aba4cc3945000009"
+    },
+    {
+      "__v": 0,
+      "_id": "53925c9eaba4cc394500000b",
+      "acodec": "aac",
+      "date": "2014-06-07T00:25:51.000Z",
+      "path": "/home/dave/mount/Californication.S07E07.480p.HDTV.x264-mSD/Californication.S07E07.480p.HDTV.x264-mSD.mkv",
+      "thumbnailLarge": "http://daveroda.com/thumbnails/Californication.S07E07.480p.HDTV.x264-mSD-1280-720.jpg",
+      "thumbnailSmall": "http://daveroda.com/thumbnails/Californication.S07E07.480p.HDTV.x264-mSD-480-270.jpg",
+      "title": "Californication.S07E07.480p.HDTV.x264-mSD.mkv",
+      "vcodec": "h264",
+      "watched": false,
+      "transcoding": false,
+      "sources": [
+        "http://daveroda.com:81/Californication.S07E07.480p.HDTV.x264-mSD/Californication.S07E07.480p.HDTV.x264-mSD.mkv"
+      ],
+      "id": "53925c9eaba4cc394500000b"
+    },
+    {
+      "__v": 0,
+      "_id": "53925c9eaba4cc394500000c",
+      "acodec": "aac",
+      "date": "2014-06-07T00:26:11.000Z",
+      "path": "/home/dave/mount/Californication.S07E08.480p.HDTV.x264-mSD/Californication.S07E08.480p.HDTV.x264-mSD.mkv",
+      "thumbnailLarge": "http://daveroda.com/thumbnails/Californication.S07E08.480p.HDTV.x264-mSD-1280-720.jpg",
+      "thumbnailSmall": "http://daveroda.com/thumbnails/Californication.S07E08.480p.HDTV.x264-mSD-480-270.jpg",
+      "title": "Californication.S07E08.480p.HDTV.x264-mSD.mkv",
+      "vcodec": "h264",
+      "watched": false,
+      "transcoding": false,
+      "sources": [
+        "http://daveroda.com:81/Californication.S07E08.480p.HDTV.x264-mSD/Californication.S07E08.480p.HDTV.x264-mSD.mkv"
+      ],
+      "id": "53925c9eaba4cc394500000c"
+    },
+    {
+      "__v": 0,
+      "_id": "53925c9eaba4cc394500000d",
+      "acodec": "aac",
+      "date": "2014-06-07T00:27:25.000Z",
+      "path": "/home/dave/mount/Californication.S07E09.480p.HDTV.x264-mSD/Californication.S07E09.480p.HDTV.x264-mSD.mkv",
+      "thumbnailLarge": "http://daveroda.com/thumbnails/Californication.S07E09.480p.HDTV.x264-mSD-1280-720.jpg",
+      "thumbnailSmall": "http://daveroda.com/thumbnails/Californication.S07E09.480p.HDTV.x264-mSD-480-270.jpg",
+      "title": "Californication.S07E09.480p.HDTV.x264-mSD.mkv",
+      "vcodec": "h264",
+      "watched": false,
+      "transcoding": false,
+      "sources": [
+        "http://daveroda.com:81/Californication.S07E09.480p.HDTV.x264-mSD/Californication.S07E09.480p.HDTV.x264-mSD.mkv"
+      ],
+      "id": "53925c9eaba4cc394500000d"
+    },
+    {
+      "__v": 0,
+      "_id": "537d256f955300b703000016",
+      "acodec": "aac",
+      "date": "2014-05-21T16:40:59.000Z",
+      "path": "/home/dave/mount/Fargo.S01E01.480p.HDTV.x264-mSD/Fargo.S01E01.480p.HDTV.x264-mSD.mkv",
+      "thumbnailLarge": "http://daveroda.com/thumbnails/Fargo.S01E01.480p.HDTV.x264-mSD-1280-720.jpg",
+      "thumbnailSmall": "http://daveroda.com/thumbnails/Fargo.S01E01.480p.HDTV.x264-mSD-480-270.jpg",
+      "title": "Fargo.S01E01.480p.HDTV.x264-mSD.mkv",
+      "vcodec": "h264",
+      "watched": false,
+      "transcoding": false,
+      "sources": [
+        "http://daveroda.com:81/Fargo.S01E01.480p.HDTV.x264-mSD/Fargo.S01E01.480p.HDTV.x264-mSD.mkv"
+      ],
+      "id": "537d256f955300b703000016"
+    },
+    {
+      "__v": 0,
+      "_id": "538d2e3a3861225c2b000003",
+      "acodec": "aac",
+      "date": "2014-06-03T02:08:49.000Z",
+      "path": "/home/dave/mount/Game.of.Thrones.S04E08.m480p.HDTV.x264-mSD/Game.of.Thrones.S04E08.m480p.HDTV.x264-mSD.mkv",
+      "thumbnailLarge": "http://daveroda.com/thumbnails/Game.of.Thrones.S04E08.m480p.HDTV.x264-mSD-1280-720.jpg",
+      "thumbnailSmall": "http://daveroda.com/thumbnails/Game.of.Thrones.S04E08.m480p.HDTV.x264-mSD-480-270.jpg",
+      "title": "Game.of.Thrones.S04E08.m480p.HDTV.x264-mSD.mkv",
+      "vcodec": "h264",
+      "watched": false,
+      "transcoding": false,
+      "sources": [
+        "http://daveroda.com:81/Game.of.Thrones.S04E08.m480p.HDTV.x264-mSD/Game.of.Thrones.S04E08.m480p.HDTV.x264-mSD.mkv"
+      ],
+      "id": "538d2e3a3861225c2b000003"
+    },
+    {
+      "__v": 0,
+      "_id": "537ad6cd955300b703000014",
+      "acodec": "aac",
+      "date": "2014-05-20T04:15:04.000Z",
+      "duration": 0,
+      "path": "/home/dave/mount/Silicon.Valley.S01E07.480p.HDTV.x264-mSD/Silicon.Valley.S01E07.480p.HDTV.x264-mSD.mkv",
+      "thumbnailLarge": "http://daveroda.com/thumbnails/Silicon.Valley.S01E07.480p.HDTV.x264-mSD-1280-720.jpg",
+      "thumbnailSmall": "http://daveroda.com/thumbnails/Silicon.Valley.S01E07.480p.HDTV.x264-mSD-480-270.jpg",
+      "title": "Silicon.Valley.S01E07.480p.HDTV.x264-mSD.mkv",
+      "vcodec": "h264",
+      "watched": true,
+      "transcoding": false,
+      "sources": [
+        "http://daveroda.com:81/Silicon.Valley.S01E07.480p.HDTV.x264-mSD/Silicon.Valley.S01E07.480p.HDTV.x264-mSD.mkv"
+      ],
+      "id": "537ad6cd955300b703000014"
+    },
+    {
+      "__v": 0,
+      "_id": "538d2f1f3861225c2b000004",
+      "acodec": "aac",
+      "date": "2014-06-03T02:10:36.000Z",
+      "path": "/home/dave/mount/Silicon.Valley.S01E08.480p.HDTV.x264-mSD/Silicon.Valley.S01E08.480p.HDTV.x264-mSD.mkv",
+      "thumbnailLarge": "http://daveroda.com/thumbnails/Silicon.Valley.S01E08.480p.HDTV.x264-mSD-1280-720.jpg",
+      "thumbnailSmall": "http://daveroda.com/thumbnails/Silicon.Valley.S01E08.480p.HDTV.x264-mSD-480-270.jpg",
+      "title": "Silicon.Valley.S01E08.480p.HDTV.x264-mSD.mkv",
+      "vcodec": "h264",
+      "watched": false,
+      "transcoding": false,
+      "sources": [
+        "http://daveroda.com:81/Silicon.Valley.S01E08.480p.HDTV.x264-mSD/Silicon.Valley.S01E08.480p.HDTV.x264-mSD.mkv"
+      ],
+      "id": "538d2f1f3861225c2b000004"
+    },
+    {
+      "__v": 0,
+      "_id": "5360501519fdf5b30f000004",
+      "acodec": "aac",
+      "date": "2014-04-24T03:30:20.000Z",
+      "duration": 0,
+      "path": "/home/dave/mount/The.Following.S02E14.480p.HDTV.x264-mSD/The.Following.S02E14.480p.HDTV.x264-mSD.mkv",
+      "thumbnailLarge": "http://daveroda.com/thumbnails/The.Following.S02E14.480p.HDTV.x264-mSD-1280-720.jpg",
+      "thumbnailSmall": "http://daveroda.com/thumbnails/The.Following.S02E14.480p.HDTV.x264-mSD-480-270.jpg",
+      "title": "The.Following.S02E14.480p.HDTV.x264-mSD.mkv",
+      "vcodec": "h264",
+      "watched": true,
+      "transcoding": false,
+      "sources": [
+        "http://daveroda.com:81/The.Following.S02E14.480p.HDTV.x264-mSD/The.Following.S02E14.480p.HDTV.x264-mSD.mkv"
+      ],
+      "id": "5360501519fdf5b30f000004"
+    },
+    {
+      "__v": 0,
+      "_id": "5360501519fdf5b30f000005",
+      "acodec": "aac",
+      "date": "2014-04-25T22:27:00.000Z",
+      "duration": 0,
+      "path": "/home/dave/mount/Hannibal.S02E09.HDTV.x264-LOL/hannibal.209.hdtv-lol.mp4",
+      "thumbnailLarge": "http://daveroda.com/thumbnails/hannibal.209.hdtv-lol-1280-720.jpg",
+      "thumbnailSmall": "http://daveroda.com/thumbnails/hannibal.209.hdtv-lol-480-270.jpg",
+      "title": "hannibal.209.hdtv-lol.mp4",
+      "vcodec": "h264",
+      "watched": true,
+      "transcoding": false,
+      "sources": [
+        "http://daveroda.com:81/Hannibal.S02E09.HDTV.x264-LOL/hannibal.209.hdtv-lol.mp4"
+      ],
+      "id": "5360501519fdf5b30f000005"
+    }
+  ]
+}

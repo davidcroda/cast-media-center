@@ -7,10 +7,12 @@
     "components"
   ],
   "dependencies": {
+    "angular": "1.2.x",
+    "angular-route": "1.2.x",
+    "angular-loader": "1.2.x",
+    "angular-mocks": "~1.2.x",
+    "html5-boilerplate": "~4.3.0",
     "bootstrap": "~3.1.1",
-    "backbone": "~1.1.2",
-    "requirejs": "~2.1.11",
-    "underscore": "~1.6.0",
-    "isotope": "~1.5.26"
+    "jquery": "~2.1.1"
   }
 }
