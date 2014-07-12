@@ -36,7 +36,7 @@
       this.timer = null;
       this.currentTime = 0;
       this.timeouts = {};
-      this.$scope = {};
+      this.$scope = $scope;
       if (!chrome.cast || !chrome.cast.isAvailable) {
         setTimeout(this.initializeCastApi, 1000);
       }
@@ -118,8 +118,12 @@
           })(this));
           return false;
         }
-        this.$scope.currentMedia = video;
-        this.$scope.state = "playing";
+        this.$scope.$apply((function(_this) {
+          return function() {
+            _this.$scope.currentMedia = video;
+            return _this.$scope.state = "playing";
+          };
+        })(this));
         console.log("loading... " + video.url);
         mediaInfo = new chrome.cast.media.MediaInfo(video.url);
         mediaInfo.contentType = 'video/mp4';
@@ -312,6 +316,7 @@
     };
 
     Excast.prototype.loadApp = function(cb) {
+      console.log("loadApp");
       if (!this.appSession && this.init) {
         return chrome.cast.requestSession(this.onRequestSessionSuccess.bind(this, cb), this.onRequestSessionError);
       }

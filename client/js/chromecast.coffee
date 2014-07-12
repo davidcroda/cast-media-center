@@ -9,7 +9,7 @@ class Excast
     @timer = null
     @currentTime = 0
     @timeouts = {}
-    @$scope = {}
+    @$scope = $scope
     if !chrome.cast || !chrome.cast.isAvailable
       setTimeout @initializeCastApi, 1000
 
@@ -80,8 +80,9 @@ class Excast
           @loadMedia video
         return false
 
-      @$scope.currentMedia = video
-      @$scope.state = "playing"
+      @$scope.$apply =>
+        @$scope.currentMedia = video
+        @$scope.state = "playing"
 
       console.log("loading... " + video.url);
       mediaInfo = new chrome.cast.media.MediaInfo(video.url);
@@ -247,6 +248,7 @@ class Excast
   #Launch the App
 
   loadApp: (cb) =>
+    console.log "loadApp"
     if !@appSession && @init
       chrome.cast.requestSession @onRequestSessionSuccess.bind(this, cb), @onRequestSessionError
 
