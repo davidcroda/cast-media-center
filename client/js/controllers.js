@@ -6,7 +6,7 @@ angular.module('myApp.controllers', [])
 
   .controller('VideoListController', ['$scope', '$http', '$location', 'chromecast', function ($scope, $http, $location, chromecast) {
     chromecast = new chromecast($scope);
-    $http.get('http://daveroda.com/api/video').success(function (data) {
+    $http.get('/api/video').success(function (data) {
       var videos = data.video;
       angular.forEach(videos, function (video, key) {
         video.canPlay = (video.vcodec == "h264" && video.acodec == "aac");
@@ -24,7 +24,8 @@ angular.module('myApp.controllers', [])
 
     $scope.orderProp = 'date';
 
-    $scope.setActive = function (video) {
+    $scope.setActive = function (video, $event) {
+      console.log($event);
       angular.forEach($scope.videos, function (video) {
         video.active = false
       }, $scope.videos);
@@ -36,32 +37,32 @@ angular.module('myApp.controllers', [])
     };
 
     $scope.deleteVideo = function (video) {
-      $http.delete('http://daveroda.com/api/video/' + video.id);
+      $http.delete('/api/video/' + video.id);
     };
 
   }])
 
   .controller('VideoController', ['$scope', '$routeParams', '$http', function ($scope, $routeParams, $http) {
-    $http.get('http://daveroda.com/api/video/' + $routeParams.id).success(function (data) {
+    $http.get('/api/video/' + $routeParams.id).success(function (data) {
       $scope.phone = data;
     });
   }])
 
   .controller('SourceController', ['$scope', '$http', function ($scope, $http) {
     $scope.index = function () {
-      $http.get('http://daveroda.com/api/source').success(function (data) {
+      $http.get('/api/source').success(function (data) {
         $scope.sources = data.source;
       });
     };
 
     $scope.add = function (source) {
-      $http.put('http://daveroda.com/api/source', source).success(function () {
+      $http.put('/api/source', source).success(function () {
         $scope.index();
       });
     };
 
     $scope.delete = function (source) {
-      $http.delete('http://daveroda.com/api/source/' + source._id).success(function () {
+      $http.delete('/api/source/' + source._id).success(function () {
         $scope.index();
       })
     };

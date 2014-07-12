@@ -13,7 +13,7 @@ var config = {
     port: port,
     db: process.env.DATABASE_URL || "mongodb://localhost/excast-development",
     thumbnailPath: process.env.THUMBNAIL_PATH || './client/thumbnails/',
-    thumbnailUrl: process.env.THUMBNAIL_URL || 'http://daveroda.com/thumbnails/',
+    thumbnailUrl: process.env.THUMBNAIL_URL || '/thumbnails/',
     watchPath: path.normalize(path.join(rootPath,'..','watch'))
   },
 
