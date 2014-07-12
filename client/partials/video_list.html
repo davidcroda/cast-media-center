@@ -27,12 +27,13 @@
         <li><a href="" ng-click="deleteVideos()" class="delete-icon"><i class="glyphicon glyphicon-trash"></i> Delete</a></li>
     </ul>
 </div>
-<nav id="control-nav" role="navigation" ng-show="currentMedia" class="navbar navbar-default navbar-fixed-bottom">
+<nav id="control-nav" role="navigation" ng-show="state == 'playing'" class="navbar navbar-default navbar-fixed-bottom">
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-1">
-                <div class="controls padded"><a id="play" class="glyphicon glyphicon-play disabled"></a><a id="stop"
-                                                                                                           class="glyphicon glyphicon-stop disabled"></a>
+                <div class="controls padded">
+                    <a id="play" class="glyphicon glyphicon-play disabled"></a>
+                    <a id="stop" class="glyphicon glyphicon-stop disabled"></a>
                 </div>
             </div>
             <div class="col-md-3">
