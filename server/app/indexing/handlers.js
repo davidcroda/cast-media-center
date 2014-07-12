@@ -52,13 +52,15 @@ var createVideoRecord = function (source, file) {
         if (!err) {
           console.log('Thumbnail created ' + sizeName + ' thumbnail at ' + url);
           fileRecord['thumbnail' + sizeName] = url;
-          fileRecord.save(function (err) {
-            if (err)
-              console.log("Error: " + err);
-          });
         } else {
           console.log("Error generating thumbnail", err);
+          fileRecord['thumbnail' + sizeName] = '/img/no-thumbnail.png';
         }
+
+        fileRecord.save(function (err) {
+          if (err)
+            console.log("Error: " + err);
+        });
       });
     }
   });
@@ -76,7 +78,7 @@ var generateThumbnail = function (file, sizeName, size, cb) {
       filename: "%b-%w-%h"
     }, config.thumbnailPath, function (err, filenames) {
       if (err) {
-        cb(err, null);
+        cb(err, sizeName, null);
       } else {
         cb(null, sizeName, config.thumbnailUrl + filenames[0]);
       }

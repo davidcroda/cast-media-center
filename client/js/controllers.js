@@ -25,10 +25,11 @@ angular.module('myApp.controllers', [])
     $scope.orderProp = 'date';
 
     $scope.setActive = function (video, $event) {
-      console.log($event);
-      angular.forEach($scope.videos, function (video) {
-        video.active = false
-      }, $scope.videos);
+      if(!$event.shiftKey) {
+        angular.forEach($scope.videos, function (video) {
+          video.active = false
+        }, $scope.videos);
+      }
       video.active = true;
     };
 
@@ -36,8 +37,15 @@ angular.module('myApp.controllers', [])
       chromecast.loadMedia(video, $scope);
     };
 
-    $scope.deleteVideo = function (video) {
-      $http.delete('/api/video/' + video.id);
+    $scope.deleteVideos = function () {
+      angular.forEach($scope.videos, function(video) {
+        if(video.active) {
+          $http.delete('/api/video/' + video.id).success(function() {
+            $scope.videos = _.without($scope.videos, video);
+            console.log("Deleted Video " + video.id);
+          });
+        }
+      });
     };
 
   }])

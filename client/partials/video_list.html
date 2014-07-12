@@ -3,19 +3,14 @@
          ng-click="setActive(video, $event)" ng-class="{active: video.active}"
          ng-mouseover="video.hover = true" ng-mouseout="video.hover = false"
          ng-dblclick="playVideo(video)"
+         context-menu
+         data-target = "videoDropdown"
             >
         <img class="img-thumbnail"  ng-src="{{video.thumbnailSmall}}" />
         <div class="overlay"></div>
         <div ng-show="video.hover">
             <div class="icon play-icon" ng-show="video.canPlay"><i class="glyphicon glyphicon-play-circle"></i></div>
             <div class="icon transcode-icon" ng-hide="video.canPlay"><i class="glyphicon glyphicon-wrench"></i></div>
-            <div class="dropdown video-dropdown">
-                <a data-toggle="dropdown" href=""><i class="glyphicon glyphicon-cog"></i></a>
-                <ul class="dropdown-menu pull-right" role="menu">
-                    <li><a ng-href="#/videos/{{video.id}}" class="edit-icon"><i class=""></i> Edit</a></li>
-                    <li><a href="" ng-click="deleteVideo(video)" class="delete-icon"><i class="glyphicon glyphicon-trash"></i> Delete</a></li>
-                </ul>
-            </div>
         </div>
         <div class="video-title">
             {{video.title}}<br/>
@@ -25,6 +20,12 @@
             <div class='acodec'>Audio: <b>{{video.acodec}}</b></div>
         </div>
     </div>
+</div>
+<div class="dropdown video-dropdown position-fixed" id="videoDropdown">
+    <ul class="dropdown-menu" role="menu">
+        <li><a href="" ng-click="editVideos()" class="edit-icon"><i class=""></i> Edit</a></li>
+        <li><a href="" ng-click="deleteVideos()" class="delete-icon"><i class="glyphicon glyphicon-trash"></i> Delete</a></li>
+    </ul>
 </div>
 <nav id="control-nav" role="navigation" ng-show="currentMedia" class="navbar navbar-default navbar-fixed-bottom">
     <div class="container-fluid">

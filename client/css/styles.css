@@ -115,3 +115,6 @@
 .video-nav ul li .desc:before {
   content: ">";
 }
+.position-fixed {
+  position: fixed;
+}

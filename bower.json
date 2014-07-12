@@ -13,6 +13,8 @@
     "angular-mocks": "~1.2.x",
     "html5-boilerplate": "~4.3.0",
     "bootstrap": "~3.1.1",
-    "jquery": "~2.1.1"
+    "jquery": "~2.1.1",
+    "ng-context-menu": "~0.1.4",
+    "underscore": "~1.6.0"
   }
 }
