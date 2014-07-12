@@ -84,7 +84,7 @@ exports.transcode = function (res, video) {
         delete exports.transcoding[video.path];
         var oldPath = video.path;
         video.path = newPath;
-        video.acodec = "libfdk_aac";
+        video.acodec = "aac";
         video.vcodec = "h264";
         video.transcoding = false;
         video.title = path.basename(video.path);
