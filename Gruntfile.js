@@ -14,7 +14,7 @@ module.exports = function (grunt) {
     pkg: grunt.file.readJSON('package.json'),
     develop: {
       server: {
-        file: '/server/app.js'
+        file: 'server/app.js'
       }
     },
     watch: {
@@ -24,7 +24,7 @@ module.exports = function (grunt) {
       },
       js: {
         files: [
-          '/server/**/*.js'
+          'server/**/*.js'
         ],
         tasks: ['develop', 'delayed-livereload']
       },
