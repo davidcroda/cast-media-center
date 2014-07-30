@@ -1,4 +1,15 @@
-var utils = require('./utils');
+var utils = require('./utils'),
+    mongoose = require('mongoose'),
+    User = mongoose.model('User');
+
+exports.register = function (req, res) {
+  User.register(new User({
+    username: 'dave2'
+  }),'ironfire', function(ev) {
+    console.log(ev);
+  });
+  res.send('200');
+};
 
 exports.postLogin = function (req, res, next) {
   // issue a remember me cookie if the option was checked

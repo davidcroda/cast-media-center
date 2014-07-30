@@ -22,6 +22,7 @@ module.exports = function (app) {
     req.logout();
     res.redirect('/');
   });
+  app.get('/register', site.register);
   app.post('/login', passport.authenticate('local'), site.postLogin, function (req, res) {
     res.json(req.user);
   });

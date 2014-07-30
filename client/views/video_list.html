@@ -1,5 +1,5 @@
 <div class="row" id="video-container">
-    <div class="video col-md-3" ng-repeat="video in videos | orderBy:orderProp"
+    <div class="video-item col-md-3" ng-repeat="video in videos | orderBy:orderProp"
          ng-click="setActive(video, $event)" ng-class="{active: video.active}"
          ng-mouseover="video.hover = true" ng-mouseout="video.hover = false"
          ng-dblclick="playVideo(video)"

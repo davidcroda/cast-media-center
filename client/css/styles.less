@@ -39,7 +39,16 @@
   width: 100px;
 }
 
-.video {
+#video-container {
+  -webkit-perspective: 1000;
+}
+
+.video-item {
+
+  //-webkit-transition: all 0.2s linear ;
+  //-webkit-animation-direction: alternate;
+
+
   text-align: center;
   padding: 10px;
 
@@ -96,6 +105,17 @@
 
   &.active {
     background-color: @brand-primary;
+
+    -webkit-animation: flip 0.05s linear 0s 6 alternate;
+
+    @-webkit-keyframes flip {
+      from {
+        -webkit-transform: rotateY(0deg);
+      }
+      to {
+        -webkit-transform: rotateY(30deg);
+      }
+    }
   }
 
   &.highlight {

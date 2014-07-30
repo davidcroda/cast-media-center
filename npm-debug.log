@@ -19,7 +19,7 @@
 10 error You can get their info via:
 10 error     npm owner ls cast-media-center
 10 error There is likely additional logging output above.
-11 error System Windows_NT 6.1.7601
+11 error System Windows_NT 6.2.9200
 12 error command "d:\\bin\\nodejs\\node.exe" "d:\\bin\\nodejs\\node_modules\\npm\\bin\\npm-cli.js" "start"
 13 error cwd d:\src\node\cast-media-center
 14 error node -v v0.10.24

@@ -12,10 +12,10 @@ angular.module('myApp', [
   'ng-context-menu'
 ]).
 config(['$routeProvider', function($routeProvider) {
-  $routeProvider.when('/', {templateUrl: 'partials/video_list.html', controller: 'VideoListController'});
-  $routeProvider.when('/login', {templateUrl: 'partials/login.html', controller: 'LoginController'});
-  $routeProvider.when('/sources', {templateUrl: 'partials/sources.html', controller: 'SourceController'});
-  $routeProvider.when('/videos/:id', {templateUrl: 'partials/video.html', controller: 'VideoController'});
+  $routeProvider.when('/', {templateUrl: 'views/video_list.html', controller: 'VideoListController'});
+  $routeProvider.when('/login', {templateUrl: 'views/login.html', controller: 'LoginController'});
+  $routeProvider.when('/sources', {templateUrl: 'views/sources.html', controller: 'SourceController'});
+  $routeProvider.when('/videos/:id', {templateUrl: 'views/video.html', controller: 'VideoController'});
   $routeProvider.otherwise({redirectTo: '/'});
 }])
 .constant('AUTH_EVENTS', {

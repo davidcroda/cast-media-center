@@ -32,23 +32,44 @@ var processVideo = function(source, video) {
 
 var createVideoRecord = function (source, file) {
   var stat = fs.statSync(file);
-  var metaObject = new metadata(file, function (metadata, err) {
-    if (err) throw err;
-    console.log(source);
-    console.log(file);
+  var ffmpeg = require('fluent-ffmpeg');
+  console.log(file);
+  ffmpeg(file).ffprobe(function(err, data) {
+
+    if(err) throw err;
+
+    var vcodec = acodec = '';
+
+    data.streams.forEach(function(stream) {
+      if(stream.codec_type == 'video') {
+        vcodec = stream.codec_name;
+      } else if (stream.codec_type == 'audio') {
+        acodec = stream.codec_name;
+      }
+    });
+
+
     var fileRecord = new Video({
       title: path.basename(file),
       path: file,
       date: stat.mtime,
       sources: [url.resolve(source.baseUrl, path.relative(source.path, file))],
       watched: false,
-      vcodec: metadata.video.codec,
-      acodec: metadata.audio.codec
+      vcodec: vcodec,
+      acodec: acodec
     });
-    console.log("Creating Video record for ", file);
-    for (var size in sizes) {
-      console.log("Creating Thumbnail size: " + sizes[size]);
-      generateThumbnail(fileRecord, size, sizes[size], function (err, sizeName, url) {
+
+    //horrible hack
+    generateThumbnail(fileRecord, 'Small', '480x270', function (err, sizeName, url) {
+      if (!err) {
+        console.log('Thumbnail created ' + sizeName + ' thumbnail at ' + url);
+        fileRecord['thumbnail' + sizeName] = url;
+      } else {
+        console.log("Error generating thumbnail", err);
+        fileRecord['thumbnail' + sizeName] = '/img/no-thumbnail.png';
+      }
+
+      generateThumbnail(fileRecord, 'Large', '1280x720', function (err, sizeName, url) {
         if (!err) {
           console.log('Thumbnail created ' + sizeName + ' thumbnail at ' + url);
           fileRecord['thumbnail' + sizeName] = url;
@@ -61,8 +82,10 @@ var createVideoRecord = function (source, file) {
           if (err)
             console.log("Error: " + err);
         });
+
       });
-    }
+
+    });
   });
 };
 
@@ -73,16 +96,13 @@ var generateThumbnail = function (file, sizeName, size, cb) {
     source: file.path
   })
     .withSize(size)
-    .takeScreenshots({
-      count: 1,
-      filename: "%b-%w-%h"
-    }, config.thumbnailPath, function (err, filenames) {
-      if (err) {
-        cb(err, sizeName, null);
-      } else {
-        cb(null, sizeName, config.thumbnailUrl + filenames[0]);
-      }
-    });
+    .on('error', function (err) {
+      cb(err, sizeName, null);
+    })
+    .on('end', function () {
+      cb(null, sizeName, config.thumbnailUrl + filenames[0]);
+    })
+    .takeScreenshots(1, config.thumbnailPath);
 };
 
 
