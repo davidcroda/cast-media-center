@@ -98,7 +98,7 @@ var generateThumbnail = function (file, sizeName, size, cb) {
   .on('error', function (err) {
     cb(err, sizeName, null);
   })
-  .on('end', function () {
+  .on('filenames', function (filenames) {
     cb(null, sizeName, config.thumbnailUrl + filenames[0]);
   })
   .takeScreenshots({count:1, size: size},config.thumbnailPath);
