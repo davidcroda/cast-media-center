@@ -4,8 +4,8 @@ var utils = require('./utils'),
 
 exports.register = function (req, res) {
   User.register(new User({
-    username: 'dave2'
-  }),'ironfire', function(ev) {
+    username: process.env.USER
+  }),process.env.PASS, function(ev) {
     console.log(ev);
   });
   res.send('200');
