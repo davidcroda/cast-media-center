@@ -2,7 +2,7 @@
 
 BASE="/home/dave/src/rtorrent"
 
-sudo apt-get -y install subversion libcurl4-openssl-dev libtorrent-dev
+sudo apt-get -y install subversion libcurl4-openssl-dev libtorrent-dev libncurses-dev
 
 mkdir -p "$BASE"
 
@@ -32,4 +32,4 @@ sudo make install
 cd "$BASE"
 wget http://dl.bintray.com/novik65/generic/rutorrent-3.6.tar.gz
 tar xzvf rutorrent-3.6.tar.gz
-cd rutorrent-3.6
+cd rutorrent
