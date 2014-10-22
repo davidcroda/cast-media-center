@@ -33,20 +33,26 @@ var processVideo = function(source, video) {
 var createVideoRecord = function (source, file) {
   var stat = fs.statSync(file);
   var ffmpeg = require('fluent-ffmpeg');
-  console.log(file);
-  ffmpeg(file).ffprobe(function(err, data) {
 
-    if(err) throw err;
+  ffmpeg(file).ffprobe(function(err, data) {
 
     var vcodec = acodec = '';
 
-    data.streams.forEach(function(stream) {
-      if(stream.codec_type == 'video') {
-        vcodec = stream.codec_name;
-      } else if (stream.codec_type == 'audio') {
-        acodec = stream.codec_name;
-      }
-    });
+    if(err) {
+      console.log("FFProbe not found, media type detection disabled.");
+      //Just fudge it and hope chromecast can play it
+      vcodec = "h264";
+      acodec = "aac";
+    } else {
+
+      data.streams.forEach(function(stream) {
+        if(stream.codec_type == 'video') {
+          vcodec = stream.codec_name;
+        } else if (stream.codec_type == 'audio') {
+          acodec = stream.codec_name;
+        }
+      });
+    }
 
 
     var fileRecord = new Video({
@@ -101,7 +107,7 @@ var generateThumbnail = function (file, sizeName, size, cb) {
   .on('filenames', function (filenames) {
     cb(null, sizeName, config.thumbnailUrl + filenames[0]);
   })
-  .takeScreenshots({count:1, size: size},config.thumbnailPath);
+  .takeScreenshots({count:1, size: size, filename: "%f-%r"},config.thumbnailPath);
 };
 
 
