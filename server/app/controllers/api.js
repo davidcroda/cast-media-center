@@ -39,18 +39,17 @@ exports.get = function (req, res) {
 };
 
 exports.addTorrent = function (req, res) {
-  //console.log(req.body);
-  var torrent = new Buffer(req.body.torrent, 'base64').toString('binary'),
-      name = req.body.name;
-  console.log(config.watchPath);
-  fs.writeFile(config.watchPath + '/' + name, torrent, function(err) {
-    if(err) {
-      console.log('Error saving Torrent: ', err);
-      res.send(500);
-    } else {
-      res.send(200);
-    }
-  });
+
+  if(req.files.type == "application/x-bittorent") {
+    var dest = path.join(config.watchPath,req.files.name)
+    fs.rename(req.files.path,dest, function (err) {
+      if(err) {
+        res.send(500);
+      } else {
+        res.send(200);
+      }
+    });
+  }
 };
 
 exports.delete = function (req, res) {

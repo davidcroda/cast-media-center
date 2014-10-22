@@ -39,9 +39,10 @@
                 <li><a href="#/sources">Sources</a></li>
                 <li><a href="/refresh">Refresh</a></li>
             </ul>
-            <form method="post" class="navbar-form navbar-left">
+            <form method="post" enctype="multipart/form-data" action="/api/torrent" class="navbar-form navbar-left">
                 <div class="form-group">
-                    <input id="torrent" type="file" class="form-control" />
+                    <input id="torrent" name="torrent" type="file" class="form-control" />
+                    <button type="submit" id="upload-button">Add</button>
                 </div>
             </form>
             <ul class="nav navbar-nav pull-right">
