@@ -95,11 +95,7 @@
     };
 
     Excast.prototype.checkMedia = function(video) {
-      if (video.vcodec !== 'h264' || video.acodec !== 'aac') {
-        return this.transcodeVideo(video);
-      } else {
-        video.url = video.sources[0];
-      }
+      video.url = video.sources[0];
       return video;
     };
 
