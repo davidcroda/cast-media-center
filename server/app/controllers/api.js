@@ -10,9 +10,9 @@ var mongoose = require('mongoose'),
 
 exports.index = function (req, res) {
   if (!req.query.sort) {
-    req.query.sort = 'title';
+    req.query.sort = '-date';
   }
-  console.log(req.query.sort);
+
   models[req.params.model].find().sort(req.query.sort).exec(function (err, results) {
     if (err) throw new Error(err);
     var json = {};
@@ -40,10 +40,10 @@ exports.get = function (req, res) {
 
 exports.addTorrent = function (req, res) {
 
-  if(req.files.type == "application/x-bittorent") {
-    var dest = path.join(config.watchPath,req.files.name)
-    fs.rename(req.files.path,dest, function (err) {
-      if(err) {
+  if (req.files.type == "application/x-bittorent") {
+    var dest = path.join(config.watchPath, req.files.name);
+    fs.rename(req.files.path, dest, function (err) {
+      if (err) {
         res.send(500);
       } else {
         res.send(200);

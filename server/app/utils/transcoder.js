@@ -74,7 +74,7 @@ exports.transcode = function (res, video) {
         exports.transcoding[video.path] = progress;
         res.json(progress);
       })
-      .on('error', function(ev, ev1, ev2) {
+      .on('error', function (ev, ev1, ev2) {
         console.log("ERROR");
         console.log(ev, ev1, ev2);
       })
@@ -88,12 +88,12 @@ exports.transcode = function (res, video) {
         video.vcodec = "h264";
         video.transcoding = false;
         video.title = path.basename(video.path);
-        video.sources = video.sources.map(function(source) {
+        video.sources = video.sources.map(function (source) {
           return transformPath(source);
         });
         video.save(function (err) {
           if (err) throw err;
-          if(oldPath != newPath) {
+          if (oldPath != newPath) {
             fs.unlink(oldPath);
           }
         });

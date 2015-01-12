@@ -17,7 +17,7 @@ module.exports = function (app) {
   app.get('/refresh', refresh.index);
 //app.get('/twitch/:channel', twitch.view);
 
-  app.get('/logout', function(req, res) {
+  app.get('/logout', function (req, res) {
     res.clearCookie('remember_me');
     req.logout();
     res.redirect('/');

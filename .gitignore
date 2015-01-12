@@ -3,3 +3,4 @@ client/thumbnails
 client/bower_components
 .idea
 *.iml
+.vagrant

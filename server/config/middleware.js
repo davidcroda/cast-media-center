@@ -51,8 +51,8 @@ module.exports = function (app, config) {
     app.use(express.bodyParser());
     app.use(express.methodOverride());
 
-    app.use(express.cookieParser('d;slgjawt4goiawgnsgh34gvdfsygs8nvy38945bn ya yv'));
-    app.use(express.session());
+    app.use(express.cookieParser('N&a]Tt-4@4h]407bcHc[>VUi|2]6&PN&a]Tt-4@4h]407bcHc[>VUi|2]6&P'));
+    app.use(express.session({secret: '9p8nzsCW,Pj00`aO}mKoGTO2B+JAJhhjp5!Mj2"3=ko6+1\'WYGt1lcWGJ5^w'}));
 
     app.use(passport.initialize());
     app.use(passport.session());
@@ -62,7 +62,7 @@ module.exports = function (app, config) {
 
     app.use(app.router);
     app.use(function (req, res) {
-      res.status(404).render('404', { title: '404' });
+      res.status(404).render('404', {title: '404'});
     });
   });
 }

@@ -14,7 +14,7 @@ var config = {
     db: process.env.DATABASE_URL || "mongodb://localhost/excast-development",
     thumbnailPath: process.env.THUMBNAIL_PATH || './client/thumbnails/',
     thumbnailUrl: process.env.THUMBNAIL_URL || '/thumbnails/',
-    watchPath: path.normalize(path.join(rootPath,'..','watch'))
+    watchPath: path.normalize(path.join(rootPath, '..', 'watch'))
   },
 
   VM: {
@@ -26,7 +26,7 @@ var config = {
     db: process.env.DATABASE_URL || "mongodb://localhost/excast-development",
     thumbnailPath: process.env.THUMBNAIL_PATH || './client/thumbnails/',
     thumbnailUrl: process.env.THUMBNAIL_URL || 'http://' + host + ':' + port + '/thumbnails/',
-    watchPath: path.normalize(path.join(rootPath,'..','watch'))
+    watchPath: path.normalize(path.join(rootPath, '..', 'watch'))
   },
 
   production: {
@@ -36,7 +36,7 @@ var config = {
     },
     port: process.env.PORT || 3000,
     db: 'mongodb://localhost/excast-production',
-    watchPath: path.normalize(path.join(rootPath,'..','watch'))
+    watchPath: path.normalize(path.join(rootPath, '..', 'watch'))
   }
 };
 

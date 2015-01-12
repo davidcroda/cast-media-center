@@ -1,4 +1,6 @@
 exports.authorize = function (req, res, next) {
+
+  console.log(req.body);
   console.log("Auth: " + req.isAuthenticated());
   console.log("Path: " + req.path);
   res.header('Access-Control-Allow-Origin', '*');

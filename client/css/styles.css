@@ -88,15 +88,6 @@
 }
 .video-item.active {
   background-color: #428bca;
-  -webkit-animation: flip 0.05s linear 0s 6 alternate;
-}
-@-webkit-keyframes flip {
-  from {
-    -webkit-transform: rotateY(0deg);
-  }
-  to {
-    -webkit-transform: rotateY(30deg);
-  }
 }
 .video-item.highlight {
   background-color: #92bce0;

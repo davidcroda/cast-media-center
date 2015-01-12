@@ -5,8 +5,8 @@ sudo apt-get -y install autoconf automake build-essential libass-dev libgpac-dev
   libsdl1.2-dev libtheora-dev libtool libva-dev libvdpau-dev libvorbis-dev libx11-dev \
   libxext-dev libxfixes-dev pkg-config texi2html zlib1g-dev unzip libmp3lame-dev libass-dev
 
-BASE="/home/dave/src"
-BINDIR="/home/dave/bin"
+BASE="/home/$USER/src"
+BINDIR="/usr/local/bin"
 
 mkdir -p "$BASE/ffmpeg_sources"
 mkdir -p "$BINDIR"
@@ -17,7 +17,7 @@ tar xzvf yasm-1.2.0.tar.gz
 cd yasm-1.2.0
 ./configure --prefix="$BASE/ffmpeg_build" --bindir="$BINDIR"
 make
-make install
+sudo make install
 make distclean
 export "PATH=$PATH:$BINDIR"
 
@@ -28,7 +28,7 @@ tar xjvf last_x264.tar.bz2
 cd x264-snapshot*
 ./configure --prefix="$BASE/ffmpeg_build" --bindir="$BINDIR" --enable-static
 make
-make install
+sudo make install
 make distclean
 
 
@@ -39,7 +39,7 @@ cd mstorsjo-fdk-aac*
 autoreconf -fiv
 ./configure --prefix="$BASE/ffmpeg_build" --disable-shared
 make
-make install
+sudo make install
 make distclean
 
 cd "$BASE/ffmpeg_sources"
@@ -48,7 +48,7 @@ tar xzvf opus-1.1.tar.gz
 cd opus-1.1
 ./configure --prefix="$BASE/ffmpeg_build" --disable-shared
 make
-make install
+sudo make install
 make distclean
 
 cd "$BASE/ffmpeg_sources"
@@ -57,7 +57,7 @@ tar xjvf libvpx-v1.3.0.tar.bz2
 cd libvpx-v1.3.0
 ./configure --prefix="$BASE/ffmpeg_build" --disable-examples
 make
-make install
+sudo make install
 make clean
 
 cd "$BASE/ffmpeg_sources"
@@ -71,6 +71,6 @@ export PKG_CONFIG_PATH
    --enable-libass --enable-libfdk-aac --enable-libmp3lame --enable-libopus --enable-libtheora \
    --enable-libvorbis --enable-libvpx --enable-libx264 --enable-nonfree
 make
-make install
+sudo make install
 make distclean
 hash -r

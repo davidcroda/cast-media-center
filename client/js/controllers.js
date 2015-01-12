@@ -25,7 +25,7 @@ angular.module('myApp.controllers', [])
     $scope.orderProp = 'date';
 
     $scope.setActive = function (video, $event) {
-      if(!$event.shiftKey) {
+      if (!$event.shiftKey) {
         angular.forEach($scope.videos, function (video) {
           video.active = false
         }, $scope.videos);
@@ -38,9 +38,9 @@ angular.module('myApp.controllers', [])
     };
 
     $scope.deleteVideos = function () {
-      angular.forEach($scope.videos, function(video) {
-        if(video.active) {
-          $http.delete('/api/video/' + video.id).success(function() {
+      angular.forEach($scope.videos, function (video) {
+        if (video.active) {
+          $http.delete('/api/video/' + video.id).success(function () {
             $scope.videos = _.without($scope.videos, video);
             console.log("Deleted Video " + video.id);
           });
@@ -82,18 +82,20 @@ angular.module('myApp.controllers', [])
   .controller('LoginController', ['$scope', '$rootScope', '$location', 'AUTH_EVENTS', 'AuthService',
     function ($scope, $rootScope, $location, AUTH_EVENTS, AuthService) {
 
-    $scope.credentials = {
-      username: '',
-      pasword: ''
-    };
+      $scope.credentials = {
+        username: '',
+        password: '',
+        remember_me: ''
+      };
 
-    $scope.login = function(credentials) {
-      AuthService.login(credentials).then(function(user) {
-        console.log(user);
-        $rootScope.$broadcast(AUTH_EVENTS.loginSuccess);
-        $location.url("/");
-      }, function() {
-        $rootScope.$broadcast(AUTH_EVENTS.loginFailed);
-      })
-    }
-  }]);
+
+      $scope.login = function (credentials) {
+        AuthService.login(credentials).then(function (user) {
+          console.log(user);
+          $rootScope.$broadcast(AUTH_EVENTS.loginSuccess);
+          $location.url("/");
+        }, function () {
+          $rootScope.$broadcast(AUTH_EVENTS.loginFailed);
+        })
+      }
+    }]);

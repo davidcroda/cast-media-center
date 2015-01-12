@@ -28,7 +28,7 @@ function Transcoder(source) {
 
   this.source = source;
 
-  this.args = { };
+  this.args = {};
   this.lastErrorLine = null;
 
   Transcoder.prototype._parseMetadata = function (child) {
@@ -86,7 +86,7 @@ function Transcoder(source) {
       'size': {
         match: /(\d+)x(\d+)(?:,|$)/i,
         transform: function (r) {
-          if (r[1] && r[2]) return { width: parseInt(r[1]), height: parseInt(r[2]) };
+          if (r[1] && r[2]) return {width: parseInt(r[1]), height: parseInt(r[2])};
         }
       },
       'aspect': {
@@ -156,7 +156,7 @@ function Transcoder(source) {
 
     }
 
-    var metadata = { input: {}, output: {} };
+    var metadata = {input: {}, output: {}};
     var current = null;
 
     var metadataLines = readline.createInterface({
@@ -186,9 +186,9 @@ function Transcoder(source) {
           if (line.length > 0) self.lastErrorLine = line;
 
           if (/^input/i.test(line)) {
-            current = metadata.input = { streams: [] };
+            current = metadata.input = {streams: []};
           } else if (/^output/i.test(line)) {
-            current = metadata.output = { streams: [] };
+            current = metadata.output = {streams: []};
           } else if (/^Metadata:$/i.test(line)) {
             if (current.streams.length) {
               current.streams[current.streams.length - 1].metadata = {};
@@ -247,8 +247,8 @@ function Transcoder(source) {
 
     var self = this;
 
-    if ('string' == typeof this.source) a = [ '-i', this.source ].concat(a);
-    else a = [ '-i', '-' ].concat(a);
+    if ('string' == typeof this.source) a = ['-i', this.source].concat(a);
+    else a = ['-i', '-'].concat(a);
 
     console.log('Spawning ffmpeg ' + a.join(' '));
 
@@ -311,26 +311,26 @@ function Transcoder(source) {
 
   /* Set video codec */
   Transcoder.prototype.videoCodec = function (codec) {
-    this.args['vcodec'] = [ '-vcodec', codec ];
+    this.args['vcodec'] = ['-vcodec', codec];
     return this;
   };
 
   /* Set video bitrate */
   Transcoder.prototype.videoBitrate = function (bitrate) {
-    this.args['b'] = [ '-b:v', bitrate ];
+    this.args['b'] = ['-b:v', bitrate];
     return this;
   };
 
   /* Set frames per second */
   Transcoder.prototype.fps = function (fps) {
-    this.args['r'] = [ '-r', fps ];
+    this.args['r'] = ['-r', fps];
     return this;
   };
 
   /* Set output format */
   Transcoder.prototype.format = function (format) {
-    this.args['format'] = [ '-f', format ];
-    if (format.toLowerCase() == 'mp4') this.args['movflags'] = [ '-movflags', 'frag_keyframe+faststart' ];
+    this.args['format'] = ['-f', format];
+    if (format.toLowerCase() == 'mp4') this.args['movflags'] = ['-movflags', 'frag_keyframe+faststart'];
     return this;
   };
 
@@ -343,7 +343,7 @@ function Transcoder(source) {
       fltWdth = 'min(trunc(iw/hsub)*hsub\\,' + fltWdth + ')';
       fltHght = 'min(trunc(ih/vsub)*vsub\\,' + fltHght + ')';
     }
-    this.args['vfscale'] = [ '-vf', 'scale=' + fltWdth + ':' + fltHght ];
+    this.args['vfscale'] = ['-vf', 'scale=' + fltWdth + ':' + fltHght];
     return this;
   };
 
@@ -356,55 +356,55 @@ function Transcoder(source) {
       fltWdth = 'max(trunc(iw/hsub)*hsub)\\,' + fltWdth + ')';
       fltHght = 'max(trunc(ih/vsub)*vsub)\\,' + fltHght + ')';
     }
-    this.args['vfscale'] = [ '-vf', 'scale=' + fltWdth + ':' + fltHght ];
+    this.args['vfscale'] = ['-vf', 'scale=' + fltWdth + ':' + fltHght];
     return this;
   };
 
   /* Sets the video size. Does not maintain aspect ratio. */
   Transcoder.prototype.size = function (width, height) {
-    this.args['s'] = [ '-s', width + 'x' + height ];
+    this.args['s'] = ['-s', width + 'x' + height];
     return this;
   };
 
   /* Sets the number of encoder passes. */
   Transcoder.prototype.passes = function (passes) {
-    this.args['pass'] = [ '-pass', passes ];
+    this.args['pass'] = ['-pass', passes];
     return this;
   };
 
   /* Sets the aspect ratio. */
   Transcoder.prototype.aspectRatio = function (ratio) {
-    this.args['aspect'] = [ '-aspect', ratio ];
+    this.args['aspect'] = ['-aspect', ratio];
     return this;
   };
 
   /* Sets the audio codec */
   Transcoder.prototype.audioCodec = function (codec) {
-    this.args['acodec'] = [ '-acodec', codec ];
+    this.args['acodec'] = ['-acodec', codec];
     return this;
   };
 
   /* Set the audio sample rate */
   Transcoder.prototype.sampleRate = function (samplerate) {
-    this.args['ar'] = [ '-ar', samplerate ];
+    this.args['ar'] = ['-ar', samplerate];
     return this;
   };
 
   /* Set audio channels */
   Transcoder.prototype.channels = function (channels) {
-    this.args['ac'] = [ '-ac', channels ];
+    this.args['ac'] = ['-ac', channels];
     return this;
   };
 
   /* Set audio bitrate */
   Transcoder.prototype.audioBitrate = function (bitrate) {
-    this.args['ab'] = [ '-ab', bitrate];
+    this.args['ab'] = ['-ab', bitrate];
     return this;
   };
 
   /* Set custom FFmpeg parameter */
   Transcoder.prototype.custom = function (key, value) {
-    var args = [ '-' + key ];
+    var args = ['-' + key];
     if (value !== undefined) {
       args.push(value);
     }
@@ -436,7 +436,7 @@ function Transcoder(source) {
 
     var timestamp = hours.toString() + ':' + minutes.toString() + ':' + seconds.toString();
 
-    this.args['ss'] = [ '-ss', timestamp, '-an', '-r', '1', '-vframes', '1', '-y' ];
+    this.args['ss'] = ['-ss', timestamp, '-an', '-r', '1', '-vframes', '1', '-y'];
 
     return this.videoCodec('mjpeg').format('mjpeg');
 

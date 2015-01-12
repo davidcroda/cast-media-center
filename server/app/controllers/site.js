@@ -1,11 +1,11 @@
 var utils = require('./utils'),
-    mongoose = require('mongoose'),
-    User = mongoose.model('User');
+  mongoose = require('mongoose'),
+  User = mongoose.model('User');
 
 exports.register = function (req, res) {
   User.register(new User({
     username: process.env.USER
-  }),process.env.PASS, function(ev) {
+  }), process.env.PASS, function (ev) {
     console.log(ev);
   });
   res.send('200');
@@ -21,7 +21,7 @@ exports.postLogin = function (req, res, next) {
 
   utils.generateToken(64, req.user.id, function (err, token) {
     if (err) return next(err);
-    res.cookie('remember_me', token, { path: '/', httpOnly: true, maxAge: 604800000 }); // 7 days
+    res.cookie('remember_me', token, {path: '/', httpOnly: true, maxAge: 604800000}); // 7 days
     return next();
   });
 };

@@ -11,7 +11,7 @@ exports.POLL_INTERVAL = 1000 * 60 * 5;
 exports.TIMEOUT = null;
 
 var filters = [],
-    handlers = [];
+  handlers = [];
 
 //"rar|001|zip": extractVideo,
 //"mp4|mkv": processVideo
@@ -20,7 +20,7 @@ var filters = [],
 exports.registerFilter = function (filter) {
   filters.push(filter);
 };
-exports.registerHandler = function(handler) {
+exports.registerHandler = function (handler) {
   handlers.push(handler);
 };
 
@@ -69,7 +69,7 @@ function calculateTimeout(interval) {
 }
 
 function processFiles(source, cb) {
-  handlers.forEach(function(handler) {
+  handlers.forEach(function (handler) {
     FILES.forEach(function (file, index) {
       console.log("Processing File: ", file);
       if (file.match(videoRegex) && !transcoder.isTranscoding(file)) {
