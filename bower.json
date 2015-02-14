@@ -1,10 +1,9 @@
 {
-  "name": "excast",
+  "name": "cast-media-center",
   "version": "0.0.1",
   "ignore": [
     "**/.*",
-    "node_modules",
-    "components"
+    "node_modules"
   ],
   "dependencies": {
     "angular": "1.2.x",

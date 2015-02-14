@@ -29,7 +29,7 @@ cd ../rtorrent-0.9.2/
 make
 sudo make install
 
-cd "$BASE"
-wget http://dl.bintray.com/novik65/generic/rutorrent-3.6.tar.gz
-tar xzvf rutorrent-3.6.tar.gz
-cd rutorrent
+#cd "$BASE"
+#wget http://dl.bintray.com/novik65/generic/rutorrent-3.6.tar.gz
+#tar xzvf rutorrent-3.6.tar.gz
+#cd rutorrent
