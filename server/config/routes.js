@@ -7,14 +7,13 @@ var site = require('../app/controllers/site'),
   passport = require('passport');
 
 module.exports = function (app) {
+  app.get('/api/refresh', refresh.index);
   app.get('/api/:model', api.index);
   app.post('/api/:model/:id', api.get);
-  app.delete('/api/:model/:id', api.delete);
+  app.delete('/api/:model/:id', api.del);
   app.post('/api/torrent', api.addTorrent);
   app.put('/api/:model/:id', api.update);
   app.put('/api/:model', api.create);
-
-  app.get('/refresh', refresh.index);
 //app.get('/twitch/:channel', twitch.view);
 
   app.get('/logout', function (req, res) {

@@ -2,25 +2,11 @@
 
 /* Controllers */
 
-angular.module('myApp.controllers', [])
+angular.module('cast.controllers', [])
 
-  .controller('VideoListController', ['$scope', '$http', '$location', 'chromecast', function ($scope, $http, $location, chromecast) {
-    chromecast = new chromecast($scope);
-    $http.get('/api/video').success(function (data) {
-      var videos = data.video;
-      angular.forEach(videos, function (video, key) {
-        video.canPlay = (video.vcodec == "h264" && video.acodec == "aac");
-        videos[key] = video;
-      });
-      $scope.videos = videos;
-    }).
-      error(function (data, status, headers, config) {
-        if (status == 401) {
-          $location.url("/login");
-        } else {
-          console.log(data, status, headers, config);
-        }
-      });
+  .controller('VideoListController', ['$scope', '$rootScope', '$http', '$location', 'chromecast', function ($scope, $rootScope, $http, $location, chromecast) {
+
+    $scope.chromecast = new chromecast($scope);
 
     $scope.orderProp = 'date';
 
@@ -33,8 +19,29 @@ angular.module('myApp.controllers', [])
       video.active = true;
     };
 
+    $scope.refreshVideos = function () {
+      console.log('calling refreshVideos');
+      $http.get('/api/video').success(function (data) {
+        var videos = data.video;
+        angular.forEach(videos, function (video, key) {
+          video.canPlay = (video.vcodec == "h264" && video.acodec == "aac");
+          videos[key] = video;
+        });
+        $scope.videos = videos;
+        clearTimeout($scope.timeout);
+        $scope.timeout = setTimeout($scope.loadVideos, 5000);
+      }).
+        error(function (data, status, headers, config) {
+          if (status == 401) {
+            $location.url("/login");
+          } else {
+            console.log(data, status, headers, config);
+          }
+        })
+    };
+
     $scope.playVideo = function (video) {
-      chromecast.loadMedia(video, $scope);
+      $scope.chromecast.loadMedia(video, $scope);
     };
 
     $scope.deleteVideos = function () {
@@ -47,6 +54,18 @@ angular.module('myApp.controllers', [])
         }
       });
     };
+
+    $scope.indexVideos = function () {
+      console.log('calling indexVideos');
+      $http.get('/api/refresh').success(function () {
+        $scope.refreshVideos();
+      });
+    };
+
+    $rootScope.$on('indexVideos', $scope.indexVideos);
+    $rootScope.$on('refreshVideos', $scope.refreshVideos);
+
+    $scope.refreshVideos();
 
   }])
 
@@ -69,7 +88,7 @@ angular.module('myApp.controllers', [])
       });
     };
 
-    $scope.delete = function (source) {
+    $scope.del = function (source) {
       $http.delete('/api/source/' + source._id).success(function () {
         $scope.index();
       })
@@ -98,4 +117,21 @@ angular.module('myApp.controllers', [])
           $rootScope.$broadcast(AUTH_EVENTS.loginFailed);
         })
       }
-    }]);
+    }])
+
+  .controller('HeaderController', ['$scope', '$rootScope', '$location', function ($scope, $rootScope, $location) {
+
+    $scope.isActive = function (viewLocation) {
+      return viewLocation === $location.path();
+    };
+
+    $scope.indexVideos = function () {
+      console.log("$emit indexVideos");
+      $rootScope.$emit('indexVideos');
+    };
+
+    $scope.refreshVideos = function () {
+      console.log("$emit refreshVideos");
+      $rootScope.$emit('refreshVideos');
+    };
+  }]);

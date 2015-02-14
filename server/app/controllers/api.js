@@ -40,19 +40,28 @@ exports.get = function (req, res) {
 
 exports.addTorrent = function (req, res) {
 
-  if (req.files.type == "application/x-bittorent") {
-    var dest = path.join(config.watchPath, req.files.name);
-    fs.rename(req.files.path, dest, function (err) {
+  if (req.files.torrent) {
+    var dest = path.join(config.watchPath, req.files.torrent.name);
+    fs.rename(req.files.torrent.path, dest, function (err) {
       if (err) {
-        res.send(500);
-      } else {
-        res.send(200);
+        if(err.code == 'EXDEV') {
+          //Cannot rename across file systems, copy instead
+          var instream = fs.createReadStream(req.files.torrent.path),
+            outstream = fs.createWriteStream(dest);
+          instream.pipe(outstream);
+          fs.unlinkSync(req.files.torrent.path);
+        } else {
+          res.send(500);
+        }
       }
+
+      res.redirect("/");
+
     });
   }
 };
 
-exports.delete = function (req, res) {
+exports.del = function (req, res) {
   if (req.params.id) {
     console.log('delete ' + req.params.id);
     models[req.params.model].find({

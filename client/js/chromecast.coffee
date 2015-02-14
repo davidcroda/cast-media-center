@@ -1,4 +1,4 @@
-class Excast
+class Chromecast
 
   constructor: ($scope)->
     @init = false
@@ -260,6 +260,6 @@ class Excast
     console.log "Launch error: ", e
 
 
-angular.module 'excast', []
+angular.module 'chromecast', []
   .factory 'chromecast', ()->
-    return Excast
+    return Chromecast

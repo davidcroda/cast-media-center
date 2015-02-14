@@ -14,7 +14,7 @@ var config = {
     db: process.env.DATABASE_URL || "mongodb://localhost/excast-development",
     thumbnailPath: process.env.THUMBNAIL_PATH || './client/thumbnails/',
     thumbnailUrl: process.env.THUMBNAIL_URL || '/thumbnails/',
-    watchPath: path.normalize(path.join(rootPath, '..', 'watch'))
+    watchPath: path.normalize(path.join(rootPath,'watch'))
   },
 
   VM: {

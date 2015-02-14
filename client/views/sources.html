@@ -1,11 +1,6 @@
-<form>
+<form class="form">
     <fieldset>
-        <legend>Add Torrents</legend>
-        <input type="file" id="torrents" name="torrents[]" multiple />
-        <div id="upload-status"></div>
-    </fieldset>
-    <br />
-    <fieldset>
+        <legend>Add / Remove Video Sources</legend>
         <label for="path">
             <span>Path</span>
             <input type="text" placeholder="/home/media/" ng-model="source.path" class="form-control" name="path" id="path"/>
@@ -28,6 +23,6 @@
         <td>{{source.path}}</td>
         <td>{{source.urlBase}}</td>
         <td>{{source.type}}</td>
-        <td><a class="btn btn-danger delete-link" ng-click="delete(source)"><i class="delete-icon"></i> Delete</a></td>
+        <td><a class="btn btn-danger delete-link" ng-click="del(source)"><i class="delete-icon"></i> Delete</a></td>
     </tr>
 </table>

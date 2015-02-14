@@ -29,13 +29,11 @@ var lastUpdate = 0;
 var FILES = [];
 
 exports.index = function (req, res) {
-
   if (typeof req.query.debug != "undefined") {
     Video.collection.drop();
   }
-
   exports.refresh();
-  res.redirect(302, '/');
+  res.send(200);
 };
 
 exports.refresh = function () {
