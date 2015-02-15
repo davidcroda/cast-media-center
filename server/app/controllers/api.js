@@ -1,4 +1,5 @@
 var mongoose = require('mongoose'),
+  url = require('url'),
   fs = require('fs'),
   config = require('../../config/config'),
   transcoder = require('../utils/transcoder'),
@@ -25,13 +26,16 @@ exports.get = function (req, res) {
   if (req.params.id) {
     models[req.params.model].findOne({
       _id: req.params.id
-    }, function (err, video) {
+    }, function (err, result) {
       if (err) throw err;
-      if (req.params.model == 'video') {
-        transcoder.transcode(res, video);
-      } else {
-        res.json(video);
-      }
+
+        if(req.params.model == 'video') {
+          var localUrl = url.parse(result.sources[0]);
+          res.setHeader("X-Accel-Redirect", "/torrents" + localUrl.pathname);
+          res.end();
+        } else {
+          res.json(result);
+        }
     });
   } else {
     res.send(404);

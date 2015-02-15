@@ -41,6 +41,7 @@ angular.module('cast.controllers', [])
     };
 
     $scope.playVideo = function (video) {
+      //window.location = "/api/video/" + video.id;
       $scope.chromecast.loadMedia(video, $scope);
     };
 

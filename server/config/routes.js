@@ -9,7 +9,8 @@ var site = require('../app/controllers/site'),
 module.exports = function (app) {
   app.get('/api/refresh', refresh.index);
   app.get('/api/:model', api.index);
-  app.post('/api/:model/:id', api.get);
+  app.get('/api/:model/:id', api.get);
+  //app.post('/api/:model/:id', api.transcode);
   app.delete('/api/:model/:id', api.del);
   app.post('/api/torrent', api.addTorrent);
   app.put('/api/:model/:id', api.update);
