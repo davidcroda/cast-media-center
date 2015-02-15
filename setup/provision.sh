@@ -5,11 +5,16 @@ sudo add-apt-repository -y ppa:jon-severinsson/ffmpeg
 sudo apt-get update
 sudo apt-get install -y nodejs npm mongodb git rtorrent supervisor nginx
 sudo apt-get install -y ffmpeg
-mkdir -p /data/db
+#sudo mkdir -p /data/db
 sudo ln -s /usr/bin/nodejs /usr/bin/node
+sudo cp /app/conf/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+sudo cp /app/conf/nginx.conf /etc/nginx/sites-available/default
 sudo npm install -g bower grunt-cli --quiet
 cd /app
 npm install --quiet
 bower install --silent --allow-root
+sudo update-rc.d nginx disable
+sudo update-rc.d mongodb disable
+sudo update-rc.d supervisor enable
 #cd setup
 #sudo ./compile_ffmpeg.sh
