@@ -17,7 +17,7 @@ cd /app
 npm install --quiet
 bower install --silent --allow-root
 
-sudo chown -R cast:cast /app
+sudo chown -R cast:cast /app/torrents /app/watch
 
 sudo update-rc.d nginx disable
 sudo update-rc.d mongodb disable
