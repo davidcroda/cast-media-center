@@ -63,7 +63,7 @@ class Chromecast
     if video.vcodec != 'h264' || video.acodec != 'aac'
       return @transcodeVideo(video);
     else
-      video.url = video.sources[0]
+      video.url = window.location.protocol + "//" + window.location.hostname + "/load/" + video.id
     return video
 
   loadMedia: (video) =>
@@ -249,8 +249,8 @@ class Chromecast
 
   loadApp: (cb) =>
     console.log "loadApp"
-    if !@appSession && @init
-      chrome.cast.requestSession @onRequestSessionSuccess.bind(this, cb), @onRequestSessionError
+    #if !@appSession && @init
+    chrome.cast.requestSession @onRequestSessionSuccess.bind(this, cb), @onRequestSessionError
 
   onRequestSessionSuccess: (cb, session) =>
     @appSession = session

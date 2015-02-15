@@ -24,18 +24,13 @@ exports.index = function (req, res) {
 
 exports.get = function (req, res) {
   if (req.params.id) {
-    models[req.params.model].findOne({
+    models['video'].findOne({
       _id: req.params.id
     }, function (err, result) {
       if (err) throw err;
-
-        if(req.params.model == 'video') {
-          var localUrl = url.parse(result.sources[0]);
-          res.setHeader("X-Accel-Redirect", "/torrents" + localUrl.pathname);
-          res.end();
-        } else {
-          res.json(result);
-        }
+      var localUrl = url.parse(result.source);
+      res.setHeader("X-Accel-Redirect", localUrl.pathname);
+      res.end();
     });
   } else {
     res.send(404);

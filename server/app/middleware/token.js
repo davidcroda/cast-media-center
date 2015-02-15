@@ -7,6 +7,7 @@ exports.authorize = function (req, res, next) {
   res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
   if (req.path == '/login' ||
     req.path == '/register' ||
+    req.path.substr(0, 5) == '/load' ||
     req.isAuthenticated() ||
     (process.env.TOKEN && req.headers['x-token'] == process.env.TOKEN)) {
     return next();

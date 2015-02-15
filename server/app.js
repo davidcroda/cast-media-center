@@ -24,9 +24,6 @@ require('./config/routes')(app);
 
 var refresh = require('./app/indexing/main');
 
-refresh.registerFilter(require('./app/indexing/filters').samples);
-refresh.registerHandler(require('./app/indexing/handlers').video);
-
 refresh.TIMEOUT = setTimeout(refresh.refresh, refresh.POLL_INTERVAL);
 
 app.listen(config.port);

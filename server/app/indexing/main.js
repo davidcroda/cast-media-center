@@ -5,13 +5,25 @@ var mongoose = require('mongoose'),
   config = require('../../config/config'),
   transcoder = require('../utils/transcoder'),
   videoRegex = /(mp4|mkv|xvid|divx|mpeg|mpg|avi)/i,
-  types = require('./types')
+  readdir = require('recursive-readdir'),
+  videoHandler = require('./handlers/video')
+
+;
 
 exports.POLL_INTERVAL = 1000 * 60 * 5;
 exports.TIMEOUT = null;
 
 var filters = [],
   handlers = [];
+
+var ignoreSampleFiles = function(files) {
+  files.forEach(function (file, i) {
+    if (file.match(/sample/)) {
+      delete files[i]
+    }
+  });
+  return files;
+};
 
 //"rar|001|zip": extractVideo,
 //"mp4|mkv": processVideo
@@ -23,6 +35,9 @@ exports.registerFilter = function (filter) {
 exports.registerHandler = function (handler) {
   handlers.push(handler);
 };
+
+exports.registerFilter(ignoreSampleFiles);
+exports.registerHandler(videoHandler);
 
 var lastUpdate = 0;
 
@@ -39,23 +54,21 @@ exports.index = function (req, res) {
 exports.refresh = function () {
   clearTimeout(exports.TIMEOUT);
 
-  Source.find().exec(function (err, results) {
-    if (err) throw err;
+  console.log("Indexing: ", config.torrentPath);
 
-    results.forEach(function (source) {
-      types[source.type](source.path, function (err, files) {
-        if (err) console.log("Error: ", err);
-        if (files.length > 0) {
-          filters.forEach(function (filter) {
-            files = filter(files);
-          });
+  readdir(config.torrentPath, function (err, files) {
+    if (err) console.log("Error: ", err);
 
-          FILES = files;
-          processFiles(source);
-        }
+    if (files.length > 0) {
+
+      filters.forEach(function (filter) {
+        files = filter(files);
       });
-    });
-  })
+
+      FILES = files;
+      processFiles();
+    }
+  });
 };
 
 function calculateTimeout(interval) {
@@ -66,13 +79,13 @@ function calculateTimeout(interval) {
   return interval;
 }
 
-function processFiles(source, cb) {
+function processFiles(cb) {
   handlers.forEach(function (handler) {
     FILES.forEach(function (file, index) {
       console.log("Processing File: ", file);
       if (file.match(videoRegex) && !transcoder.isTranscoding(file)) {
         if (path.extname(file).match(handler.pattern)) {
-          handler.callback(source, file, index);
+          handler.callback(file, index);
         }
       }
     });

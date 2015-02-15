@@ -97,7 +97,7 @@
       if (video.vcodec !== 'h264' || video.acodec !== 'aac') {
         return this.transcodeVideo(video);
       } else {
-        video.url = video.sources[0];
+        video.url = window.location.protocol + "//" + window.location.hostname + "/load/" + video.id;
       }
       return video;
     };
@@ -316,9 +316,7 @@
 
     Chromecast.prototype.loadApp = function(cb) {
       console.log("loadApp");
-      if (!this.appSession && this.init) {
-        return chrome.cast.requestSession(this.onRequestSessionSuccess.bind(this, cb), this.onRequestSessionError);
-      }
+      return chrome.cast.requestSession(this.onRequestSessionSuccess.bind(this, cb), this.onRequestSessionError);
     };
 
     Chromecast.prototype.onRequestSessionSuccess = function(cb, session) {

@@ -1,43 +1,22 @@
 var path = require('path'),
   rootPath = path.normalize(__dirname + '/../..'),
-  env = process.env.NODE_ENV || 'development',
   port = process.env.PORT || 3000,
-  host = process.env.HOST || 'localhost'
+  host = process.env.HOST || 'localhost',
+  os = require("os");
+
 
 var config = {
-  development: {
-    root: rootPath,
-    app: {
-      name: 'excast'
-    },
-    port: port,
-    db: process.env.DATABASE_URL || "mongodb://localhost/excast-development",
-    thumbnailPath: process.env.THUMBNAIL_PATH || './client/thumbnails/',
-    thumbnailUrl: process.env.THUMBNAIL_URL || '/thumbnails/',
-    watchPath: path.normalize(path.join(rootPath,'watch'))
+  root: rootPath,
+  app: {
+    name: 'excast'
   },
-
-  VM: {
-    root: rootPath,
-    app: {
-      name: 'excast'
-    },
-    port: port,
-    db: process.env.DATABASE_URL || "mongodb://localhost/excast-development",
-    thumbnailPath: process.env.THUMBNAIL_PATH || './client/thumbnails/',
-    thumbnailUrl: process.env.THUMBNAIL_URL || 'http://' + host + ':' + port + '/thumbnails/',
-    watchPath: path.normalize(path.join(rootPath, '..', 'watch'))
-  },
-
-  production: {
-    root: rootPath,
-    app: {
-      name: 'excast'
-    },
-    port: process.env.PORT || 3000,
-    db: 'mongodb://localhost/excast-production',
-    watchPath: path.normalize(path.join(rootPath, '..', 'watch'))
-  }
+  host: process.env.HOSTNAME || os.hostname(),
+  port: port,
+  db: process.env.DATABASE_URL || "mongodb://localhost/excast-development",
+  thumbnailPath: process.env.THUMBNAIL_PATH || './client/thumbnails/',
+  thumbnailUrl: process.env.THUMBNAIL_URL || '/thumbnails/',
+  watchPath: path.join(rootPath, 'watch'),
+  torrentPath: path.join(rootPath, 'torrents')
 };
 
-module.exports = config[env];
+module.exports = config;

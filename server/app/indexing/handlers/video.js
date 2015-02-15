@@ -3,7 +3,7 @@ var mongoose = require('mongoose'),
   Track = mongoose.model('Track'),
   ffmpeg = require('fluent-ffmpeg'),
   rarfile = require('rarfile').RarFile,
-  config = require('../../config/config'),
+  config = require('../../../config/config'),
   path = require('path'),
   sizes = {
     Small: '480x270',
@@ -12,7 +12,9 @@ var mongoose = require('mongoose'),
   url = require('url'),
   fs = require('fs')
 
-var processVideo = function (source, video) {
+;
+
+var processVideo = function (video) {
   Video.find({
     path: video
   }, function (err, results) {
@@ -21,7 +23,7 @@ var processVideo = function (source, video) {
     } else {
       if (results.length == 0) {
         lastUpdate = Date.now();
-        createVideoRecord(source, video);
+        createVideoRecord(video);
       } else {
         console.log("Found existing video for path: ", video);
       }
@@ -30,7 +32,7 @@ var processVideo = function (source, video) {
 };
 
 
-var createVideoRecord = function (source, file) {
+var createVideoRecord = function (file) {
   var stat = fs.statSync(file);
   var srt = file.replace(/\.[a-zA-Z0-9]*4?$/, ".srt");
   var ffmpeg = require('fluent-ffmpeg');
@@ -59,21 +61,19 @@ var createVideoRecord = function (source, file) {
       title: path.basename(file),
       path: file,
       date: stat.mtime,
-      sources: [url.resolve(source.baseUrl, path.relative(source.path, file))],
+      source: "/" + path.relative(config.root, file),
       watched: false,
       vcodec: vcodec,
       acodec: acodec,
       tracks: []
     });
 
-    console.log(srt);
-
     if (fs.existsSync(srt)) {
       var trackRecord = new Track({
         id: 1,
         type: "text",
         subtype: "captions",
-        contentId: url.resolve(source.baseUrl, path.relative(source.path.replace(/\..*$/, ".srt"), srt)),
+        contentId: path.relative(config.root, srt),
         name: "English Subtitle",
         language: "en-US"
       });
@@ -85,7 +85,6 @@ var createVideoRecord = function (source, file) {
         console.log("Error: " + err);
     });
 
-    //horrible hack
     generateThumbnail(fileRecord, 'Small', '480x270');
     generateThumbnail(fileRecord, 'Large', '1280x720');
   });
@@ -106,10 +105,9 @@ var generateThumbnail = function (file, sizeName, size) {
       });
     })
     .on('filenames', function (filenames) {
-      console.log(filenames);
       file['thumbnail' + sizeName] = config.thumbnailUrl + filenames[0];
       file.save(function (err) {
-        if(err != null) {
+        if(err) {
           console.log("Error saving thumbnail record", err);
         }
       });
@@ -117,28 +115,9 @@ var generateThumbnail = function (file, sizeName, size) {
     .takeScreenshots({count: 1, size: size, filename: "%f-%r"}, config.thumbnailPath);
 };
 
-
-function extractVideo(source, archive, index) {
-  console.log("Extract ", archive);
-
-  var rf = new rarfile(archive, {
-    debugMode: true
-  });
-  console.log(rf.toString());
-  // { names: [ '0.jpg', '2.jpg']}
-
-////readFile function
-//  rf.readFile('0.jpg', function(err, fdata) {
-//    console.log("File 0.jpg is " + fdata.length + " bytes long.");
-//  });
-
-  return archive + ".test.mp4";
-}
-
-
 //"rar|001|zip": extractVideo,
 //"mp4|mkv": processVideo
-exports.video = {
+module.exports = {
   pattern: /\.(mp4|mkv|avi)/,
   callback: processVideo
 };
