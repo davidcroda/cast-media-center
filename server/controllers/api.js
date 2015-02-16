@@ -23,7 +23,7 @@ exports.index = function (req, res) {
 
 exports.get = function (req, res) {
   if (req.params.id) {
-    models[req.params.model].findOne({
+    models.video.findOne({
       _id: req.params.id
     }, function (err, result) {
       if (err) throw err;
