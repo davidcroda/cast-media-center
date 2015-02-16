@@ -14,20 +14,24 @@ module.exports = function (req, res, next) {
     return next();
   } else if(req.query['token']) {
 
+    console.log("HELLO?");
     var token = req.query['token'];
     tokenUtils.queryToken(token, function(err, user) {
       //console.log(err, user);
-      if(!err && user) {
+      if(err) throw err;
+      if(user) {
         req.login(user, function(err) {
           if(err) throw err;
           //console.log('SUCCESS');
           return next();
         });
+      } else {
+        res.sendStatus(401);
       }
     });
   } else if((process.env.TOKEN && req.headers['x-token'] == process.env.TOKEN)) {
     return next();
+  } else {
+    res.sendStatus(401);
   }
-
-  return res.send(401);
 };

@@ -32,7 +32,7 @@ exports.get = function (req, res) {
       res.end();
     });
   } else {
-    res.send(404);
+    res.sendStatus(404);
   }
 };
 
