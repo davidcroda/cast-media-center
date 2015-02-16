@@ -38,7 +38,7 @@ exports.get = function (req, res) {
 
 exports.getToken = function(req, res) {
   tokenUtils.generateToken(req.user, function(err, token) {
-    res.json(token);
+    res.json({token: token});
   });
 };
 
