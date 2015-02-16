@@ -31,10 +31,28 @@ exports.findToken = function(token, done) {
       _id: res.userId
     }, function (err, res) {
       if (err) return done(err);
-      console.log('removing token');
+      //console.log('removing token');
       Token.remove(function() {
         return done(null, res);
       });
+    });
+  });
+};
+
+exports.queryToken = function(token, done) {
+  Token.findOne({
+    token: token
+  }, function (err, res) {
+    if (err) return done(err);
+    console.log(res);
+    if (!res) {
+      return done(null, false);
+    }
+    User.findOne({
+      _id: res.userId
+    }, function (err, res) {
+      if (err) return done(err);
+      return done(null, res);
     });
   });
 };

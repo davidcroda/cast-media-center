@@ -15,12 +15,12 @@ module.exports = function (req, res, next) {
   } else if(req.query['token']) {
 
     var token = req.query['token'];
-    tokenUtils.findToken(token, function(err, user) {
-      console.log(err, user);
+    tokenUtils.queryToken(token, function(err, user) {
+      //console.log(err, user);
       if(!err && user) {
         req.login(user, function(err) {
           if(err) throw err;
-          console.log('SUCCESS');
+          //console.log('SUCCESS');
           return next();
         });
       }
