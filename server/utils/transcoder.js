@@ -1,7 +1,7 @@
 var fs = require('fs'),
-  Transcoder = require('../../lib/transcoder'),
+  Transcoder = require('./base_transcoder.js'),
   path = require('path'),
-  config = require('../../config/config')
+  config = require('../config/config')
 
   ;
 

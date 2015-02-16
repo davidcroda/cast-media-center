@@ -41,8 +41,11 @@ angular.module('cast.controllers', [])
     };
 
     $scope.playVideo = function (video) {
-      //window.location = "/api/video/" + video.id;
-      $scope.chromecast.loadMedia(video, $scope);
+      $http.post('/api/token').success(function(token) {
+        video.url = window.location.protocol + "//" + window.location.hostname
+          + "/load/" + video.id + "?token=" + token.token;
+        $scope.chromecast.loadMedia(video, $scope);
+      });
     };
 
     $scope.deleteVideos = function () {
@@ -74,29 +77,6 @@ angular.module('cast.controllers', [])
     $http.get('/api/video/' + $routeParams.id).success(function (data) {
       $scope.phone = data;
     });
-  }])
-
-  .controller('SourceController', ['$scope', '$http', function ($scope, $http) {
-    $scope.index = function () {
-      $http.get('/api/source').success(function (data) {
-        $scope.sources = data.source;
-      });
-    };
-
-    $scope.add = function (source) {
-      $http.put('/api/source', source).success(function () {
-        $scope.index();
-      });
-    };
-
-    $scope.del = function (source) {
-      $http.delete('/api/source/' + source._id).success(function () {
-        $scope.index();
-      })
-    };
-
-    $scope.index();
-
   }])
 
   .controller('LoginController', ['$scope', '$rootScope', '$location', 'AUTH_EVENTS', 'AuthService',

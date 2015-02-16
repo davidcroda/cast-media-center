@@ -3,7 +3,7 @@ var mongoose = require('mongoose'),
   Track = mongoose.model('Track'),
   ffmpeg = require('fluent-ffmpeg'),
   rarfile = require('rarfile').RarFile,
-  config = require('../../../config/config'),
+  config = require('../../config/config'),
   path = require('path'),
   sizes = {
     Small: '480x270',

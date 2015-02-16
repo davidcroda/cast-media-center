@@ -67,7 +67,8 @@ class Chromecast
     return video
 
   loadMedia: (video) =>
-    video = @checkMedia(video)
+
+    #video = @checkMedia(video)
 
     @video = video;
 

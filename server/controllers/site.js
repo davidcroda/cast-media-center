@@ -1,4 +1,4 @@
-var utils = require('./utils'),
+var utils = require('../utils/token'),
   mongoose = require('mongoose'),
   User = mongoose.model('User');
 
@@ -19,7 +19,7 @@ exports.postLogin = function (req, res, next) {
 
   console.log(req.user);
 
-  utils.generateToken(64, req.user.id, function (err, token) {
+  utils.generateToken(req.user, function (err, token) {
     if (err) return next(err);
     res.cookie('remember_me', token, {path: '/', httpOnly: true, maxAge: 604800000}); // 7 days
     return next();

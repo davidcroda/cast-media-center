@@ -1,7 +1,7 @@
-var site = require('../app/controllers/site'),
-  api = require('../app/controllers/api'),
+var site = require('../controllers/site'),
+  api = require('../controllers/api'),
 //twitch = require('../app/controllers/twitch'),
-  refresh = require('../app/indexing/main'),
+  refresh = require('../indexing/main'),
   mongoose = require('mongoose'),
   User = mongoose.model('User'),
   passport = require('passport');
@@ -17,6 +17,8 @@ module.exports = function (app) {
   app.put('/api/:model', api.create);
 //app.get('/twitch/:channel', twitch.view);
 
+  app.post('/api/token', api.getToken);
+
   app.get('/logout', function (req, res) {
     res.clearCookie('remember_me');
     req.logout();
@@ -25,5 +27,10 @@ module.exports = function (app) {
   app.get('/register', site.register);
   app.post('/login', passport.authenticate('local'), site.postLogin, function (req, res) {
     res.json(req.user);
+  });
+
+  app.use(function (req, res) {
+    console.log("WTF");
+    res.status(404).render('404', {title: '404'});
   });
 };

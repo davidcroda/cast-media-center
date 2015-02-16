@@ -104,7 +104,6 @@
 
     Chromecast.prototype.loadMedia = function(video) {
       var mediaInfo, request;
-      video = this.checkMedia(video);
       this.video = video;
       video.watched = true;
       if (video) {

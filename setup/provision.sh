@@ -11,13 +11,13 @@ sudo useradd -r cast
 
 sudo ln -s /usr/bin/nodejs /usr/bin/node
 sudo cp /app/conf/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
-sudo cp /app/conf/nginx.conf /etc/nginx/sites-available/default
 sudo npm install -g bower grunt-cli --quiet
 cd /app
 npm install --quiet
 bower install --silent --allow-root
 
-sudo chown -R cast:cast /app/torrents /app/watch
+sudo mkdir -p /app/client/thumbnails
+sudo chown cast:cast /app/torrents /app/watch /app/client/thumbnails
 
 sudo update-rc.d nginx disable
 sudo update-rc.d mongodb disable

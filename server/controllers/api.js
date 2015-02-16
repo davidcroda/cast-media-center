@@ -1,12 +1,11 @@
 var mongoose = require('mongoose'),
   url = require('url'),
   fs = require('fs'),
-  config = require('../../config/config'),
-  transcoder = require('../utils/transcoder'),
+  config = require('../config/config'),
   path = require('path'),
+  tokenUtils = require('../utils/token'),
   models = {
-    video: mongoose.model('Video'),
-    source: mongoose.model('Source')
+    video: mongoose.model('Video')
   };
 
 exports.index = function (req, res) {
@@ -24,7 +23,7 @@ exports.index = function (req, res) {
 
 exports.get = function (req, res) {
   if (req.params.id) {
-    models['video'].findOne({
+    models[req.params.model].findOne({
       _id: req.params.id
     }, function (err, result) {
       if (err) throw err;
@@ -35,6 +34,12 @@ exports.get = function (req, res) {
   } else {
     res.send(404);
   }
+};
+
+exports.getToken = function(req, res) {
+  tokenUtils.generateToken(req.user, function(err, token) {
+    res.json(token);
+  });
 };
 
 exports.addTorrent = function (req, res) {
