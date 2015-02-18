@@ -10,12 +10,9 @@ exports.generateToken = function (user, next, expiration) {
     console.log("Generated Token: " + token);
 
     var data = {
+      userId: user.id,
       token: token
     };
-
-    if(typeof user != "undefined") {
-      token.userId = user.id;
-    }
 
     if(typeof expiration != "undefined") {
       data.expiresAt = moment().add(6,'hours').toDate();
@@ -59,6 +56,11 @@ exports.queryToken = function(token, done) {
     if (!res) {
       return done(null, false);
     }
-    return done(null, res);
+    User.findOne({
+      _id: res.userId
+    }, function (err, res) {
+      if (err) return done(err);
+      return done(null, res);
+    });
   });
 };

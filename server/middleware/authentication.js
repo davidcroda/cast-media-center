@@ -1,4 +1,6 @@
-var tokenUtils = require('../utils/token');
+var tokenUtils = require('../utils/token'),
+  mongoose = require('mongoose'),
+  User = mongoose.schema('User');
 
 module.exports = function (req, res, next) {
 
@@ -29,7 +31,11 @@ module.exports = function (req, res, next) {
       }
     });
   } else if((process.env.TOKEN && req.headers['x-token'] == process.env.TOKEN)) {
-    return next();
+    var user = User.findOne();
+    req.login(user, function (err) {
+      if (err) throw err;
+      return next();
+    });
   } else {
     res.sendStatus(401);
   }
