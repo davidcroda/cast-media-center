@@ -10,9 +10,12 @@ exports.generateToken = function (user, next, expiration) {
     console.log("Generated Token: " + token);
 
     var data = {
-      userId: user.id,
       token: token
     };
+
+    if(typeof user != "undefined") {
+      token.userId = user.id;
+    }
 
     if(typeof expiration != "undefined") {
       data.expiresAt = moment().add(30,'seconds').toDate();
