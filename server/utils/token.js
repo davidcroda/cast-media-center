@@ -18,7 +18,7 @@ exports.generateToken = function (user, next, expiration) {
     }
 
     if(typeof expiration != "undefined") {
-      data.expiresAt = moment().add(30,'seconds').toDate();
+      data.expiresAt = moment().add(6,'hours').toDate();
     }
 
     var tokenRecord = new Token(data);
@@ -59,11 +59,6 @@ exports.queryToken = function(token, done) {
     if (!res) {
       return done(null, false);
     }
-    User.findOne({
-      _id: res.userId
-    }, function (err, res) {
-      if (err) return done(err);
-      return done(null, res);
-    });
+    return done(null, res);
   });
 };
