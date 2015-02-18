@@ -14,7 +14,6 @@ module.exports = function (req, res, next) {
     return next();
   } else if(req.query['token']) {
 
-    console.log("HELLO?");
     var token = req.query['token'];
     tokenUtils.queryToken(token, function(err, user) {
       //console.log(err, user);
