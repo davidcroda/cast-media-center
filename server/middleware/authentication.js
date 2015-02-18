@@ -31,10 +31,11 @@ module.exports = function (req, res, next) {
       }
     });
   } else if((process.env.TOKEN && req.headers['x-token'] == process.env.TOKEN)) {
-    var user = User.findOne();
-    req.login(user, function (err) {
-      if (err) throw err;
-      return next();
+    User.findOne(function(err, user) {
+      req.login(user, function (err) {
+        if (err) throw err;
+        return next();
+      });
     });
   } else {
     res.sendStatus(401);
