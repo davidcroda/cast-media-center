@@ -41,11 +41,7 @@ angular.module('cast.controllers', [])
     };
 
     $scope.playVideo = function (video) {
-      $http.post('/api/token').success(function(token) {
-        video.url = window.location.protocol + "//" + window.location.hostname
-          + "/load/" + video.id + "?token=" + token.token;
-        $scope.chromecast.loadMedia(video, $scope);
-      });
+      $scope.chromecast.loadMedia(video, $scope);
     };
 
     $scope.deleteVideos = function () {

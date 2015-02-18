@@ -123,6 +123,9 @@
           };
         })(this));
         console.log("loading... " + video.url);
+        $.post('/api/token').success(function(token) {
+          return video.url = window.location.protocol + "//" + window.location.hostname + "/load/" + video.id + "?token=" + token.token;
+        });
         mediaInfo = new chrome.cast.media.MediaInfo(video.url);
         mediaInfo.contentType = 'video/mp4';
         mediaInfo.customData = {

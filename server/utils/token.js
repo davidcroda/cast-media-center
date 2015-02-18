@@ -1,16 +1,24 @@
 var mongoose = require('mongoose'),
   Token = mongoose.model('Token'),
   User = mongoose.model('User'),
+  moment = require('moment'),
   TOKEN_LENGTH = 64;
 
-exports.generateToken = function (user, next) {
+exports.generateToken = function (user, next, expiration) {
   var token = require('crypto').randomBytes(TOKEN_LENGTH, function (ex, buff) {
     token = buff.toString('hex');
     console.log("Generated Token: " + token);
-    var tokenRecord = new Token({
+
+    var data = {
       userId: user.id,
       token: token
-    });
+    };
+
+    if(typeof expiration != "undefined") {
+      data.expiresAt = moment().add(30,'seconds').toDate();
+    }
+
+    var tokenRecord = new Token(data);
     tokenRecord.save(function (err) {
       if (err) return next(err);
       return next(null, token);

@@ -41,7 +41,7 @@ exports.get = function (req, res) {
 exports.getToken = function(req, res) {
   tokenUtils.generateToken(req.user, function(err, token) {
     res.json({token: token});
-  });
+  }, 60*60*6);
 };
 
 exports.addTorrent = function (req, res) {

@@ -30,7 +30,6 @@ module.exports = function (app) {
   });
 
   app.use(function (req, res) {
-    console.log("WTF");
     res.status(404).render('404', {title: '404'});
   });
 };
