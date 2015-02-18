@@ -1,6 +1,6 @@
 var tokenUtils = require('../utils/token'),
   mongoose = require('mongoose'),
-  User = mongoose.schema('User');
+  User = mongoose.model('User');
 
 module.exports = function (req, res, next) {
 
