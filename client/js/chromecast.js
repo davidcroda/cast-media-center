@@ -43,6 +43,7 @@
 
     Chromecast.prototype.bindControls = function() {
       var excast;
+      console.log('bindControls');
       excast = this;
       this.play = $('#play');
       this.play.bind('click', this.playMedia);
@@ -103,7 +104,6 @@
     };
 
     Chromecast.prototype.loadMedia = function(video) {
-      var mediaInfo, request;
       this.video = video;
       video.watched = true;
       if (video) {
@@ -122,20 +122,23 @@
             return _this.$scope.state = "playing";
           };
         })(this));
-        console.log("loading... " + video.url);
-        $.post('/api/token').success(function(token) {
-          return video.url = window.location.protocol + "//" + window.location.hostname + "/load/" + video.id + "?token=" + token.token;
-        });
-        mediaInfo = new chrome.cast.media.MediaInfo(video.url);
-        mediaInfo.contentType = 'video/mp4';
-        mediaInfo.customData = {
-          title: video.title,
-          thumbnail: video.thumbnailLarge
-        };
-        request = new chrome.cast.media.LoadRequest(mediaInfo);
-        request.autoplay = true;
-        request.currentTime = 0;
-        return this.appSession.loadMedia(request, this.onMediaDiscovered, this.onMediaError);
+        console.log("loading... " + video.title);
+        return $.post('/api/token').success((function(_this) {
+          return function(token) {
+            var mediaInfo, request;
+            video.url = window.location.protocol + "//" + window.location.hostname + "/load/" + video.id + "?token=" + token.token;
+            mediaInfo = new chrome.cast.media.MediaInfo(video.url);
+            mediaInfo.contentType = 'video/mp4';
+            mediaInfo.customData = {
+              title: video.title,
+              thumbnail: video.thumbnailLarge
+            };
+            request = new chrome.cast.media.LoadRequest(mediaInfo);
+            request.autoplay = true;
+            request.currentTime = 0;
+            return _this.appSession.loadMedia(request, _this.onMediaDiscovered, _this.onMediaError);
+          };
+        })(this));
       }
     };
 
@@ -199,11 +202,11 @@
     };
 
     Chromecast.prototype.onStopError = function(error) {
-      return console.log(error);
+      return console.log("onStopError", error);
     };
 
     Chromecast.prototype.onMediaError = function(error) {
-      return console.log(error);
+      return console.log("onMediaError", error);
     };
 
     Chromecast.prototype.updateMediaDisplay = function() {
@@ -275,6 +278,7 @@
     };
 
     Chromecast.prototype.onInitSuccess = function() {
+      console.log('onInitSuccess');
       this.init = true;
       return this.bindControls();
     };
@@ -317,11 +321,12 @@
     };
 
     Chromecast.prototype.loadApp = function(cb) {
-      console.log("loadApp");
       return chrome.cast.requestSession(this.onRequestSessionSuccess.bind(this, cb), this.onRequestSessionError);
     };
 
     Chromecast.prototype.onRequestSessionSuccess = function(cb, session) {
+      console.log("Request session success");
+      console.log(session);
       this.appSession = session;
       return cb();
     };

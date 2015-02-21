@@ -14,6 +14,7 @@ class Chromecast
       setTimeout @initializeCastApi, 1000
 
   bindControls: =>
+    console.log('bindControls');
     excast = this
     @play = $('#play')
     @play.bind 'click', @playMedia
@@ -85,24 +86,25 @@ class Chromecast
         @$scope.currentMedia = video
         @$scope.state = "playing"
 
-      console.log("loading... " + video.url);
+      console.log("loading... " + video.title);
 
-      $.post('/api/token').success (token) ->
+      $.post('/api/token').success (token) =>
         video.url = window.location.protocol + "//" + window.location.hostname +
           "/load/" + video.id + "?token=" + token.token
 
-      mediaInfo = new chrome.cast.media.MediaInfo(video.url);
-      mediaInfo.contentType = 'video/mp4'
-      mediaInfo.customData =
-        title: video.title,
-        thumbnail: video.thumbnailLarge
-      request = new chrome.cast.media.LoadRequest mediaInfo
-      request.autoplay = true;
-      request.currentTime = 0;
+        mediaInfo = new chrome.cast.media.MediaInfo(video.url);
+        mediaInfo.contentType = 'video/mp4'
+        mediaInfo.customData =
+          title: video.title,
+          thumbnail: video.thumbnailLarge
+        request = new chrome.cast.media.LoadRequest mediaInfo
+        request.autoplay = true;
+        request.currentTime = 0;
 
-      @appSession.loadMedia request,
-        @onMediaDiscovered,
-        @onMediaError
+        @appSession.loadMedia request,
+          @onMediaDiscovered,
+          @onMediaError
+
 
   playMedia: =>
     if !@mediaSession
@@ -158,10 +160,10 @@ class Chromecast
     console.log(data)
 
   onStopError: (error) =>
-    console.log(error)
+    console.log("onStopError", error)
 
   onMediaError: (error) =>
-    console.log(error)
+    console.log("onMediaError", error)
 
   updateMediaDisplay: =>
     if @mediaSession
@@ -220,6 +222,7 @@ class Chromecast
         @stop.addClass('disabled')
 
   onInitSuccess: =>
+    console.log('onInitSuccess');
     @init = true
     @bindControls()
 
@@ -254,11 +257,12 @@ class Chromecast
   #Launch the App
 
   loadApp: (cb) =>
-    console.log "loadApp"
     #if !@appSession && @init
     chrome.cast.requestSession @onRequestSessionSuccess.bind(this, cb), @onRequestSessionError
 
   onRequestSessionSuccess: (cb, session) =>
+    console.log("Request session success");
+    console.log(session);
     @appSession = session
     cb()
 
