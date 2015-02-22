@@ -2,7 +2,6 @@ var mongoose = require('mongoose'),
   Video = mongoose.model('Video'),
   Track = mongoose.model('Track'),
   ffmpeg = require('fluent-ffmpeg'),
-  rarfile = require('rarfile').RarFile,
   config = require('../../config/config'),
   path = require('path'),
   sizes = {
@@ -105,14 +104,14 @@ var generateThumbnail = function (file, sizeName, size) {
       });
     })
     .on('filenames', function (filenames) {
-      file['thumbnail' + sizeName] = config.thumbnailUrl + filenames[0];
+      file['thumbnail' + sizeName] = '/thumbnails/' + filenames[0];
       file.save(function (err) {
         if(err) {
           console.log("Error saving thumbnail record", err);
         }
       });
     })
-    .takeScreenshots({count: 1, size: size, filename: "%f-%r"}, config.thumbnailPath);
+    .takeScreenshots({count: 1, size: size, filename: "%f-%r"}, config.root + '/client/thumbnails/');
 };
 
 //"rar|001|zip": extractVideo,

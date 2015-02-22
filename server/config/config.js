@@ -8,13 +8,11 @@ var path = require('path'),
 var config = {
   root: rootPath,
   app: {
-    name: 'excast'
+    name: 'cast-media-center'
   },
   host: process.env.HOSTNAME || os.hostname(),
   port: port,
-  db: process.env.DATABASE_URL || "mongodb://localhost/excast-development",
-  thumbnailPath: process.env.THUMBNAIL_PATH || './client/thumbnails/',
-  thumbnailUrl: process.env.THUMBNAIL_URL || '/thumbnails/',
+  db: process.env.DATABASE_URL || "mongodb://localhost/cast-media-center",
   watchPath: path.join(rootPath, 'watch'),
   torrentPath: path.join(rootPath, 'torrents')
 };

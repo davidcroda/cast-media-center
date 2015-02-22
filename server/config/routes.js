@@ -24,8 +24,17 @@ module.exports = function (app) {
     req.logout();
     res.redirect('/');
   });
-  app.get('/register', site.register);
-  app.post('/login', passport.authenticate('local'), site.postLogin, function (req, res) {
+
+  app.get('/oauth2', site.oauth2);
+
+  app.post('/login', function(req, res, next) {
+    console.log(req.body);
+    next();
+  },passport.authenticate('local'), site.postLogin, function (req, res) {
+    console.log(req.body);
+    if(req.query['redirect']) {
+      res.redirect("/" + req.query['redirect']);
+    }
     res.json(req.user);
   });
 

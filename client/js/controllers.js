@@ -75,8 +75,8 @@ angular.module('cast.controllers', [])
     });
   }])
 
-  .controller('LoginController', ['$scope', '$rootScope', '$location', 'AUTH_EVENTS', 'AuthService',
-    function ($scope, $rootScope, $location, AUTH_EVENTS, AuthService) {
+  .controller('LoginController', ['$scope', '$rootScope', '$location', '$routeParams', '$window', 'AUTH_EVENTS', 'AuthService',
+    function ($scope, $rootScope, $location, $routeParams, $window, AUTH_EVENTS, AuthService) {
 
       $scope.credentials = {
         username: '',
@@ -89,7 +89,14 @@ angular.module('cast.controllers', [])
         AuthService.login(credentials).then(function (user) {
           console.log(user);
           $rootScope.$broadcast(AUTH_EVENTS.loginSuccess);
-          $location.url("/");
+          if(typeof $routeParams.redirect != "undefined") {
+            console.log($routeParams.redirect);
+            window.location.href = "http://" + window.location.host + $routeParams.redirect;
+            console.log(window.location.href);
+          } else {
+            $location.url("/");
+          }
+
         }, function () {
           $rootScope.$broadcast(AUTH_EVENTS.loginFailed);
         })

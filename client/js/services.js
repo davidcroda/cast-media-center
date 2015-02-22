@@ -14,6 +14,7 @@ angular.module('cast.services', [])
       return $http.post('/login', credentials)
         .then(function(res) {
           $rootScope.user = res.data;
+
           return res.data;
         })
     };

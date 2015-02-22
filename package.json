@@ -25,7 +25,9 @@
     "express-session": "~1.10.2",
     "compression": "~1.4.1",
     "morgan": "~1.5.1",
-    "moment": "~2.9.0"
+    "moment": "~2.9.0",
+    "prompt": "~0.2.14",
+    "ejs": "~2.2.4"
   },
   "devDependencies": {
     "grunt": "~0.4.1",
