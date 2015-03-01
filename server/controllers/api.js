@@ -6,6 +6,7 @@ var mongoose = require('mongoose'),
   tokenUtils = require('../utils/token'),
   formidable = require('formidable'),
   util = require('util'),
+  Transmission = require('../utils/transmission'),
   models = {
     video: mongoose.model('Video')
   };
@@ -44,6 +45,26 @@ exports.getToken = function(req, res) {
   }, 60*60*6);
 };
 
+exports.getTorrents = function(req, res) {
+
+  Transmission.getTorrents(function(err, torrents) {
+    if(err) throw err;
+    return res.status(200).json(torrents);
+  });
+};
+
+exports.deleteTorrent = function(req, res) {
+
+  if(req.params.id) {
+    Transmission.deleteTorrent(req.params.id, function(err, data) {
+      if(err) throw err;
+      res.status(200).send(data);
+    });
+  } else {
+    res.sendStatus(404);
+  }
+};
+
 exports.addTorrent = function (req, res) {
 
   var form = new formidable.IncomingForm();
@@ -51,24 +72,12 @@ exports.addTorrent = function (req, res) {
   form.parse(req, function(err, fields, files) {
 
     if (files.torrent) {
-      var dest = path.join(config.watchPath, files.torrent.name);
-      fs.rename(files.torrent.path, dest, function (err) {
-        if (err) {
-          if(err.code == 'EXDEV') {
-            //Cannot rename across file systems, copy instead
-            var instream = fs.createReadStream(files.torrent.path),
-              outstream = fs.createWriteStream(dest);
-            instream.pipe(outstream);
-            fs.unlinkSync(files.torrent.path);
-          } else {
-            res.send(500);
-          }
-        }
 
+      Transmission.addTorrent(files.torrent.path, function() {
+        res.redirect("/");
       });
-    }
 
-    res.redirect("/");
+    }
 
   });
 };

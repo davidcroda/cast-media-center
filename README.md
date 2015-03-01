@@ -8,4 +8,10 @@ which is periodically monitored for new files.  It's not an ideal system to say 
 Torrents must use x264 video and 2-channel AAC audio to play on the chromecast.  Transcoding was causing problems 
 and is disabled at the moment.
 
-Work in progress. Most likely will not work for you.
+**Work in progress. Most likely will not work for you. Programmers only**
+
+TODO:
+
+ - Switch rtorrent with transmission, manage torrents via json rpc api https://trac.transmissionbt.com/browser/trunk/extras/rpc-spec.txt
+ - Restore transcoding features
+ - Implement subtitles

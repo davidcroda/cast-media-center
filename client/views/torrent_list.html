@@ -1,0 +1,30 @@
+<div class="row" id="torrent-container">
+    <table class="table">
+        <tr>
+            <th>Name</th>
+            <th>Status</th>
+            <th style="width: 300px;">%</th>
+            <th>D/S</th>
+            <th>U/S</th>
+            <th>Size</th>
+            <th>Ratio</th>
+            <th>&nbsp;</th>
+        </tr>
+        <tr ng-repeat="torrent in torrents">
+            <td>{{torrent.name}}</td>
+            <td>{{torrent.status}}</td>
+            <td>
+                <div class="progress">
+                    <div class="progress-bar" role="progressbar" aria-valuenow="{{torrent.percentDone * 100}}" aria-valuemin="0" aria-valuemax="100" style="width: {{torrent.percentDone * 100}}%;">
+                        {{torrent.percentDone * 100}}%
+                    </div>
+                </div>
+            </td>
+            <td>{{torrent.rateDownload}}</td>
+            <td>{{torrent.rateUpload}}</td>
+            <td>{{torrent.totalSize}}</td>
+            <td>{{torrent.uploadRatio}}</td>
+            <td><a ng-click="deleteTorrent(torrent.id)"><span class="glyphicon glyphicon-trash"></span></a></td>
+        </tr>
+    </table>
+</div>

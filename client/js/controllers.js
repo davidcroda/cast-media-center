@@ -69,11 +69,59 @@ angular.module('cast.controllers', [])
 
   }])
 
-  .controller('VideoController', ['$scope', '$routeParams', '$http', function ($scope, $routeParams, $http) {
-    $http.get('/api/video/' + $routeParams.id).success(function (data) {
-      $scope.phone = data;
-    });
+
+  .controller('TorrentListController', ['$scope','$http', function($scope, $http) {
+
+    $scope.formatSize = function(bytes) {
+
+      if(bytes == undefined) {
+        bytes = 0;
+      }
+
+      if(bytes > 0) {
+        bytes = bytes / (1024 * 1024)
+      }
+
+      return bytes.toFixed(2) + "Mb";
+    };
+
+    $scope.STATUSES = [
+      "stopped",
+      "queued_to_check_files",
+      "checking_files",
+      "queued_to_download",
+      "downloading",
+      "queued_to_seed",
+      "seeding"
+    ];
+
+
+    $scope.getTorrents = function() {
+
+      $http.get('/api/torrent').success(function(data) {
+
+        data.rateDownload = $scope.formatSize(data.rateDownload);
+        data.rateUpload = $scope.formatSize(data.rateUpload);
+        data.totalSize = $scope.formatSize(data.totalSize);
+
+        data.status = $scope.STATUSES[data.status];
+
+        $scope.torrents = data.torrents;
+        //$scope.timeout = setTimeout($scope.getTorrents, 10000);
+      });
+
+    };
+
+    $scope.deleteTorrent = function(id) {
+
+      $http.delete('/api/torrent/' + id);
+
+    };
+
+    $scope.getTorrents();
+
   }])
+
 
   .controller('LoginController', ['$scope', '$rootScope', '$location', '$routeParams', '$window', 'AUTH_EVENTS', 'AuthService',
     function ($scope, $rootScope, $location, $routeParams, $window, AUTH_EVENTS, AuthService) {

@@ -4,20 +4,15 @@ var tokenUtils = require('../utils/token'),
 
 module.exports = function (req, res, next) {
 
-  //console.log(req.headers);
-  console.log("Auth: " + req.isAuthenticated());
-  console.log("Path: " + req.path);
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
+  //res.setHeader('Access-Control-Allow-Origin', '*');
+  //res.setHeader('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
 
   var token;
-
-  console.log(req.headers);
 
   if (req.path == '/login' ||
     req.path == '/register' ||
     req.isAuthenticated() ) {
-    return next();
+    next();
   } else if((token = req.query['token'] || req.headers['x-token']) != undefined) {
 
     tokenUtils.queryToken(token, function(err, user) {
@@ -27,13 +22,14 @@ module.exports = function (req, res, next) {
         req.login(user, function(err) {
           if(err) throw err;
           //console.log('SUCCESS');
-          return next();
+          next();
         });
       } else {
         res.sendStatus(401);
       }
     });
+
   } else {
-    res.send(401);
+    res.sendStatus(401);
   }
 };

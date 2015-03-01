@@ -55,7 +55,7 @@ exports.refresh = function () {
 
   console.log("Indexing: ", config.torrentPath);
 
-  readdir(config.torrentPath, function (err, files) {
+  readdir(config.downloadDir, function (err, files) {
     if (err) console.log("Error: ", err);
 
     if (files.length > 0) {

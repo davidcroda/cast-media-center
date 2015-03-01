@@ -7,7 +7,6 @@ var mongoose = require('mongoose'),
 exports.generateToken = function (user, next, expiration) {
   var token = require('crypto').randomBytes(TOKEN_LENGTH, function (ex, buff) {
     token = buff.toString('hex');
-    console.log("Generated Token: " + token);
 
     var data = {
       userId: user.id,
@@ -31,7 +30,6 @@ exports.findToken = function(token, done) {
     token: token
   }, function (err, res) {
     if (err) return done(err);
-    console.log(res);
     if (!res) {
       return done(null, false);
     }
@@ -39,7 +37,6 @@ exports.findToken = function(token, done) {
       _id: res.userId
     }, function (err, res) {
       if (err) return done(err);
-      //console.log('removing token');
       Token.remove(function() {
         return done(null, res);
       });

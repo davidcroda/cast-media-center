@@ -1,7 +1,8 @@
 var express = require('express'),
   mongoose = require('mongoose'),
   fs = require('fs'),
-  config = require('./config/config');
+  config = require('./config/config')
+;
 
 mongoose.connect(config.db);
 var db = mongoose.connection;
@@ -19,6 +20,7 @@ fs.readdirSync(modelsPath).forEach(function (file) {
 var User = mongoose.model('User');
 
 var startApp = function() {
+
   var app = express();
 
   app.engine('html', require('ejs').renderFile);

@@ -10,7 +10,8 @@ var express = require('express'),
   cookieParser = require('cookie-parser'),
   session = require('express-session'),
   compression = require('compression'),
-  morgan = require('morgan')
+  morgan = require('morgan'),
+  config = require('./config')
 
 ;
 
@@ -36,9 +37,9 @@ module.exports = function (app, config) {
 
   //app.use(express.methodOverride());
 
-  app.use(cookieParser('N&a]Tt-4@4h]407bcHc[>VUi|2]6&PN&a]Tt-4@4h]407bcHc[>VUi|2]6&P'));
+  app.use(cookieParser(config.secret));
   app.use(session({
-    secret: '9p8nzsCW,Pj00`aO}mKoGTO2B+JAJhhjp5!Mj2"3=ko6+1\'WYGt1lcWGJ5^w',
+    secret: config.secret,
     saveUninitialized: false,
     resave: false
   }));

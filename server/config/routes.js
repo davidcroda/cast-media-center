@@ -8,11 +8,15 @@ var site = require('../controllers/site'),
 
 module.exports = function (app) {
   app.get('/api/refresh', refresh.index);
+
+  app.get('/api/torrent', api.getTorrents);
+  app.post('/api/torrent', api.addTorrent);
+  app.delete('/api/torrent/:id', api.deleteTorrent);
+
   app.get('/api/:model', api.index);
   app.get('/load/:id', api.get);
   //app.post('/api/:model/:id', api.transcode);
   app.delete('/api/:model/:id', api.del);
-  app.post('/api/torrent', api.addTorrent);
   app.put('/api/:model/:id', api.update);
   app.put('/api/:model', api.create);
 //app.get('/twitch/:channel', twitch.view);
@@ -36,9 +40,5 @@ module.exports = function (app) {
       res.redirect("/" + req.query['redirect']);
     }
     res.json(req.user);
-  });
-
-  app.use(function (req, res) {
-    res.status(404).render('404', {title: '404'});
   });
 };
