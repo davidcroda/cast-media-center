@@ -107,7 +107,7 @@ angular.module('cast.controllers', [])
         data.status = $scope.STATUSES[data.status];
 
         $scope.torrents = data.torrents;
-        //$scope.timeout = setTimeout($scope.getTorrents, 10000);
+        $scope.timeout = setTimeout($scope.getTorrents, 5000);
       });
 
     };
