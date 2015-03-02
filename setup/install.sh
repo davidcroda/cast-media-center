@@ -9,9 +9,10 @@ sudo apt-get install -y ffmpeg
 
 sudo useradd -r cast
 
-sudo ln -s /usr/bin/nodejs /usr/bin/node
+if [! -a /usr/bin/node]; then
+    sudo ln -s /usr/bin/nodejs /usr/bin/node
+fi
 sudo cp /app/conf/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
-sudo cp /app/conf/transmission.json /etc/transmission-daemon/settings.json
 sudo npm install -g bower grunt-cli --quiet
 cd /app
 npm install --quiet

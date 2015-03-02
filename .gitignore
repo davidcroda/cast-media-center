@@ -4,3 +4,4 @@ client/bower_components
 .idea
 .vagrant
 conf/ssl.conf
+conf/transmission/*
