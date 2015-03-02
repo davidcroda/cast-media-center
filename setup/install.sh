@@ -12,7 +12,8 @@ sudo useradd -r cast
 if [! -a /usr/bin/node]; then
     sudo ln -s /usr/bin/nodejs /usr/bin/node
 fi
-sudo cp /app/conf/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+rm -f /etc/supervisor/conf.d/cast.conf
+sudo ln -s /app/conf/supervisord.conf /etc/supervisor/conf.d/cast.conf
 sudo npm install -g bower grunt-cli --quiet
 cd /app
 npm install --quiet
