@@ -40,7 +40,6 @@
             <ul class="nav navbar-nav">
                 <li ng-class="{ active: isActive('/')}"><a href="#/">Home</a></li>
                 <li ng-class="{ active: isActive('/torrents')}"><a href="#/torrents">Torrents</a></li>
-                <li><a href="" ng-click="refreshVideos()">Refresh</a></li>
                 <li><a href="" ng-click="indexVideos()">Index</a></li>
             </ul>
             <form method="post" enctype="multipart/form-data" action="/api/torrent" class="navbar-form navbar-left">

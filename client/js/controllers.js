@@ -100,9 +100,11 @@ angular.module('cast.controllers', [])
 
       $http.get('/api/torrent').success(function(data) {
 
-        data.rateDownload = $scope.formatSize(data.rateDownload);
-        data.rateUpload = $scope.formatSize(data.rateUpload);
-        data.totalSize = $scope.formatSize(data.totalSize);
+        data.torrents.map(function(torrent) {
+          torrent.rateDownload = $scope.formatSize(torrent.rateDownload);
+          torrent.rateUpload = $scope.formatSize(torrent.rateUpload);
+          torrent.totalSize = $scope.formatSize(torrent.totalSize);
+        });
 
         data.status = $scope.STATUSES[data.status];
 
