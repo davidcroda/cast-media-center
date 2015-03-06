@@ -82,7 +82,7 @@ angular.module('cast.controllers', [])
         bytes = bytes / (1024 * 1024)
       }
 
-      return bytes.toFixed(2) + "Mb";
+      return bytes.toFixed(2);
     };
 
     $scope.STATUSES = [
@@ -104,9 +104,15 @@ angular.module('cast.controllers', [])
           torrent.rateDownload = $scope.formatSize(torrent.rateDownload);
           torrent.rateUpload = $scope.formatSize(torrent.rateUpload);
           torrent.totalSize = $scope.formatSize(torrent.totalSize);
-        });
+          torrent.status = $scope.STATUSES[torrent.status];
 
-        data.status = $scope.STATUSES[data.status];
+          torrent.seederCount = torrent.trackerStats.reduce(function(carry, trackerStat) {
+            return carry + trackerStat.seederCount;
+          }, 0);
+          torrent.leecherCount = torrent.trackerStats.reduce(function(carry, trackerStat) {
+            return carry + trackerStat.leecherCount;
+          }, 0);
+        });
 
         $scope.torrents = data.torrents;
         $scope.timeout = setTimeout($scope.getTorrents, 5000);
@@ -115,8 +121,11 @@ angular.module('cast.controllers', [])
     };
 
     $scope.deleteTorrent = function(id) {
-
-      $http.delete('/api/torrent/' + id);
+      $http.delete('/api/torrent/' + id).success(function() {
+        $scope.torrents = $scope.torrents.filter(function(torrent) {
+          return torrent.id != id;
+        })
+      });
 
     };
 

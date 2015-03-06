@@ -11,7 +11,7 @@ Setup used on my personal web server to download and stream torrents to my chrom
  - run `sudo supervisorctl fg cast` to bring the node app to the foreground and allow you to enter a username
  and password on the first run
  - The source code is mounted at /app
- - Services are managed with SupervisorD http://supervisord.org/
+ - Services are managed with Supervisord http://supervisord.org/
  - Visit http://192.168.33.1 (or whatever ip you bridged to) to access the nginx reverse proxy pointed to the node application
  - If you want to run outside of vagrant, you just need to run `sudo ./setup/install.sh` however it requires Ubuntu 14.04 LTS
 

@@ -4,8 +4,8 @@
             <th>Name</th>
             <th>Status</th>
             <th style="width: 300px;">%</th>
-            <th>D/S</th>
-            <th>U/S</th>
+            <th>D/U</th>
+            <th>(P) S/L</th>
             <th>Size</th>
             <th>Ratio</th>
             <th>&nbsp;</th>
@@ -20,8 +20,8 @@
                     </div>
                 </div>
             </td>
-            <td>{{torrent.rateDownload}}</td>
-            <td>{{torrent.rateUpload}}</td>
+            <td>{{torrent.rateDownload}} / {{torrent.rateUpload}}</td>
+            <td>({{torrent.peersConnected}}) {{torrent.seederCount}} / {{torrent.leecherCount}}</td>
             <td>{{torrent.totalSize}}</td>
             <td>{{torrent.uploadRatio}}</td>
             <td><a ng-click="deleteTorrent(torrent.id)"><span class="glyphicon glyphicon-trash"></span></a></td>

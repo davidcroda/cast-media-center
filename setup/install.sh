@@ -14,7 +14,7 @@ fi
 sudo mkdir -p /data/db
 sudo rm -f /etc/supervisor/conf.d/cast.conf
 sudo ln -s /app/conf/supervisord.conf /etc/supervisor/conf.d/cast.conf
-sudo npm install -g bower grunt-cli --quiet
+sudo npm install -g bower grunt-cli nodemon --quiet
 cd /app
 npm install --quiet
 bower install --silent --allow-root
@@ -22,9 +22,10 @@ bower install --silent --allow-root
 mkdir -p /app/client/thumbnails
 
 #don't start automatically, let supervisord manage them
-sudo update-rc.d -f nginx disable
-sudo update-rc.d -f mongodb disable
-sudo update-rc.d -f transmission-daemon disable
+echo manual | sudo tee /etc/init/nginx.override
+echo manual | sudo tee /etc/init/mongodb.override
+echo manual | sudo tee /etc/init/transmission-daemon.override
+
 sudo service nginx stop
 sudo service mongodb stop
 sudo service transmission-daemon stop

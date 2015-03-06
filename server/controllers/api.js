@@ -74,7 +74,7 @@ exports.addTorrent = function (req, res) {
     if (files.torrent) {
 
       Transmission.addTorrent(files.torrent.path, function() {
-        res.redirect("/");
+        res.redirect("/#/torrents");
       });
 
     }
