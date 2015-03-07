@@ -2,8 +2,14 @@
 
 sudo apt-get install -y software-properties-common
 sudo add-apt-repository -y ppa:jon-severinsson/ffmpeg
+
+# Enable multiverse repo for unrar
+#sudo add-apt-repository "deb http://archive.ubuntu.com/ubuntu trusty multiverse"
+#sudo add-apt-repository "deb http://archive.ubuntu.com/ubuntu trusty-updates multiverse"
+
 sudo apt-get update
-sudo apt-get install -y nodejs npm mongodb git transmission-daemon supervisor nginx ffmpeg
+sudo apt-get install -y nodejs npm mongodb git transmission-daemon \
+    supervisor nginx ffmpeg # unrar
 
 sudo useradd -r cast
 
@@ -14,7 +20,7 @@ fi
 sudo mkdir -p /data/db
 sudo rm -f /etc/supervisor/conf.d/cast.conf
 sudo ln -s /app/conf/supervisord.conf /etc/supervisor/conf.d/cast.conf
-sudo npm install -g bower grunt-cli nodemon --quiet
+sudo npm install -g bower grunt-cli nodemon node-inspector --quiet
 cd /app
 npm install --quiet
 bower install --silent --allow-root

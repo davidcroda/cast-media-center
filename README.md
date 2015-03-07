@@ -33,3 +33,5 @@ TODO:
  - Restore transcoding features
  - Implement subtitles
  - Automatic extraction of archives
+   - ~~Rar~~
+   - Zip

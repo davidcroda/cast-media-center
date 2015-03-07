@@ -5,7 +5,7 @@ var mongoose = require('mongoose'),
   path = require('path'),
   tokenUtils = require('../utils/token'),
   formidable = require('formidable'),
-  util = require('util'),
+  indexer = require('../indexing/indexer'),
   Transmission = require('../utils/transmission'),
   models = {
     video: mongoose.model('Video')
@@ -37,6 +37,17 @@ exports.get = function (req, res) {
   } else {
     res.sendStatus(404);
   }
+};
+
+exports.runIndexer = function (req, res) {
+
+  if (typeof req.query.debug != "undefined") {
+    models.video.collection.drop();
+  }
+
+  indexer.refresh(function() {
+    res.sendStatus(200);
+  });
 };
 
 exports.getToken = function(req, res) {

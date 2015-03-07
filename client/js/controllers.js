@@ -27,9 +27,10 @@ angular.module('cast.controllers', [])
           video.canPlay = (video.vcodec == "h264" && video.acodec == "aac");
           videos[key] = video;
         });
+        console.log('Settings $scope.videos to ', videos);
         $scope.videos = videos;
-        clearTimeout($scope.timeout);
-        $scope.timeout = setTimeout($scope.loadVideos, 5000);
+        clearTimeout($rootScope.timeout);
+        $rootScope.timeout = setTimeout($scope.loadVideos, 5000);
       }).
         error(function (data, status, headers, config) {
           if (status == 401) {
@@ -57,7 +58,7 @@ angular.module('cast.controllers', [])
 
     $scope.indexVideos = function () {
       console.log('calling indexVideos');
-      $http.get('/api/refresh').success(function () {
+      $http.post('/api/refresh', {}).success(function () {
         $scope.refreshVideos();
       });
     };
@@ -70,7 +71,7 @@ angular.module('cast.controllers', [])
   }])
 
 
-  .controller('TorrentListController', ['$scope','$http', function($scope, $http) {
+  .controller('TorrentListController', ['$scope', '$rootScope', '$http', function($scope, $rootScope, $http) {
 
     $scope.formatSize = function(bytes) {
 
@@ -115,7 +116,7 @@ angular.module('cast.controllers', [])
         });
 
         $scope.torrents = data.torrents;
-        $scope.timeout = setTimeout($scope.getTorrents, 5000);
+        $rootScope.timeout = setTimeout($scope.getTorrents, 5000);
       });
 
     };

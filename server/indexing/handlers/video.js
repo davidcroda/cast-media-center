@@ -14,6 +14,8 @@ var mongoose = require('mongoose'),
 ;
 
 var processVideo = function (video) {
+  var Indexer = require('../indexer');
+
   Video.find({
     path: video
   }, function (err, results) {
@@ -21,7 +23,7 @@ var processVideo = function (video) {
       console.log("Error: ", err);
     } else {
       if (results.length == 0) {
-        lastUpdate = Date.now();
+        Indexer.lastUpdate = Date.now();
         createVideoRecord(video);
       } else {
         console.log("Found existing video for path: ", video);
@@ -117,6 +119,6 @@ var generateThumbnail = function (file, sizeName, size) {
 //"rar|001|zip": extractVideo,
 //"mp4|mkv": processVideo
 module.exports = {
-  pattern: /\.(mp4|mkv|avi)/,
-  callback: processVideo
+  pattern: /\.(mp4|mkv|avi)$/,
+  process: processVideo
 };

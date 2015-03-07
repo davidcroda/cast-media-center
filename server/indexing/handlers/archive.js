@@ -1,22 +1,36 @@
+var config = require('../../config/config'),
+  fs = require('fs'),
+  rar = require('node-rar'),
+  path = require('path')
+;
 
-function extractVideo(source, archive, index) {
-  console.log("Extract ", archive);
 
-  var rf = new rarfile(archive, {
-    debugMode: true
-  });
-  console.log(rf.toString());
-  // { names: [ '0.jpg', '2.jpg']}
+function extractVideo(archive) {
 
-////readFile function
-//  rf.readFile('0.jpg', function(err, fdata) {
-//    console.log("File 0.jpg is " + fdata.length + " bytes long.");
-//  });
+  var Indexer = require('../indexer'),
+    files = rar.list(archive),
+    dir = path.dirname(archive);
 
-  return archive + ".test.mp4";
+  files.reduce(function(carry, file) {
+    return (carry && fs.existsSync(file));
+  }, true);
+
+  //1 or more files from the archive are not extracted
+  if(!files) {
+
+    console.log("Extracting ", archive);
+
+    rar.extract(archive, dir);
+
+    files.forEach(function(file) {
+      Indexer.pushFile(path.join(dir, file.FileName));
+    });
+  } else {
+    console.log("Skipping ", archive, " all files extracted");
+  }
 }
 
 module.exports = {
-  pattern: /\.(rar|001|zip)/,
-  callback: extractVideo
+  pattern: /\.(rar|001|zip)$/,
+  process: extractVideo
 };

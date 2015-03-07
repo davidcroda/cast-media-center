@@ -1,13 +1,11 @@
 var site = require('../controllers/site'),
   api = require('../controllers/api'),
-//twitch = require('../app/controllers/twitch'),
-  refresh = require('../indexing/main'),
   mongoose = require('mongoose'),
   User = mongoose.model('User'),
   passport = require('passport');
 
 module.exports = function (app) {
-  app.get('/api/refresh', refresh.index);
+  app.post('/api/refresh', api.runIndexer);
 
   app.get('/api/torrent', api.getTorrents);
   app.post('/api/torrent', api.addTorrent);
