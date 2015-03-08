@@ -75,6 +75,7 @@ var startApp = function() {
   Indexer.start();
 
   app.enable('trust proxy', 1);
+  app.disable('e-tag');
 
   app.listen(config.port);
   console.log('Listening on port: ' + config.port);

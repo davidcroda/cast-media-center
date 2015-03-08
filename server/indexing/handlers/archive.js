@@ -11,12 +11,15 @@ function extractVideo(archive) {
     files = rar.list(archive),
     dir = path.dirname(archive);
 
-  files.reduce(function(carry, file) {
-    return (carry && fs.existsSync(file));
+  console.log(files);
+
+  var allExtracted = files.reduce(function(carry, file) {
+    var exists = fs.existsSync(path.join(dir,file.FileName));
+    return (carry && exists);
   }, true);
 
   //1 or more files from the archive are not extracted
-  if(!files) {
+  if(!allExtracted) {
 
     console.log("Extracting ", archive);
 
