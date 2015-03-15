@@ -14,7 +14,7 @@ exports.generateToken = function (user, next, expiration) {
     };
 
     if(typeof expiration != "undefined") {
-      data.expiresAt = moment().add(6,'hours').toDate();
+      data.expiresAt = expiration;
     }
 
     var tokenRecord = new Token(data);

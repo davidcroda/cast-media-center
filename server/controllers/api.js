@@ -53,7 +53,7 @@ exports.runIndexer = function (req, res) {
 exports.getToken = function(req, res) {
   tokenUtils.generateToken(req.user, function(err, token) {
     res.json({token: token});
-  }, 60*60*6);
+  }, moment().add(6,'hours').toDate());
 };
 
 exports.getTorrents = function(req, res) {
@@ -95,28 +95,34 @@ exports.addTorrent = function (req, res) {
 
 exports.del = function (req, res) {
   if (req.params.id) {
-    console.log('delete ' + req.params.id);
+
     models[req.params.model].find({
       _id: req.params.id
-    }, function (err, videos) {
+    }, function (err, results) {
+
       if (err) throw err;
-      for (var i in videos) {
+
+      results.forEach(function(result) {
+
         if (req.params.model == 'video') {
-          fs.unlink(videos[i].path, function (err) {
+
+          fs.unlink(result.path, function (err) {
             if (err) console.log(err);
-            videos[i].remove();
+            result.remove();
           });
+
         } else {
-          videos[i].remove();
+          result.remove();
         }
-      }
-      res.json(videos);
+      });
+
+      res.json(results);
     });
   }
 };
 
 exports.create = function (req, res) {
-  console.log(req.body);
+
   var model = new models[req.params.model](req.body);
   model.save(function (err) {
     if (err) return res.send(500);
