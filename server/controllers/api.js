@@ -7,6 +7,7 @@ var mongoose = require('mongoose'),
   formidable = require('formidable'),
   indexer = require('../indexing/indexer'),
   Transmission = require('../utils/transmission'),
+  moment = require('moment'),
   models = {
     video: mongoose.model('Video')
   };
