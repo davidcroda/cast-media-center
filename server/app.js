@@ -26,10 +26,13 @@ var checkSetup = function() {
 
     if(!result) {
       var defaultUser = new User({
-        username: config.DEFAULT_USERNAME
+        username: config.defaultUser
       });
 
-      User.register(defaultUser, config.DEFAULT_PASSWORD);
+      User.register(defaultUser, config.defaultPassword, function (err) {
+        if(err) throw err;
+        console.log("User: " + defaultUser.username + " registered.");
+      });
     }
 
   });
@@ -47,7 +50,7 @@ var startApp = function() {
 
   var Indexer = require('./indexing/indexer');
 
-  Indexer.start();
+  Indexer.startTimer();
 
   app.enable('trust proxy', 1);
   app.disable('e-tag');

@@ -1,8 +1,7 @@
 var path = require('path'),
   config = require('../config/config'),
-  readdir = require('recursive-readdir')
-
-;
+  readdir = require('recursive-readdir'),
+  sleep = require('sleep');
 
 var Indexer = function(options) {
 
@@ -15,6 +14,7 @@ var Indexer = function(options) {
   this.lastUpdate = 0;
 
   this.files = [];
+  this.running = false;
 
 };
 
@@ -27,9 +27,15 @@ Indexer.prototype.registerHandler = function (handler) {
 
 Indexer.prototype.refresh = function (cb) {
 
-  var _this = this;
+  var _this = indexer;
 
-  clearTimeout(this.timeout);
+  if(_this.running) {
+    console.log("Indexer already running, returning.");
+    return false;
+  }
+
+  _this.stopTimer();
+  _this.running = true;
 
   readdir(config.downloadDir, function (err, files) {
 
@@ -38,7 +44,8 @@ Indexer.prototype.refresh = function (cb) {
     indexer.files = files;
 
     indexer.processFiles(function() {
-      indexer.timeout = setTimeout(indexer.refresh, indexer.calculateTimeout(indexer.interval));
+      _this.running = false;
+      _this.startTimer();
       if (typeof cb == "function") {
         cb()
       }
@@ -48,7 +55,7 @@ Indexer.prototype.refresh = function (cb) {
 
 Indexer.prototype.calculateTimeout = function (interval) {
   var diff = Date.now() - this.lastUpdate;
-  if (diff > (60 * 30)) {
+  if (this.lastUpdate > 0 && diff > (60 * 30)) {
     return interval * 72; //6 hours
   }
   return interval;
@@ -60,7 +67,7 @@ Indexer.prototype.pushFile = function(file) {
 
 Indexer.prototype.processFiles = function (cb) {
 
-  var _this = this;
+  var _this = indexer;
 
 
   (function(file) {
@@ -92,9 +99,14 @@ Indexer.prototype.processFiles = function (cb) {
 
 };
 
-Indexer.prototype.start = function(interval) {
-  this.interval = interval || this.interval;
-  this.timeout = setTimeout(this.refresh, this.interval);
+Indexer.prototype.startTimer = function() {
+  var interval = indexer.calculateTimeout(indexer.interval);
+
+  indexer.timeout = setTimeout(indexer.refresh, interval);
+};
+
+Indexer.prototype.stopTimer = function() {
+  clearTimeout(this.timeout);
 };
 
 var indexer = new Indexer(),

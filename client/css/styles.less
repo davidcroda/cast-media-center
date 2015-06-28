@@ -34,21 +34,15 @@
   width: 100px;
 }
 
-#video-container {
-  -webkit-perspective: 1000;
-}
-
 .video-item {
 
   //-webkit-transition: all 0.2s linear ;
   //-webkit-animation-direction: alternate;
 
-
+  position: relative;
   text-align: center;
   padding: 10px;
-
-  height: 390px;
-
+  cursor: pointer;
   -webkit-user-select: none; /* Chrome/Safari */
   -moz-user-select: none; /* Firefox */
   -ms-user-select: none; /* IE10+ */
@@ -75,18 +69,22 @@
     color: indianred;
   }
 
-  .play-icon, .transcode-icon {
-    position: absolute;
-    margin: auto;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    right: 0;
-    font-size: 72px;
-    height: 150px;
-    color: @brand-success;
-  }
 
+  .video-icons {
+    position: inherit;
+
+    .play-icon, .transcode-icon {
+      position: absolute;
+      margin: auto;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      right: 0;
+      font-size: 36px;
+      color: @brand-success;
+    }
+
+  }
   .overlay {
     display: none;
     width: 0%;

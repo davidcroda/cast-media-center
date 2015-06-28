@@ -40,6 +40,14 @@ exports.get = function (req, res) {
   }
 };
 
+exports.getUser = function(req, res) {
+  if(req.params.id) {
+
+
+
+  }
+};
+
 exports.runIndexer = function (req, res) {
 
   if (typeof req.query.debug != "undefined") {

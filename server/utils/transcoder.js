@@ -24,7 +24,7 @@ exports.isTranscoding = function (file) {
 };
 
 function transformPath(file) {
-  return file + '.CONV.mp4';
+  return file + '.transcoded.mp4';
 }
 
 exports.transcode = function (res, video) {
@@ -57,22 +57,7 @@ exports.transcode = function (res, video) {
       .channels(2)
       .format('mp4')
       .on('progress', function (progress) {
-        // The 'progress' event is emitted every time FFmpeg
-        // reports progress information. 'progress' contains
-        // the following information:
-        // - 'frames': the total processed frame count
-        // - 'currentFps': the framerate at which FFmpeg is
-        //   currently processing
-        // - 'currentKbps': the throughput at which FFmpeg is
-        //   currently processing
-        // - 'targetSize': the current size of the target file
-        //   in kilobytes
-        // - 'timemark': the timestamp of the current frame
-        //   in seconds
-        // - 'percent': an estimation of the progress
-
         exports.transcoding[video.path] = progress;
-        res.json(progress);
       })
       .on('error', function (ev, ev1, ev2) {
         console.log("ERROR");
@@ -81,21 +66,17 @@ exports.transcode = function (res, video) {
       .on('finish', function (ev) {
         console.log(ev);
         console.log("transcode finished");
-        delete exports.transcoding[video.path];
         var oldPath = video.path;
-        video.path = newPath;
         video.acodec = "aac";
         video.vcodec = "h264";
         video.transcoding = false;
-        video.title = path.basename(video.path);
-        video.sources = video.sources.map(function (source) {
-          return transformPath(source);
-        });
         video.save(function (err) {
           if (err) throw err;
           if (oldPath != newPath) {
             fs.unlink(oldPath);
+            fs.rename(newPath, oldPath);
           }
+          delete exports.transcoding[video.path];
         });
         res.end();
       })
@@ -103,4 +84,4 @@ exports.transcode = function (res, video) {
   } else {
     res.json(exports.transcoding[video.path]);
   }
-}
+};

@@ -40,6 +40,7 @@ service transmission-daemon stop
 
 update-rc.d -f supervisor enable
 service supervisor restart
+supervisorctl restart all
 
 ## No longer needed, using ppa repository of real ffmpeg
 #cd setup

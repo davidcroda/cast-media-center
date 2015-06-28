@@ -7,16 +7,16 @@
          data-target = "videoDropdown"
             >
         <div class="overlay"></div>
-        <div ng-show="video.hover">
+        <div ng-show="video.hover" class='video-icons'>
             <div class="icon play-icon" ng-show="video.canPlay"><i class="glyphicon glyphicon-play-circle"></i></div>
             <div class="icon transcode-icon" ng-hide="video.canPlay"><i class="glyphicon glyphicon-wrench"></i></div>
         </div>
         <div class="video-title">
             {{video.title}}<br/>
 
-            <div class='created'>{{video.date}}</div>
-            <div class='vcodec'>Video: <b>{{video.vcodec}}</b></div>
-            <div class='acodec'>Audio: <b>{{video.acodec}}</b></div>
+            <span class='created'>{{video.date | date : 'shortDate'}}</span>
+            <span class='vcodec'>Video: <b>{{video.vcodec}}</b></span>
+            <span class='acodec'>Audio: <b>{{video.acodec}}</b></span>
         </div>
     </div>
 </div>
@@ -36,9 +36,7 @@
                 </div>
             </div>
             <div class="col-md-3">
-                <img class="thumbnail" ng-src="{{currentMedia.thumbnailLarge}}">
                 <div class="current-media">{{currentMedia.title}}</div>
-
                 <div class="currentTime"></div>
             </div>
             <div class="col-md-8">

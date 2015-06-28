@@ -25,13 +25,11 @@
 .thumbnail {
   width: 100px;
 }
-#video-container {
-  -webkit-perspective: 1000;
-}
 .video-item {
+  position: relative;
   text-align: center;
   padding: 10px;
-  height: 390px;
+  cursor: pointer;
   -webkit-user-select: none;
   /* Chrome/Safari */
   -moz-user-select: none;
@@ -57,16 +55,18 @@
   font-size: 14px;
   color: indianred;
 }
-.video-item .play-icon,
-.video-item .transcode-icon {
+.video-item .video-icons {
+  position: inherit;
+}
+.video-item .video-icons .play-icon,
+.video-item .video-icons .transcode-icon {
   position: absolute;
   margin: auto;
   top: 0;
   left: 0;
   bottom: 0;
   right: 0;
-  font-size: 72px;
-  height: 150px;
+  font-size: 36px;
   color: #5cb85c;
 }
 .video-item .overlay {
