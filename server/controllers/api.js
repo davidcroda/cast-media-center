@@ -14,6 +14,7 @@ var mongoose = require('mongoose'),
 
 exports.index = function (req, res) {
   var sort = req.query.sort || '+title';
+  console.log('SORT = ', sort);
   models[req.params.model].find().sort(sort).exec(function (err, results) {
     if (err) throw new Error(err);
     var json = {};
