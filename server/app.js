@@ -23,38 +23,13 @@ var checkSetup = function() {
 
   //If there isn't a user setup, prompt for one
   User.findOne({}, function(err, result) {
+
     if(!result) {
-      var prompt = require('prompt');
-
-      var properties = [
-        {
-          name: 'username',
-          validator: /^[a-zA-Z\s\-]+$/,
-          warning: 'Username must be only letters, spaces, or dashes'
-        },
-        {
-          name: 'password',
-          hidden: true
-        }
-      ];
-
-      prompt.start();
-
-      prompt.get(properties, function (err, result) {
-        if (err) {
-          throw err;
-        }
-
-        User.register(new User({
-          username: result.username
-        }), result.password, function (ev) {
-
-          console.log("User: " + result.username + " registered.");
-
-        });
-
+      var defaultUser = new User({
+        username: config.DEFAULT_USERNAME
       });
 
+      User.register(defaultUser, config.DEFAULT_PASSWORD);
     }
 
   });

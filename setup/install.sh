@@ -1,8 +1,8 @@
 #!/bin/sh
 
 sudo apt-get install -y software-properties-common
-sudo add-apt-repository -y ppa:jon-severinsson/ffmpeg
-
+sudo add-apt-repository ppa:mc3man/trusty-media
+  
 # Enable multiverse repo for unrar
 #sudo add-apt-repository "deb http://archive.ubuntu.com/ubuntu trusty multiverse"
 #sudo add-apt-repository "deb http://archive.ubuntu.com/ubuntu trusty-updates multiverse"

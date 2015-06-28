@@ -85,35 +85,7 @@ var createVideoRecord = function (file) {
       if (err)
         console.log("Error: " + err);
     });
-
-    generateThumbnail(fileRecord, 'Small', '480x270');
-    generateThumbnail(fileRecord, 'Large', '1280x720');
   });
-};
-
-
-var generateThumbnail = function (file, sizeName, size) {
-  new ffmpeg({
-    source: file.path
-  })
-    .on('error', function (err) {
-      console.log(sizeName, err);
-      file['thumbnail' + sizeName] = '/img/no-thumbnail.png';
-      file.save(function (err) {
-        if(err != null) {
-          console.log("Error saving thumbnail record", err);
-        }
-      });
-    })
-    .on('filenames', function (filenames) {
-      file['thumbnail' + sizeName] = '/thumbnails/' + filenames[0];
-      file.save(function (err) {
-        if(err) {
-          console.log("Error saving thumbnail record", err);
-        }
-      });
-    })
-    .takeScreenshots({count: 1, size: size, filename: "%f-%r"}, config.root + '/client/thumbnails/');
 };
 
 //"rar|001|zip": extractVideo,

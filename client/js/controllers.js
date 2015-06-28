@@ -75,7 +75,7 @@ angular.module('cast.controllers', [])
 
     $scope.formatSize = function(bytes) {
 
-      if(bytes == undefined) {
+      if(bytes === undefined) {
         bytes = 0;
       }
 

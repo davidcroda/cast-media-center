@@ -2,6 +2,11 @@
   "name": "cast-media-center",
   "version": "0.0.1",
   "private": true,
+  "jshintConfig": {
+    "curly": true,
+    "browser": true,
+    "devel": true
+  },
   "scripts": {
     "start": "start.sh"
   },

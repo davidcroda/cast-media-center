@@ -96,7 +96,6 @@ class Chromecast
         mediaInfo.contentType = 'video/mp4'
         mediaInfo.customData =
           title: video.title,
-          thumbnail: video.thumbnailLarge
         request = new chrome.cast.media.LoadRequest mediaInfo
         request.autoplay = true;
         request.currentTime = 0;

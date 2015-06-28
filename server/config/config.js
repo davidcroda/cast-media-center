@@ -7,6 +7,8 @@ var path = require('path'),
 
 var config = {
   root: rootPath,
+  defaultUser: 'dave',
+  defaultPassword: 'changethis',
   app: {
     name: 'cast-media-center'
   },

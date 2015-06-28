@@ -32,8 +32,6 @@ var VideoSchema = new Schema({
   path: String,
   duration: 0,
   source: String,
-  thumbnailSmall: String,
-  thumbnailLarge: String,
   vcodec: String,
   acodec: String,
   date: Date,
