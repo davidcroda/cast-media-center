@@ -13,11 +13,8 @@ var mongoose = require('mongoose'),
   };
 
 exports.index = function (req, res) {
-  if (!req.query.sort) {
-    req.query.sort = '-date';
-  }
-
-  models[req.params.model].find().sort(req.query.sort).exec(function (err, results) {
+  var sort = req.query.sort || '+title';
+  models[req.params.model].find().sort(sort).exec(function (err, results) {
     if (err) throw new Error(err);
     var json = {};
     json[req.params.model] = results;
