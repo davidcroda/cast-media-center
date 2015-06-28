@@ -48,7 +48,7 @@ Vagrant.configure(2) do |config|
   #  vb.gui = true
 
     # Customize the amount of memory on the VM:
-    vb.memory = "1024"
+    vb.memory = "2048"
     vb.cpus = "4"
   end
   #
@@ -65,7 +65,5 @@ Vagrant.configure(2) do |config|
   # Enable provisioning with a shell script. Additional provisioners such as
   # Puppet, Chef, Ansible, Salt, and Docker are also available. Please see the
   # documentation for more information about their specific syntax and use.
-  config.vm.provision "shell", inline: <<-SHELL
-    sudo /app/setup/install.sh
-  SHELL
+  config.vm.provision "shell", path: "scripts/install.sh"
 end
