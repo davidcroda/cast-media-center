@@ -10,13 +10,24 @@ angular.module('cast.controllers', [])
 
     $scope.orderProp = 'title';
 
-    $scope.setActive = function (video, $event) {
-      if (!$event.shiftKey) {
+    $scope.setActive = function (chosenVideo, $event) {
+      if (!$event.shiftKey && !$event.ctrlKey) {
         angular.forEach($scope.videos, function (video) {
           video.active = false
         }, $scope.videos);
+      } else if ($event.shiftKey) {
+        var isActive = false;
+        angular.forEach($scope.videos, function (video) {
+          if (video._id == chosenVideo._id) {
+            isActive = false;
+          } else if(!isActive && video.isActive) {
+            isActive = true;
+          } else {
+            video.active = isActive;
+          }
+        }, $scope.videos);
       }
-      video.active = true;
+      chosenVideo.active = true;
     };
 
     $scope.refreshVideos = function () {
@@ -63,8 +74,8 @@ angular.module('cast.controllers', [])
       });
     };
 
-    $rootScope.$on('indexVideos', $scope.indexVideos);
-    $rootScope.$on('refreshVideos', $scope.refreshVideos);
+    $scope.$on('indexVideos', $scope.indexVideos);
+    $scope.$on('refreshVideos', $scope.refreshVideos);
 
     $scope.refreshVideos();
 
