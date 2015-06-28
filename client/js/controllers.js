@@ -8,7 +8,7 @@ angular.module('cast.controllers', [])
 
     $scope.chromecast = new chromecast($scope);
 
-    $scope.orderProp = 'date';
+    $scope.orderProp = 'title';
 
     $scope.setActive = function (video, $event) {
       if (!$event.shiftKey) {
