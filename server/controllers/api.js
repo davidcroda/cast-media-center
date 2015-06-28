@@ -32,7 +32,7 @@ exports.get = function (req, res) {
     }, function (err, result) {
       if (err) throw err;
       var localUrl = url.parse(result.source);
-      res.setHeader("X-Accel-Redirect", localUrl.pathname);
+      res.setHeader("X-Accel-Redirect", unescape(localUrl.pathname));
       res.end();
     });
   } else {
