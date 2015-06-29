@@ -1,12 +1,11 @@
 Setup used on my personal web server to download and stream torrents to my chromecast.
 
-###Setup
+#### Dev Setup
 
  - Install Vagrant http://www.vagrantup.com
  - `$ vagrant up` - follow prompts as necessary
  - visit http://192.168.33.11/ in your browser. Default user: "dave", Default password: "changethis"
  - `$ ./scripts/manage.sh` will connect you to the supervisord instance
- - If you want to run outside of vagrant, you just need to run `sudo ./setup/install.sh` however it has only been tested Ubuntu 14.04 LTS
 
 Torrents must use x264 video and 2-channel AAC audio to play on the chromecast.
 
@@ -22,8 +21,8 @@ Ffmpeg is used to generate thumbnails and eventually transcode to the correct vi
 TODO:
 
  - [x] Switch rtorrent with transmission, manage torrents via json rpc api https://trac.transmissionbt.com/browser/trunk/extras/rpc-spec.txt
- - [] Restore transcoding features
- - [] Implement subtitles
- - []Automatic extraction of archives
+ - [ ] Restore transcoding features
+ - [ ] Implement subtitles
+ - [ ]Automatic extraction of archives
    - [x] Rar
-   - Zip
+   - [ ] Zip
