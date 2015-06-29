@@ -1,58 +1,66 @@
 <!DOCTYPE html>
-<!--[if lt IE 7]>      <html lang="en" ng-app="cast" class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
-<!--[if IE 7]>         <html lang="en" ng-app="cast" class="no-js lt-ie9 lt-ie8"> <![endif]-->
-<!--[if IE 8]>         <html lang="en" ng-app="cast" class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]><!--> <html lang="en" ng-app="cast" class="no-js"> <!--<![endif]-->
+<!--[if lt IE 7]>
+<html lang="en" ng-app="cast" class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>
+<html lang="en" ng-app="cast" class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>
+<html lang="en" ng-app="cast" class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html lang="en" ng-app="cast" class="no-js"> <!--<![endif]-->
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Cast Media Center</title>
-    <meta name="description" content="">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css">
-    <link rel="stylesheet" href="css/styles.css"/>
-    <script src="bower_components/html5-boilerplate/js/vendor/modernizr-2.6.2.min.js"></script>
-    <script src="bower_components/jquery/dist/jquery.js"></script>
-    <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Cast Media Center</title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css">
+  <link rel="stylesheet" href="css/styles.css"/>
+  <script src="bower_components/html5-boilerplate/js/vendor/modernizr-2.6.2.min.js"></script>
+  <script src="bower_components/jquery/dist/jquery.js"></script>
+  <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
 
-    <!--CHROMECAST SDK-->
-    <script src="https://www.gstatic.com/cv/js/sender/v1/cast_sender.js"></script>
+  <!--CHROMECAST SDK-->
+  <script src="https://www.gstatic.com/cv/js/sender/v1/cast_sender.js"></script>
 
-    <!-- BOOTSTRAP EDIT IN PLACE -->
-    <link href="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/css/bootstrap-editable.css" rel="stylesheet"/>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/js/bootstrap-editable.min.js"></script>
+  <!-- BOOTSTRAP EDIT IN PLACE -->
+  <link href="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/css/bootstrap-editable.css"
+        rel="stylesheet"/>
+  <script
+      src="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/js/bootstrap-editable.min.js"></script>
 </head>
 <body>
 
 <!--[if lt IE 7]>
-<p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+<p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade
+  your browser</a> to improve your experience.</p>
 <![endif]-->
 
 <nav role="navigation" id="main_nav" class="navbar navbar-default" ng-controller="HeaderController">
-    <div class="container-fluid">
-        <div class="navbar-header">
-            <button data-toggle="collapse" data-target="#navbar-collapse" type="button" class="navbar-toggle"><span
-                    class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span
-                    class="icon-bar"></span></button>
-            <a href="#" class="navbar-brand">freeCast</a>
-        </div>
-        <div id="navbar-collapse" class="collapse navbar-collapse">
-            <ul class="nav navbar-nav">
-                <li ng-class="{ active: isActive('/')}"><a href="#/">Home</a></li>
-                <li ng-class="{ active: isActive('/torrents')}"><a href="#/torrents">Torrents</a></li>
-                <li><a href="" ng-click="indexVideos()">Index</a></li>
-            </ul>
-            <form method="post" enctype="multipart/form-data" action="/api/torrent" class="navbar-form navbar-left">
-                <div class="form-group">
-                    <input id="torrent" name="torrent" type="file" class="form-control" />
-                    <button type="submit" id="upload-button">Add</button>
-                </div>
-            </form>
-            <ul class="nav navbar-nav pull-right">
-                <li><a href="/logout">Logout</a></li>
-            </ul>
-        </div>
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button data-toggle="collapse" data-target="#navbar-collapse" type="button" class="navbar-toggle"><span
+          class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span
+          class="icon-bar"></span></button>
+      <a href="#" class="navbar-brand">freeCast</a>
     </div>
+    <div id="navbar-collapse" class="collapse navbar-collapse">
+      <ul class="nav navbar-nav">
+        <li ng-class="{ active: isActive('/')}"><a href="#/">Home</a></li>
+        <li ng-class="{ active: isActive('/torrents')}"><a href="#/torrents">Torrents</a></li>
+        <li><a href="" ng-click="indexVideos()">Index</a></li>
+      </ul>
+      <form method="post" enctype="multipart/form-data" action="/api/torrent" class="navbar-form navbar-left">
+        <div class="form-group">
+          <input id="torrent" name="torrent" type="file" class="form-control"/>
+          <button type="submit" id="upload-button">Add</button>
+        </div>
+      </form>
+      <ul class="nav navbar-nav pull-right">
+        <li ng-class="{ active: isActive('/settings')}"><a href="#/settings">Settings</a></li>
+        <li><a href="/logout">Logout</a></li>
+      </ul>
+    </div>
+  </div>
 </nav>
 <div ng-view class="container-fluid"></div>
 

@@ -15,6 +15,7 @@ config(['$routeProvider', function($routeProvider) {
   $routeProvider.when('/', {templateUrl: 'views/video_list.html', controller: 'VideoListController'});
   $routeProvider.when('/login', {templateUrl: 'views/login.html', controller: 'LoginController'});
   $routeProvider.when('/torrents', {templateUrl: 'views/torrent_list.html', controller: 'TorrentListController'});
+  $routeProvider.when('/settings', {templateUrl: 'views/settings.html', controller: 'SettingsController'});
   $routeProvider.when('/videos/:id', {templateUrl: 'views/video.html', controller: 'VideoController'});
   $routeProvider.otherwise({redirectTo: '/'});
 }])

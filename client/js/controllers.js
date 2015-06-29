@@ -146,6 +146,22 @@ angular.module('cast.controllers', [])
 
   }])
 
+  .controller('SettingsController', ['$scope', '$rootScope', '$http',
+    function($scope, $rootScope, $http) {
+
+      console.log($rootScope);
+
+      $scope.user = $rootScope.user;
+
+      console.log($scope.user);
+
+      $scope.update = function(user) {
+        $http.post('/api/user/' + user._id, user).success(function(user) {
+          $scope.user = $rootScope.user = user;
+        });
+      }
+
+    }])
 
   .controller('LoginController', ['$scope', '$rootScope', '$location', '$routeParams', '$window', 'AUTH_EVENTS', 'AuthService',
     function ($scope, $rootScope, $location, $routeParams, $window, AUTH_EVENTS, AuthService) {
@@ -163,7 +179,7 @@ angular.module('cast.controllers', [])
           $rootScope.$broadcast(AUTH_EVENTS.loginSuccess);
           if(typeof $routeParams.redirect != "undefined") {
             console.log($routeParams.redirect);
-            window.location.href = "http://" + window.location.host + $routeParams.redirect;
+            window.location.href = "//" + window.location.host + $routeParams.redirect;
             console.log(window.location.href);
           } else {
             $location.url("/");
