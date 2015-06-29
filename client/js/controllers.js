@@ -117,7 +117,7 @@ angular.module('cast.controllers', [])
           torrent.rateUpload = $scope.formatSize(torrent.rateUpload);
           torrent.totalSize = $scope.formatSize(torrent.totalSize);
           torrent.status = $scope.STATUSES[torrent.status];
-          torrent.percentDone = torrent.percentDone.toFixed(1);
+          torrent.percentDone = torrent.percentDone.toFixed(3);
 
           torrent.seederCount = torrent.trackerStats.reduce(function(carry, trackerStat) {
             return carry + trackerStat.seederCount;
