@@ -36,11 +36,14 @@
 
 .video-item {
 
+  .video-title {
+    display: block;
+    font-weight: bold;
+  }
   //-webkit-transition: all 0.2s linear ;
   //-webkit-animation-direction: alternate;
 
   position: relative;
-  text-align: center;
   padding: 10px;
   cursor: pointer;
   -webkit-user-select: none; /* Chrome/Safari */
@@ -50,6 +53,7 @@
   /* Rules below not implemented in browsers yet */
   -o-user-select: none;
   user-select: none;
+  font-size: 10pt;
 
   .img-thumbnail {
     min-height: 220px;
@@ -87,7 +91,7 @@
   }
   .overlay {
     display: none;
-    width: 0%;
+    width: 0;
     height: 100%;
     top: 0;
     left: 0;

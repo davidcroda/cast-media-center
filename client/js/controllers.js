@@ -10,6 +10,9 @@ angular.module('cast.controllers', [])
 
     $scope.orderProp = 'title';
 
+    $rootScope.$on('indexVideos', $scope.indexVideos);
+    $rootScope.$on('refreshVideos', $scope.refreshVideos);
+
     $scope.setActive = function (chosenVideo, $event) {
       if (!$event.shiftKey && !$event.ctrlKey) {
         angular.forEach($scope.videos, function (video) {
@@ -73,9 +76,6 @@ angular.module('cast.controllers', [])
         $scope.refreshVideos();
       });
     };
-
-    $scope.$on('indexVideos', $scope.indexVideos);
-    $scope.$on('refreshVideos', $scope.refreshVideos);
 
     $scope.refreshVideos();
 

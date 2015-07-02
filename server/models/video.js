@@ -31,6 +31,8 @@ var VideoSchema = new Schema({
   subtitle: String,
   path: String,
   duration: 0,
+  season: Number,
+  episode: Number,
   source: String,
   vcodec: String,
   acodec: String,

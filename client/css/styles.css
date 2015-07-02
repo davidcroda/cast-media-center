@@ -27,7 +27,6 @@
 }
 .video-item {
   position: relative;
-  text-align: center;
   padding: 10px;
   cursor: pointer;
   -webkit-user-select: none;
@@ -39,6 +38,11 @@
   /* Rules below not implemented in browsers yet */
   -o-user-select: none;
   user-select: none;
+  font-size: 10pt;
+}
+.video-item .video-title {
+  display: block;
+  font-weight: bold;
 }
 .video-item .img-thumbnail {
   min-height: 220px;
@@ -71,7 +75,7 @@
 }
 .video-item .overlay {
   display: none;
-  width: 0%;
+  width: 0;
   height: 100%;
   top: 0;
   left: 0;

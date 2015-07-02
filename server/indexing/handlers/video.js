@@ -32,6 +32,30 @@ var processVideo = function (video) {
   });
 };
 
+var processFilename = function(file) {
+
+  var filename = path.basename(file),
+    title = filename,
+    season = 0,
+    episode = 0;
+
+  var matches = filename.match(/(.*?)\.S([0-9][0-9])E([0-9][0-9]).*/);
+
+  if(matches) {
+
+    title = matches[1].trim().replace('.',' ');
+    season = matches[2];
+    episode = matches[3];
+
+  }
+
+  return {
+    title: title,
+    season: season,
+    episode: episode
+  };
+};
+
 
 var createVideoRecord = function (file) {
   var stat = fs.statSync(file);
@@ -58,10 +82,14 @@ var createVideoRecord = function (file) {
       });
     }
 
+    var processed = processFilename(file);
+
     var fileRecord = new Video({
-      title: path.basename(file),
+      title: processed.title,
       path: file,
       date: stat.mtime,
+      season: processed.season,
+      episode: processed.episode,
       source: "/" + path.relative(config.root, file),
       watched: false,
       vcodec: vcodec,
