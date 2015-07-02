@@ -35,35 +35,36 @@
   your browser</a> to improve your experience.</p>
 <![endif]-->
 
-<nav role="navigation" id="main_nav" class="navbar navbar-default" ng-controller="HeaderController">
-  <div class="container-fluid">
-    <div class="navbar-header">
-      <button data-toggle="collapse" data-target="#navbar-collapse" type="button" class="navbar-toggle"><span
-          class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span
-          class="icon-bar"></span></button>
-      <a href="#" class="navbar-brand">freeCast</a>
+<div ng-controller="AppController">
+  <nav role="navigation" id="main_nav" class="navbar navbar-default">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <button data-toggle="collapse" data-target="#navbar-collapse" type="button" class="navbar-toggle"><span
+            class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span
+            class="icon-bar"></span></button>
+        <a href="#" class="navbar-brand">freeCast</a>
+      </div>
+      <div id="navbar-collapse" class="collapse navbar-collapse">
+        <ul class="nav navbar-nav">
+          <li ng-class="{ active: isActive('/')}"><a href="#/">Home</a></li>
+          <li ng-class="{ active: isActive('/torrents')}"><a href="#/torrents">Torrents</a></li>
+          <li><a href="" ng-click="indexVideos()">Index</a></li>
+        </ul>
+        <form method="post" enctype="multipart/form-data" action="/api/torrent" class="navbar-form navbar-left">
+          <div class="form-group">
+            <input id="torrent" name="torrent" type="file" class="form-control"/>
+            <button type="submit" id="upload-button">Add</button>
+          </div>
+        </form>
+        <ul class="nav navbar-nav pull-right">
+          <li ng-class="{ active: isActive('/settings')}"><a href="#/settings">Settings</a></li>
+          <li><a href="/logout">Logout</a></li>
+        </ul>
+      </div>
     </div>
-    <div id="navbar-collapse" class="collapse navbar-collapse">
-      <ul class="nav navbar-nav">
-        <li ng-class="{ active: isActive('/')}"><a href="#/">Home</a></li>
-        <li ng-class="{ active: isActive('/torrents')}"><a href="#/torrents">Torrents</a></li>
-        <li><a href="" ng-click="indexVideos()">Index</a></li>
-      </ul>
-      <form method="post" enctype="multipart/form-data" action="/api/torrent" class="navbar-form navbar-left">
-        <div class="form-group">
-          <input id="torrent" name="torrent" type="file" class="form-control"/>
-          <button type="submit" id="upload-button">Add</button>
-        </div>
-      </form>
-      <ul class="nav navbar-nav pull-right">
-        <li ng-class="{ active: isActive('/settings')}"><a href="#/settings">Settings</a></li>
-        <li><a href="/logout">Logout</a></li>
-      </ul>
-    </div>
-  </div>
-</nav>
-<div ng-view class="container-fluid"></div>
-
+  </nav>
+  <div ng-view class="container-fluid"></div>
+</div>
 
 <!-- In production use:
 <script src="//ajax.googleapis.com/ajax/libs/angularjs/x.x.x/angular.min.js"></script>

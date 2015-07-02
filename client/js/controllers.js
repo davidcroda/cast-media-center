@@ -4,14 +4,20 @@
 
 angular.module('cast.controllers', [])
 
-  .controller('VideoListController', ['$scope', '$rootScope', '$http', '$location', 'chromecast', function ($scope, $rootScope, $http, $location, chromecast) {
+  .controller('VideoListController', ['$scope', '$http', '$location', 'chromecast', function ($scope, $http, $location, chromecast) {
+
+    console.log($scope.$parent);
 
     $scope.chromecast = new chromecast($scope);
 
     $scope.orderProp = 'title';
 
-    $scope.$on('indexVideos', $scope.indexVideos);
-    $scope.$on('refreshVideos', $scope.refreshVideos);
+    $scope.$on('indexVideos', function(event) {
+      $scope.indexVideos();
+    });
+    $scope.$on('refreshVideos', function(event) {
+      $scope.refreshVideos();
+    });
 
     $scope.setActive = function (chosenVideo, $event) {
       if (!$event.shiftKey && !$event.ctrlKey) {
@@ -43,8 +49,8 @@ angular.module('cast.controllers', [])
         });
         console.log('Settings $scope.videos to ', videos);
         $scope.videos = videos;
-        clearTimeout($rootScope.timeout);
-        $rootScope.timeout = setTimeout($scope.loadVideos, 5000);
+        clearTimeout($scope.timeout);
+        $scope.timeout = setTimeout($scope.loadVideos, 5000);
       }).
         error(function (data, status, headers, config) {
           if (status == 401) {
@@ -128,7 +134,7 @@ angular.module('cast.controllers', [])
         });
 
         $scope.torrents = data.torrents;
-        $rootScope.timeout = setTimeout($scope.getTorrents, 5000);
+        $scope.timeout = setTimeout($scope.getTorrents, 5000);
       });
 
     };
@@ -146,18 +152,14 @@ angular.module('cast.controllers', [])
 
   }])
 
-  .controller('SettingsController', ['$scope', '$rootScope', '$http',
-    function($scope, $rootScope, $http) {
+  .controller('SettingsController', ['$scope', '$http', 'AuthService',
+    function($scope, $http, AuthService) {
 
-      console.log($rootScope);
-
-      $scope.user = $rootScope.user;
-
-      console.log($scope.user);
+      $scope.user = AuthService.getUser();
 
       $scope.update = function(user) {
         $http.post('/api/user/' + user._id, user).success(function(user) {
-          $scope.user = $rootScope.user = user;
+          AuthService.update(user);
         });
       }
 
@@ -191,7 +193,7 @@ angular.module('cast.controllers', [])
       }
     }])
 
-  .controller('HeaderController', ['$scope', '$rootScope', '$location', function ($scope, $rootScope, $location) {
+  .controller('AppController', ['$scope', '$location', function ($scope, $location) {
 
     $scope.isActive = function (viewLocation) {
       return viewLocation === $location.path();
@@ -199,11 +201,11 @@ angular.module('cast.controllers', [])
 
     $scope.indexVideos = function () {
       console.log("$broadcast indexVideos");
-      $rootScope.$broadcast('indexVideos');
+      $scope.$broadcast('indexVideos');
     };
 
     $scope.refreshVideos = function () {
       console.log("$broadcast refreshVideos");
-      $rootScope.$broadcast('refreshVideos');
+      $scope.$broadcast('refreshVideos');
     };
   }]);

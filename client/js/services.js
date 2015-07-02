@@ -13,10 +13,14 @@ angular.module('cast.services', [])
     authService.login = function(credentials) {
       return $http.post('/login', credentials)
         .then(function(res) {
-          $rootScope.user = res.data;
+          authService.update(res.data);
 
           return res.data;
         })
+    };
+
+    authService.update = function(user) {
+      $rootScope.user = user;
     };
 
     authService.isAuthenticated = function () {
@@ -30,6 +34,10 @@ angular.module('cast.services', [])
 //      return (authService.isAuthenticated() &&
 //        authorizedRoles.indexOf(Session.userRole) !== -1);
 //    };
+
+    authService.getUser = function() {
+      return $rootScope.user;
+    };
 
     return authService;
   }]);
