@@ -1,5 +1,5 @@
 <div class="row" id="video-container">
-  <div class="video-item col-md-12" ng-repeat="video in videos | orderBy:orderProp"
+  <div class="video-item col-md-3" ng-repeat="video in videos | orderBy:orderProp"
        ng-click="setActive(video, $event)" ng-class="{active: video.active}"
        ng-mouseover="video.hover = true" ng-mouseout="video.hover = false"
        ng-dblclick="playVideo(video)"
@@ -8,7 +8,6 @@
       >
     <div class="overlay"></div>
     <div ng-show="video.hover" class='video-icons'>
-      <div class="icon play-icon" ng-show="video.canPlay"><i class="glyphicon glyphicon-play-circle"></i></div>
       <div class="icon transcode-icon" ng-hide="video.canPlay"><i class="glyphicon glyphicon-wrench"></i></div>
     </div>
     <div class="video">
