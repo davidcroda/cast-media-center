@@ -46,8 +46,11 @@ service nginx stop
 service mongodb stop
 service transmission-daemon stop
 
-sudo chown -R cast:cast /app
+IN_VAGRANT=${VAGRANT_HOME?"FALSE"}
 
+if [${IN_VAGRANT} = "FALSE" ]; then
+  sudo chown -R cast:cast /app
+fi
 update-rc.d -f supervisor enable
 service supervisor restart
 supervisorctl restart all
