@@ -10,8 +10,8 @@ angular.module('cast.controllers', [])
 
     $scope.orderProp = 'title';
 
-    $rootScope.$on('indexVideos', $scope.indexVideos);
-    $rootScope.$on('refreshVideos', $scope.refreshVideos);
+    $scope.$on('indexVideos', $scope.indexVideos);
+    $scope.$on('refreshVideos', $scope.refreshVideos);
 
     $scope.setActive = function (chosenVideo, $event) {
       if (!$event.shiftKey && !$event.ctrlKey) {
@@ -198,12 +198,12 @@ angular.module('cast.controllers', [])
     };
 
     $scope.indexVideos = function () {
-      console.log("$emit indexVideos");
-      $rootScope.$emit('indexVideos');
+      console.log("$broadcast indexVideos");
+      $rootScope.$broadcast('indexVideos');
     };
 
     $scope.refreshVideos = function () {
-      console.log("$emit refreshVideos");
-      $rootScope.$emit('refreshVideos');
+      console.log("$broadcast refreshVideos");
+      $rootScope.$broadcast('refreshVideos');
     };
   }]);
