@@ -46,9 +46,9 @@ service nginx stop
 service mongodb stop
 service transmission-daemon stop
 
-IN_VAGRANT=${VAGRANT_HOME?"FALSE"}
+${VAGRANT_HOME="FALSE"}
 
-if [${IN_VAGRANT} = "FALSE" ]; then
+if [${VAGRANT_HOME} = "FALSE" ]; then
   sudo chown -R cast:cast /app
 fi
 update-rc.d -f supervisor enable
