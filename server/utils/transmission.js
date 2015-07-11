@@ -108,12 +108,12 @@ Transmission.prototype.deleteTorrent = function(ids, deleteLocal, cb) {
   }
 
   if(typeof ids != Array) {
-    ids = [ids];
+    ids = parseInt(ids);
+  } else {
+    ids.map(function(id) {
+      return parseInt(id);
+    });
   }
-
-  ids.map(function(id) {
-    return parseInt(id);
-  });
 
   var args = {
     "ids": ids,
