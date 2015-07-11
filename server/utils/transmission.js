@@ -88,9 +88,9 @@ Transmission.prototype.addTorrent = function(torrent, cb) {
   };
 
   if (typeof torrent == "string") {
-    args["filename"] = torrent;
-  } else if (typeof torrent == "Buffer") {
-    args["metainfo"] = torrent.toString("base64")
+    args.filename = torrent;
+  } else if (typeof torrent == Buffer) {
+    args.metainfo = torrent.toString("base64");
   } else {
     throw new Error("Invalid torrent specified");
   }
@@ -107,7 +107,7 @@ Transmission.prototype.deleteTorrent = function(ids, deleteLocal, cb) {
     deleteLocal = false;
   }
 
-  if(typeof ids != "array") {
+  if(typeof ids != array) {
     ids = [ids];
   }
 
@@ -116,7 +116,7 @@ Transmission.prototype.deleteTorrent = function(ids, deleteLocal, cb) {
   });
 
   var args = {
-    "id": ids,
+    "ids": ids,
     "delete-local-data": deleteLocal
   };
 
