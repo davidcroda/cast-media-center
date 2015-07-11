@@ -107,7 +107,7 @@ Transmission.prototype.deleteTorrent = function(ids, deleteLocal, cb) {
     deleteLocal = false;
   }
 
-  if(typeof ids != array) {
+  if(typeof ids != Array) {
     ids = [ids];
   }
 
