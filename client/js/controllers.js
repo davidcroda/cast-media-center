@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 
 /* Controllers */
 
@@ -22,7 +22,7 @@ angular.module('cast.controllers', [])
     $scope.setActive = function (chosenVideo, $event) {
       if (!$event.shiftKey && !$event.ctrlKey) {
         angular.forEach($scope.videos, function (video) {
-          video.active = false
+          video.active = false;
         }, $scope.videos);
       } else if ($event.shiftKey) {
         var isActive = false;
@@ -58,7 +58,7 @@ angular.module('cast.controllers', [])
           } else {
             console.log(data, status, headers, config);
           }
-        })
+        });
     };
 
     $scope.playVideo = function (video) {
@@ -97,7 +97,7 @@ angular.module('cast.controllers', [])
       }
 
       if(bytes > 0) {
-        bytes = bytes / (1024 * 1024)
+        bytes = bytes / (1024 * 1024);
       }
 
       return bytes.toFixed(2);
@@ -140,10 +140,16 @@ angular.module('cast.controllers', [])
     };
 
     $scope.deleteTorrent = function(id) {
-      $http.delete('/api/torrent/' + id).success(function() {
+      var url = '/api/torrent/' + id;
+      if(prompt("Do you want to delete the local files?")) {
+        url += "/1";
+      } else {
+        url += "/0";
+      }
+      $http.delete(url).success(function() {
         $scope.torrents = $scope.torrents.filter(function(torrent) {
           return torrent.id != id;
-        })
+        });
       });
 
     };

@@ -10,7 +10,7 @@ module.exports = function (app) {
 
   app.get('/api/torrent', api.getTorrents);
   app.post('/api/torrent', api.addTorrent);
-  app.delete('/api/torrent/:id', api.deleteTorrent);
+  app.delete('/api/torrent/:id/:deleteLocal?', api.deleteTorrent);
 
   app.get('/api/:model', api.index);
   app.get('/load/:id', api.get);

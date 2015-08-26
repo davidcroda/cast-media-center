@@ -73,8 +73,10 @@ exports.getTorrents = function(req, res) {
 
 exports.deleteTorrent = function(req, res) {
 
+  var deleteLocal = req.params.deleteLocal || false;
+
   if(req.params.id) {
-    Transmission.deleteTorrent(req.params.id, function(err, data) {
+    Transmission.deleteTorrent(req.params.id, deleteLocal, function(err, data) {
       if(err) throw err;
       res.status(200).send(data);
     });
