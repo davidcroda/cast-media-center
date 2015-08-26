@@ -61,7 +61,8 @@ class Chromecast
       return false
 
   checkMedia: (video) =>
-    if video.vcodec != 'h264' || video.acodec != 'aac'
+    if video.vcodec != 'h264' || (video.acodec != 'aac' 
+				&& video.acodec != "mp3")
       return @transcodeVideo(video);
     else
       video.url = window.location.protocol + "//" + window.location.hostname + "/load/" + video.id

@@ -119,6 +119,6 @@ var createVideoRecord = function (file) {
 //"rar|001|zip": extractVideo,
 //"mp4|mkv": processVideo
 module.exports = {
-  pattern: /\.(mp4|mkv|avi)$/,
+  pattern: /\.(mp4|mkv|avi|m4v)$/,
   process: processVideo
 };
