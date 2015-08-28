@@ -1,6 +1,6 @@
 var config = require('../../config/config'),
   fs = require('fs'),
-  rar = require('node-rar'),
+  rar = require('node-rar-updated'),
   path = require('path')
 ;
 
