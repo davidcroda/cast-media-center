@@ -10,8 +10,11 @@ class Chromecast
     @currentTime = 0
     @timeouts = {}
     @$scope = $scope
-    if !chrome.cast || !chrome.cast.isAvailable
-      setTimeout @initializeCastApi, 1000
+    window['__onGCastApiAvailable'] = (loaded, errorInfo) =>
+      if loaded
+        @initializeCastApi()
+      else
+        console.log errorInfo
 
   bindControls: =>
     console.log('bindControls');
@@ -222,6 +225,7 @@ class Chromecast
 
   onInitSuccess: =>
     console.log('onInitSuccess');
+    $('.chromecast-icon').show()
     @init = true
     @bindControls()
 
@@ -231,14 +235,14 @@ class Chromecast
   sessionListener: (e)=>
     console.log "Received Session: ", e
     @appSession = e;
-    if !@$scope.currentMedia
-      console.log("Stopping existing session");
-      @appSession.stop(@onStopSuccess, @onStopError)
-    else
-      if e.media.length > 0
-        @onMediaDiscovered e.media[0]
-      @appSession.addMediaListener @onMediaDiscovered
-      @appSession.addUpdateListener @sessionUpdateListener
+    # if !@$scope.currentMedia
+    #   console.log("Stopping existing session");
+    #   @appSession.stop(@onStopSuccess, @onStopError)
+    # else
+    if e.media.length > 0
+      @onMediaDiscovered e.media[0]
+    @appSession.addMediaListener @onMediaDiscovered
+    @appSession.addUpdateListener @sessionUpdateListener
 
   sessionUpdateListener: (alive)=>
     console.log (alive ? 'Session Updated: ': 'Session Removed: ') + @appSession.sessionId;
@@ -247,7 +251,7 @@ class Chromecast
       @mediaSession = null
 
   receiverListener: (e)=>
-    if e == 'available'
+    if e == chrome.cast.ReceiverAvailability.AVAILABLE
       console.log "receiver found"
     else
       console.log e
@@ -269,6 +273,6 @@ class Chromecast
     console.log "Launch error: ", e
 
 
-angular.module 'chromecast', []
-  .factory 'chromecast', ()->
+angular.module 'Chromecast', []
+  .factory 'Chromecast', ()->
     return Chromecast
