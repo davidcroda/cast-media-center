@@ -23,7 +23,7 @@ exports.postLogin = function (req, res, next) {
 
 exports.oauth2 = function(req, res, next) {
   utils.generateToken(req.user, function(err, token) {
-    if(err) throw err;
+    if (err) { throw err; }
     var url = "intent:#Intent;action=com.google.sample.cast.refplayer.api.LOGIN_HANDLER;S.token=" + token + ";end";
     console.log("Redirecting to url: ", url);
     return res.redirect(url);

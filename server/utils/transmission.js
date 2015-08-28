@@ -38,8 +38,6 @@ Transmission.prototype.request = function(method, args, cb) {
     }
   });
 
-  request.end(body);
-
   request.on('response', function(resp) {
 
       var data = "";
@@ -67,12 +65,18 @@ Transmission.prototype.request = function(method, args, cb) {
 
       });
   });
+
+  request.on('error', function(error) {
+    console.log(error);
+  });
+
+  request.end(body);
 };
 
 Transmission.prototype.getTorrents = function(cb, fields) {
 
   if(typeof fields == "undefined") {
-    fields = ['id','name','peersConnected','eta','trackerStats','percentDone','rateDownload','rateUpload','status','files','totalSize','uploadRatio']
+    fields = ['id','name','peersConnected','eta','trackerStats','percentDone','rateDownload','rateUpload','status','files','totalSize','uploadRatio'];
   }
 
   this.request("torrent-get", {

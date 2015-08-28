@@ -8,7 +8,7 @@ angular.module('cast', [
   'cast.services',
   'cast.directives',
   'cast.controllers',
-  'chromecast',
+  'Chromecast',
   'ng-context-menu'
 ]).
 config(['$routeProvider', function($routeProvider) {

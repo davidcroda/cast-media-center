@@ -38,8 +38,12 @@ exports.transcode = function (res, video) {
     var vcodec = "libx264",
       acodec = "libfdk_aac";
 
-    if (video.vcodec == "h264") vcodec = "copy";
-    if (video.acodec == "aac") acodec = "copy";
+    if (video.vcodec == "h264") {
+      vcodec = "copy";
+    }
+    if (video.acodec == "aac") {
+      acodec = "copy";
+    }
 
     if (acodec == "copy" && vcodec == "copy") {
       video.transcoding = false;
@@ -71,7 +75,7 @@ exports.transcode = function (res, video) {
         video.vcodec = "h264";
         video.transcoding = false;
         video.save(function (err) {
-          if (err) throw err;
+          if (err) { throw err; }
           if (oldPath != newPath) {
             fs.unlink(oldPath);
             fs.rename(newPath, oldPath);

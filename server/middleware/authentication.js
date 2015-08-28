@@ -17,10 +17,10 @@ module.exports = function (req, res, next) {
 
     tokenUtils.queryToken(token, function(err, user) {
       //console.log(err, user);
-      if(err) throw err;
+      if (err) { throw err; }
       if(user) {
         req.login(user, function(err) {
-          if(err) throw err;
+          if (err) { throw err; }
           //console.log('SUCCESS');
           next();
         });

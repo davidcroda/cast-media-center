@@ -24,7 +24,7 @@ try {
 } catch(err) {
   var crypto = require('crypto');
   crypto.randomBytes(256, function(err, random) {
-    if(err) throw err;
+    if (err) { throw err; }
     for(var i = 1000; i > 0; i--) {
       random = crypto.createHash('sha256').update(random).digest();
     }

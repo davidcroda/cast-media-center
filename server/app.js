@@ -30,7 +30,9 @@ var checkSetup = function() {
       });
 
       User.register(defaultUser, config.defaultPassword, function (err) {
-        if(err) throw err;
+        if(err) {
+          throw err;
+        }
         console.log("User: " + defaultUser.username + " registered.");
       });
     }
