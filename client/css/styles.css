@@ -121,3 +121,8 @@
 .position-fixed {
   position: fixed;
 }
+.chromecast-icon {
+  height: 30px;
+  float: left;
+  margin-top: 10px;
+}
