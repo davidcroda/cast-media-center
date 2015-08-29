@@ -225,7 +225,7 @@
 
     Chromecast.prototype.initializeCastApi = function() {
       var apiConfig, sessionRequest;
-      sessionRequest = new chrome.cast.SessionRequest("A37D6DB4");
+      sessionRequest = new chrome.cast.SessionRequest("30FE51B1");
       apiConfig = new chrome.cast.ApiConfig(sessionRequest, this.sessionListener, this.receiverListener);
       return chrome.cast.initialize(apiConfig, this.onInitSuccess, this.onError);
     };

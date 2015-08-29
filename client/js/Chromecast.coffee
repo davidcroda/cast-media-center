@@ -175,7 +175,7 @@ class Chromecast
   #Ttial Setup
 
   initializeCastApi: =>
-    sessionRequest = new chrome.cast.SessionRequest "A37D6DB4"
+    sessionRequest = new chrome.cast.SessionRequest "30FE51B1"
     apiConfig = new chrome.cast.ApiConfig sessionRequest, @sessionListener, @receiverListener
     chrome.cast.initialize(apiConfig, @onInitSuccess, @onError)
 
