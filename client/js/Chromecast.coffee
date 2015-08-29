@@ -117,8 +117,9 @@ class Chromecast
 
   loadUrl: (url) =>
 
-    if url.indexOf 'm3u8' == -1
+    if url.indexOf 'm3u8' != -1
       window.alert "Only m3u8 URLs currently supported"
+      return false
 
     if !@appSession
       @loadApp =>

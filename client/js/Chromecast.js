@@ -163,8 +163,9 @@
 
     Chromecast.prototype.loadUrl = function(url) {
       var mediaInfo, request;
-      if (url.indexOf('m3u8' === -1)) {
+      if (url.indexOf('m3u8' !== -1)) {
         window.alert("Only m3u8 URLs currently supported");
+        return false;
       }
       if (!this.appSession) {
         this.loadApp((function(_this) {
