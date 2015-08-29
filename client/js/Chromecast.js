@@ -1,32 +1,36 @@
 (function() {
   var Chromecast,
-    __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
+    bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
 
   Chromecast = (function() {
-    function Chromecast($scope) {
-      this.onRequestSessionSuccess = __bind(this.onRequestSessionSuccess, this);
-      this.loadApp = __bind(this.loadApp, this);
-      this.receiverListener = __bind(this.receiverListener, this);
-      this.sessionUpdateListener = __bind(this.sessionUpdateListener, this);
-      this.sessionListener = __bind(this.sessionListener, this);
-      this.onError = __bind(this.onError, this);
-      this.onInitSuccess = __bind(this.onInitSuccess, this);
-      this.updateControls = __bind(this.updateControls, this);
-      this.updateProgress = __bind(this.updateProgress, this);
-      this.updateProgressBar = __bind(this.updateProgressBar, this);
-      this.updateMediaDisplay = __bind(this.updateMediaDisplay, this);
-      this.onMediaError = __bind(this.onMediaError, this);
-      this.onStopError = __bind(this.onStopError, this);
-      this.onStopSuccess = __bind(this.onStopSuccess, this);
-      this.onMediaDiscovered = __bind(this.onMediaDiscovered, this);
-      this.initializeCastApi = __bind(this.initializeCastApi, this);
-      this.stopMedia = __bind(this.stopMedia, this);
-      this.seekMedia = __bind(this.seekMedia, this);
-      this.playMedia = __bind(this.playMedia, this);
-      this.loadMedia = __bind(this.loadMedia, this);
-      this.checkMedia = __bind(this.checkMedia, this);
-      this.transcodeVideo = __bind(this.transcodeVideo, this);
-      this.bindControls = __bind(this.bindControls, this);
+    function Chromecast() {
+      this.onRequestSessionSuccess = bind(this.onRequestSessionSuccess, this);
+      this.loadApp = bind(this.loadApp, this);
+      this.receiverListener = bind(this.receiverListener, this);
+      this.sessionUpdateListener = bind(this.sessionUpdateListener, this);
+      this.sessionListener = bind(this.sessionListener, this);
+      this.onError = bind(this.onError, this);
+      this.onInitSuccess = bind(this.onInitSuccess, this);
+      this.updateControls = bind(this.updateControls, this);
+      this.updateProgress = bind(this.updateProgress, this);
+      this.updateProgressBar = bind(this.updateProgressBar, this);
+      this.updateMediaDisplay = bind(this.updateMediaDisplay, this);
+      this.onMediaError = bind(this.onMediaError, this);
+      this.onStopError = bind(this.onStopError, this);
+      this.onStopSuccess = bind(this.onStopSuccess, this);
+      this.onMediaDiscovered = bind(this.onMediaDiscovered, this);
+      this.initializeCastApi = bind(this.initializeCastApi, this);
+      this.stopMedia = bind(this.stopMedia, this);
+      this.seekMedia = bind(this.seekMedia, this);
+      this.playMedia = bind(this.playMedia, this);
+      this.loadUrl = bind(this.loadUrl, this);
+      this.loadMedia = bind(this.loadMedia, this);
+      this.checkMedia = bind(this.checkMedia, this);
+      this.transcodeVideo = bind(this.transcodeVideo, this);
+      this.bindControls = bind(this.bindControls, this);
+      this.toggleDebug = bind(this.toggleDebug, this);
+      this.setScope = bind(this.setScope, this);
+      console.log('Chromecast.js constructor called');
       this.init = false;
       this.appSession = null;
       this.mediaSession = null;
@@ -35,7 +39,7 @@
       this.timer = null;
       this.currentTime = 0;
       this.timeouts = {};
-      this.$scope = $scope;
+      this.debug = false;
       window['__onGCastApiAvailable'] = (function(_this) {
         return function(loaded, errorInfo) {
           if (loaded) {
@@ -46,6 +50,14 @@
         };
       })(this);
     }
+
+    Chromecast.prototype.setScope = function($scope) {
+      return this.scope = $scope;
+    };
+
+    Chromecast.prototype.toggleDebug = function() {
+      return this.debug = !this.debug;
+    };
 
     Chromecast.prototype.bindControls = function() {
       var excast;
@@ -122,12 +134,14 @@
           })(this));
           return false;
         }
-        this.$scope.$apply((function(_this) {
-          return function() {
-            _this.$scope.currentMedia = video;
-            return _this.$scope.state = "playing";
-          };
-        })(this));
+        if (this.$scope) {
+          this.$scope.$apply((function(_this) {
+            return function() {
+              _this.$scope.currentMedia = video;
+              return _this.$scope.state = "playing";
+            };
+          })(this));
+        }
         console.log("loading... " + video.title);
         return $.post('/api/token').success((function(_this) {
           return function(token) {
@@ -145,6 +159,28 @@
           };
         })(this));
       }
+    };
+
+    Chromecast.prototype.loadUrl = function(url) {
+      var mediaInfo, request;
+      if (!this.appSession) {
+        this.loadApp((function(_this) {
+          return function() {
+            return _this.loadUrl(url);
+          };
+        })(this));
+        return false;
+      }
+      mediaInfo = new chrome.cast.media.MediaInfo(url);
+      mediaInfo.contentType = 'application/xmpeg-url';
+      mediaInfo.customData = {
+        title: url,
+        debug: this.debug
+      };
+      request = new chrome.cast.media.LoadRequest(mediaInfo);
+      request.autoplay = true;
+      request.currentTime = 0;
+      return this.appSession.loadMedia(request, this.onMediaDiscovered, this.onMediaError);
     };
 
     Chromecast.prototype.playMedia = function() {
@@ -186,7 +222,7 @@
 
     Chromecast.prototype.initializeCastApi = function() {
       var apiConfig, sessionRequest;
-      sessionRequest = new chrome.cast.SessionRequest("E4815CDE");
+      sessionRequest = new chrome.cast.SessionRequest("A37D6DB4");
       apiConfig = new chrome.cast.ApiConfig(sessionRequest, this.sessionListener, this.receiverListener);
       return chrome.cast.initialize(apiConfig, this.onInitSuccess, this.onError);
     };
@@ -284,7 +320,6 @@
 
     Chromecast.prototype.onInitSuccess = function() {
       console.log('onInitSuccess');
-      $('.chromecast-icon').show();
       this.init = true;
       return this.bindControls();
     };
@@ -315,8 +350,10 @@
 
     Chromecast.prototype.receiverListener = function(e) {
       if (e === chrome.cast.ReceiverAvailability.AVAILABLE) {
-        return console.log("receiver found");
+        console.log("receiver found");
+        return $('.chromecast-icon').show();
       } else {
+        $('.chromecast-icon').hide();
         return console.log(e);
       }
     };

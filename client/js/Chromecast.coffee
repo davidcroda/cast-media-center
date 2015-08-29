@@ -1,6 +1,8 @@
+# out: ./Chromecast.js
 class Chromecast
 
-  constructor: ($scope)->
+  constructor: ()->
+    console.log('Chromecast.js constructor called')
     @init = false
     @appSession = null
     @mediaSession = null
@@ -9,12 +11,18 @@ class Chromecast
     @timer = null
     @currentTime = 0
     @timeouts = {}
-    @$scope = $scope
+    @debug = false
     window['__onGCastApiAvailable'] = (loaded, errorInfo) =>
       if loaded
         @initializeCastApi()
       else
         console.log errorInfo
+
+  setScope: ($scope) =>
+    @scope = $scope
+
+  toggleDebug: =>
+    @debug = !@debug;
 
   bindControls: =>
     console.log('bindControls');
@@ -84,10 +92,10 @@ class Chromecast
         @loadApp =>
           @loadMedia video
         return false
-
-      @$scope.$apply =>
-        @$scope.currentMedia = video
-        @$scope.state = "playing"
+      if @$scope
+        @$scope.$apply =>
+          @$scope.currentMedia = video
+          @$scope.state = "playing"
 
       console.log("loading... " + video.title);
 
@@ -107,6 +115,25 @@ class Chromecast
           @onMediaDiscovered,
           @onMediaError
 
+  loadUrl: (url) =>
+
+    if !@appSession
+      @loadApp =>
+        @loadUrl url
+      return false
+
+    mediaInfo = new chrome.cast.media.MediaInfo(url)
+    mediaInfo.contentType = 'application/xmpeg-url'
+    mediaInfo.customData =
+      title: url,
+      debug: @debug
+    request = new chrome.cast.media.LoadRequest mediaInfo
+    request.autoplay = true;
+    request.currentTime = 0;
+
+    @appSession.loadMedia request,
+      @onMediaDiscovered,
+      @onMediaError
 
   playMedia: =>
     if !@mediaSession
@@ -145,7 +172,7 @@ class Chromecast
   #Ttial Setup
 
   initializeCastApi: =>
-    sessionRequest = new chrome.cast.SessionRequest "E4815CDE"
+    sessionRequest = new chrome.cast.SessionRequest "A37D6DB4"
     apiConfig = new chrome.cast.ApiConfig sessionRequest, @sessionListener, @receiverListener
     chrome.cast.initialize(apiConfig, @onInitSuccess, @onError)
 
@@ -225,7 +252,6 @@ class Chromecast
 
   onInitSuccess: =>
     console.log('onInitSuccess');
-    $('.chromecast-icon').show()
     @init = true
     @bindControls()
 
@@ -253,7 +279,9 @@ class Chromecast
   receiverListener: (e)=>
     if e == chrome.cast.ReceiverAvailability.AVAILABLE
       console.log "receiver found"
+      $('.chromecast-icon').show()
     else
+      $('.chromecast-icon').hide()
       console.log e
 
 

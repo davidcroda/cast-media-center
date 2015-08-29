@@ -1,43 +1,49 @@
-'use strict';
+(function() {
+  'use strict';
 
-/* Services */
+  /* Services */
 
 
-// Demonstrate how to register services
-// In this case it is a simple value service.
-angular.module('cast.services', [])
+  // Demonstrate how to register services
+  // In this case it is a simple value service.
+  angular.module('cast.services', [])
 
-.factory('AuthService', ['$rootScope','$http', function($rootScope, $http) {
-    var authService = {};
+  .factory('ChromecastService', ['Chromecast', function(Chromecast) {
+    return new Chromecast();
+  }])
 
-    authService.login = function(credentials) {
-      return $http.post('/login', credentials)
-        .then(function(res) {
-          authService.update(res.data);
+  .factory('AuthService', ['$rootScope','$http', function($rootScope, $http) {
+      var authService = {};
 
-          return res.data;
-        })
-    };
+      authService.login = function(credentials) {
+        return $http.post('/login', credentials)
+          .then(function(res) {
+            authService.update(res.data);
 
-    authService.update = function(user) {
-      $rootScope.user = user;
-    };
+            return res.data;
+          });
+      };
 
-    authService.isAuthenticated = function () {
-      return (typeof $rootScope.user._id != "undefined")
-    };
+      authService.update = function(user) {
+        $rootScope.user = user;
+      };
 
-//    authService.isAuthorized = function (authorizedRoles) {
-//      if (!angular.isArray(authorizedRoles)) {
-//        authorizedRoles = [authorizedRoles];
-//      }
-//      return (authService.isAuthenticated() &&
-//        authorizedRoles.indexOf(Session.userRole) !== -1);
-//    };
+      authService.isAuthenticated = function () {
+        return (typeof $rootScope.user._id != "undefined");
+      };
 
-    authService.getUser = function() {
-      return $rootScope.user;
-    };
+  //    authService.isAuthorized = function (authorizedRoles) {
+  //      if (!angular.isArray(authorizedRoles)) {
+  //        authorizedRoles = [authorizedRoles];
+  //      }
+  //      return (authService.isAuthenticated() &&
+  //        authorizedRoles.indexOf(Session.userRole) !== -1);
+  //    };
 
-    return authService;
-  }]);
+      authService.getUser = function() {
+        return $rootScope.user;
+      };
+
+      return authService;
+    }]);
+})();
