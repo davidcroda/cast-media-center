@@ -116,8 +116,8 @@ class Chromecast
           @onMediaError
 
   loadUrl: (url) =>
-
-    if url.indexOf 'm3u8' != -1
+    console.log "Load ", url
+    if url.indexOf 'm3u8' < 0
       window.alert "Only m3u8 URLs currently supported"
       return false
 
