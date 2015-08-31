@@ -142,7 +142,7 @@
 
     $scope.deleteTorrent = function (id) {
       var url = '/api/torrent/' + id;
-      if (prompt("Do you want to delete the local files?")) {
+      if (confirm("Do you want to delete the local files?")) {
         url += "/1";
       } else {
         url += "/0";
