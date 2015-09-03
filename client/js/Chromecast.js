@@ -189,6 +189,7 @@
         return false;
       }
       if (this.mediaSession.playerState === "PLAYING") {
+        this.scope.state = "playing";
         clearTimeout(this.timer);
         this.timer = null;
         this.mediaSession.pause(null, this.updateMediaDisplay, this.onError);
@@ -216,7 +217,7 @@
         console.log("No media session to stop");
         return false;
       }
-      $("#control-nav").hide();
+      this.scope.state = "stopped";
       clearTimeout(this.timer);
       return this.mediaSession.stop(null, this.updateMediaDisplay, this.onError);
     };

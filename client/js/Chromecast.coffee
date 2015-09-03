@@ -141,6 +141,7 @@ class Chromecast
       return false
 
     if @mediaSession.playerState == "PLAYING"
+      @scope.state = "playing"
       clearTimeout(@timer)
       @timer = null
       @mediaSession.pause null, @updateMediaDisplay, @onError
@@ -166,7 +167,7 @@ class Chromecast
       console.log("No media session to stop")
       return false
 
-    $("#control-nav").hide()
+    @scope.state = "stopped"
     clearTimeout(@timer)
     @mediaSession.stop null, @updateMediaDisplay, @onError
 
