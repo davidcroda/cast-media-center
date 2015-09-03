@@ -65,7 +65,8 @@
     };
 
     $scope.playVideo = function (video) {
-      $scope.chromecast.loadMedia(video, $scope);
+      $scope.chromecast.setScope($scope);
+      $scope.chromecast.loadMedia(video);
     };
 
     $scope.deleteVideos = function () {
