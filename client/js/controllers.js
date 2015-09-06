@@ -5,11 +5,11 @@
 
   angular.module('cast.controllers', [])
 
-  .controller('VideoListController', ['$scope', '$http', '$location', 'ChromecastService', function ($scope, $http, $location, ChromecastService) {
+  .controller('VideoListController', ['$scope', '$http', '$location', '$timeout', 'Chromecast', function ($scope, $http, $location, $timeout, Chromecast) {
 
     console.log($scope.$parent);
 
-    $scope.chromecast = ChromecastService;
+    $scope.chromecast = Chromecast;
     $scope.chromecast.setScope($scope);
 
     $scope.orderProp = 'title';
@@ -47,13 +47,13 @@
       $http.get('/api/video').success(function (data) {
         var videos = data.video;
         angular.forEach(videos, function (video, key) {
-          video.canPlay = (video.vcodec == "h264" && video.acodec == "aac");
+          video.canPlay = (video.vcodec == "h264" && (video.acodec == "aac" ||
+            video.acodec == "mp3"));
           videos[key] = video;
         });
         console.log('Settings $scope.videos to ', videos);
         $scope.videos = videos;
-        clearTimeout($scope.timeout);
-        $scope.timeout = setTimeout($scope.loadVideos, 5000);
+        $scope.timeout = $timeout($scope.refreshVideos, 5000);
       }).
       error(function (data, status, headers, config) {
         if (status == 401) {
@@ -64,13 +64,17 @@
       });
     };
 
+    $scope.$on('$destroy', function(){
+      $timeout.cancel($scope.timeout);
+    });
+
     $scope.playVideo = function (video) {
       $scope.chromecast.setScope($scope);
       $scope.chromecast.loadMedia(video);
     };
 
     $scope.deleteVideos = function () {
-      angular.forEach($scope.videos, function (video) {
+      angular.forErach($scope.videos, function (video) {
         if (video.active) {
           $http.delete('/api/video/' + video.id).success(function () {
             $scope.videos = _.without($scope.videos, video);
@@ -83,7 +87,7 @@
     $scope.indexVideos = function () {
       console.log('calling indexVideos');
       $http.post('/api/refresh', {}).success(function () {
-        $scope.refreshVideos();
+        $timeout($scope.refreshVideos, 1000);
       });
     };
 
@@ -91,7 +95,7 @@
 
   }])
 
-  .controller('TorrentListController', ['$scope', '$rootScope', '$http', function ($scope, $rootScope, $http) {
+  .controller('TorrentListController', ['$scope', '$rootScope', '$http', '$timeout', function ($scope, $rootScope, $http, $timeout) {
 
     $scope.formatSize = function (bytes) {
 
@@ -136,7 +140,7 @@
         });
 
         $scope.torrents = data.torrents;
-        $scope.timeout = setTimeout($scope.getTorrents, 5000);
+        $scope.timeout = $timeout($scope.getTorrents, 5000);
       });
 
     };
@@ -155,6 +159,10 @@
       });
 
     };
+
+    $scope.$on('$destroy', function(){
+      $timeout.cancel($scope.timeout);
+    });
 
     $scope.getTorrents();
 
@@ -201,14 +209,14 @@
     }
   ])
 
-  .controller('AppController', ['$scope', '$location', 'ChromecastService',
-    function ($scope, $location, ChromecastService) {
+  .controller('AppController', ['$scope', '$location', 'Chromecast',
+    function ($scope, $location, Chromecast) {
 
       $scope.debug = false;
 
       $scope.toggleDebug = function() {
         $scope.debug = !$scope.debug;
-        ChromecastService.toggleDebug();
+        Chromecast.toggleDebug();
       };
 
       $scope.isActive = function (viewLocation) {
@@ -227,7 +235,7 @@
 
       $scope.castUrl = function () {
         console.log($scope.url);
-        ChromecastService.loadUrl($scope.url);
+        Chromecast.loadUrl($scope.url);
         // $scope.url = "";
       };
     }

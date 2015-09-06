@@ -5,9 +5,7 @@
   // Declare app level module which depends on filters, and services
   angular.module('cast', [
     'ngRoute',
-    'cast.filters',
     'cast.services',
-    'cast.directives',
     'cast.controllers',
     'Chromecast',
     'ng-context-menu'

@@ -140,8 +140,9 @@ class Chromecast
     if !@mediaSession
       return false
 
+    console.log(@mediaSession);
+
     if @mediaSession.playerState == "PLAYING"
-      @scope.state = "playing"
       clearTimeout(@timer)
       @timer = null
       @mediaSession.pause null, @updateMediaDisplay, @onError
@@ -150,6 +151,7 @@ class Chromecast
       @timer = setTimeout(@updateProgress, 1000)
       @mediaSession.play null, @updateMediaDisplay, @onError
       console.log('Play started')
+    console.log(@scope.state);
 
   seekMedia: (percent)=>
     clearTimeout(@timer)
@@ -237,6 +239,8 @@ class Chromecast
     if @mediaSession.playerState == "BUFFERING"
       $('.progress').addClass('active').addClass('progress-striped')
     else
+      @scope.$apply =>
+         @scope.state = "playing"
       $('.progress').removeClass('active').removeClass('progress-striped')
       if @mediaSession.playerState == "PLAYING"
         @stop.removeClass('disabled')
@@ -248,6 +252,10 @@ class Chromecast
         @stop.removeClass('disabled')
         @play.removeClass('disabled');
         @play.removeClass('glyphicon-pause').addClass('glyphicon-play')
+      else if @mediaSession.playerState == "IDLE"
+        clearTimeout @timer
+        @scope.$apply =>
+          @scope.state = "idle"
       else
         @play.addClass('disabled')
         @stop.addClass('disabled')
@@ -305,4 +313,4 @@ class Chromecast
 
 angular.module 'Chromecast', []
   .factory 'Chromecast', ()->
-    return Chromecast
+    return new Chromecast()

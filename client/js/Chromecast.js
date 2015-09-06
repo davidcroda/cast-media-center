@@ -188,17 +188,18 @@
       if (!this.mediaSession) {
         return false;
       }
+      console.log(this.mediaSession);
       if (this.mediaSession.playerState === "PLAYING") {
-        this.scope.state = "playing";
         clearTimeout(this.timer);
         this.timer = null;
         this.mediaSession.pause(null, this.updateMediaDisplay, this.onError);
-        return console.log('Play paused');
+        console.log('Play paused');
       } else {
         this.timer = setTimeout(this.updateProgress, 1000);
         this.mediaSession.play(null, this.updateMediaDisplay, this.onError);
-        return console.log('Play started');
+        console.log('Play started');
       }
+      return console.log(this.scope.state);
     };
 
     Chromecast.prototype.seekMedia = function(percent) {
@@ -301,6 +302,11 @@
       if (this.mediaSession.playerState === "BUFFERING") {
         return $('.progress').addClass('active').addClass('progress-striped');
       } else {
+        this.scope.$apply((function(_this) {
+          return function() {
+            return _this.scope.state = "playing";
+          };
+        })(this));
         $('.progress').removeClass('active').removeClass('progress-striped');
         if (this.mediaSession.playerState === "PLAYING") {
           this.stop.removeClass('disabled');
@@ -313,6 +319,13 @@
           this.stop.removeClass('disabled');
           this.play.removeClass('disabled');
           return this.play.removeClass('glyphicon-pause').addClass('glyphicon-play');
+        } else if (this.mediaSession.playerState === "IDLE") {
+          clearTimeout(this.timer);
+          return this.scope.$apply((function(_this) {
+            return function() {
+              return _this.scope.state = "idle";
+            };
+          })(this));
         } else {
           this.play.addClass('disabled');
           return this.stop.addClass('disabled');
@@ -380,7 +393,7 @@
   })();
 
   angular.module('Chromecast', []).factory('Chromecast', function() {
-    return Chromecast;
+    return new Chromecast();
   });
 
 }).call(this);
