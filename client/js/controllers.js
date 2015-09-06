@@ -53,7 +53,6 @@
         });
         console.log('Settings $scope.videos to ', videos);
         $scope.videos = videos;
-        $scope.timeout = $timeout($scope.refreshVideos, 5000);
       }).
       error(function (data, status, headers, config) {
         if (status == 401) {
@@ -87,11 +86,12 @@
     $scope.indexVideos = function () {
       console.log('calling indexVideos');
       $http.post('/api/refresh', {}).success(function () {
-        $timeout($scope.refreshVideos, 1000);
+        setTimeout($scope.refreshVideos, 1000);
       });
     };
 
     $scope.refreshVideos();
+    $scope.timeout = $timeout($scope.refreshVideos, 5000);
 
   }])
 
@@ -140,7 +140,6 @@
         });
 
         $scope.torrents = data.torrents;
-        $scope.timeout = $timeout($scope.getTorrents, 5000);
       });
 
     };
@@ -165,6 +164,7 @@
     });
 
     $scope.getTorrents();
+    $scope.timeout = $timeout($scope.getTorrents, 5000);
 
   }])
 
