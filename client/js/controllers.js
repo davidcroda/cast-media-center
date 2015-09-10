@@ -73,7 +73,7 @@
     };
 
     $scope.deleteVideos = function () {
-      angular.forErach($scope.videos, function (video) {
+      angular.forEach($scope.videos, function (video) {
         if (video.active) {
           $http.delete('/api/video/' + video.id).success(function () {
             $scope.videos = _.without($scope.videos, video);
