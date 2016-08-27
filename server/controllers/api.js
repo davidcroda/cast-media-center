@@ -157,8 +157,18 @@ exports.updatePassword = function (req, res) {
   models.user.findOne({
       _id: _id
     }, function (err, result) {
-      result.setPassword(req.body.password, function() {
-        res.send(200, result);
+      result.setPassword(req.body.password, function(err) {
+        if(!err) {
+          result.save(function(err) {
+            if(!err) {
+              res.send(200, result);
+            } else {
+              res.send(500, err);
+            }
+          });
+        } else {
+          res.send(500, err);
+        }
       });
     });
 };
