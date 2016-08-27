@@ -1,5 +1,7 @@
 #!/bin/bash
 
+DOMAIN="daveroda.com"
+
 shopt -s extglob
 
 apt-get install -y software-properties-common
@@ -44,14 +46,15 @@ service nginx stop
 service mongodb stop
 service transmission-daemon stop
 
-${VAGRANT_HOME="FALSE"}
+VAGRANT_HOME=${VAGRANT_HOME="FALSE"}
 
-if [${VAGRANT_HOME} = "FALSE" ]; then
+if [ ${VAGRANT_HOME} = "FALSE" ]; then
   sudo chown -R cast:cast /app
 fi
 update-rc.d -f supervisor enable
 service supervisor restart
 supervisorctl restart all
+
 
 ## No longer needed, using ppa repository of real ffmpeg
 #cd setup
