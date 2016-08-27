@@ -9,7 +9,8 @@ var mongoose = require('mongoose'),
   Transmission = require('../utils/transmission'),
   moment = require('moment'),
   models = {
-    video: mongoose.model('Video')
+    video: mongoose.model('Video'),
+    user: mongoose.model('User')
   };
 
 exports.index = function (req, res) {
@@ -148,4 +149,16 @@ exports.update = function (req, res) {
     if (err) { res.send(500, err); }
     res.send(200, affectedRows);
   });
+};
+
+exports.updatePassword = function (req, res) {
+  var _id = req.body._id;
+
+  models.user.findOne({
+      _id: _id
+    }, function (err, result) {
+      result.setPassword(req.body.password, function() {
+        res.send(200, result);
+      });
+    });
 };

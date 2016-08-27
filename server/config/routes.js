@@ -14,7 +14,10 @@ module.exports = function (app) {
 
   app.get('/api/:model', api.index);
   app.get('/load/:id', api.get);
+
+  app.post('/api/user/:id', api.updatePassword);
   app.post('/api/:model/:id', transcoder.transcode);
+  
   app.delete('/api/:model/:id', api.del);
   app.put('/api/:model/:id', api.update);
   app.put('/api/:model', api.create);
