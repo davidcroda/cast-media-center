@@ -57,7 +57,7 @@ var startApp = function() {
   app.enable('trust proxy', 1);
   app.disable('e-tag');
 
-  app.listen(config.port);
+  app.listen(config.port, '127.0.0.1');
   console.log('Listening on port: ' + config.port);
 };
 
