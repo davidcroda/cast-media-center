@@ -1,8 +1,9 @@
 #!/bin/bash
-
-DOMAIN="daveroda.com"
-
 shopt -s extglob
+
+cd /
+git clone git@github.com:davidcroda/cast-media-center app
+cd /app
 
 apt-get install -y software-properties-common
 add-apt-repository ppa:mc3man/trusty-media
