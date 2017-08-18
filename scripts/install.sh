@@ -2,7 +2,7 @@
 shopt -s extglob
 
 cd /
-git clone git@github.com:davidcroda/cast-media-center app
+git clone https://github.com/davidcroda/cast-media-center/ app
 cd /app
 
 apt-get install -y software-properties-common
