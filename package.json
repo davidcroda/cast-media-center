@@ -21,7 +21,7 @@
     "fluent-ffmpeg": "~2.0",
     "formidable": "~1.0.17",
     "jade": "~0.34.0",
-    "moment": "~2.9.0",
+    "moment": "~2.24.0",
     "mongoose": "~5.8.3",
     "morgan": "~1.5.1",
     "node-rar-updated": "0.0.1",
